@@ -97,8 +97,6 @@ public class BallControl : MonoBehaviour {
             m_countBoost = 0;
             UpdateColorBall();
 
-
-            GameManager.m_lastHit = coll.gameObject.GetComponent<PlayerControl>().m_playerID;
             Vector2 vel;
             vel.x = m_currentSpeed * ( coll.contacts[0].point.x - coll.collider.attachedRigidbody.position.x);
             //Force y velocity to avoid ball move horizontally
