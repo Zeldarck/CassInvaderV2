@@ -32,3 +32,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Script/PlayerController.cs
+ProjectSettings/TagManager.asset
+ProjectSettings/EditorBuildSettings.asset
