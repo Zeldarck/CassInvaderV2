@@ -13,19 +13,36 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Limit of move (considering center on x=0)
     /// </summary>
-    public float m_boundY = 2.25f;
+    [SerializeField]
+    float m_boundY = 2.25f;
     private Rigidbody2D m_rb2d;
 
+    /// <summary>
+    /// To Delete
+    /// </summary>
     public ButtonMove m_buttonRight;
+    /// <summary>
+    /// To Delete
+    /// </summary>
     public ButtonMove m_buttonLeft;
-
-    private Vector3 m_startPos;
+    /// <summary>
+    /// To Delete
+    /// </summary>
+    float t = 1000;
 
     /// <summary>
-    /// Currently got Pickup
+    /// Ball Prefab
     /// </summary>
-    PickUp m_pickUp =null;
+    [SerializeField]
+    GameObject m_ballPrefab;
 
+    /// <summary>
+    /// SpawnBall Position
+    /// </summary>
+    [SerializeField]
+    Transform m_ballSpawnPosition;
+
+    private Vector3 m_startPos;
 
     void Start () {
         m_rb2d = GetComponent<Rigidbody2D>();
@@ -42,12 +59,21 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate () {
 
+        t += Time.deltaTime;
+        if ((Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.Space) ) && t > 3.0f /* && m_chargeur.value == m_chargeur.maxValue*/)
+        {
+            Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation);
+            t = 0;
+            //TODO : add velocity depend on player velocity
+        }
+
+
         var vel = m_rb2d.velocity;
-        if (Input.GetKey(m_moveRight) || m_buttonRight.m_isPointerIn)
+        if (Input.GetKey(m_moveRight) || Input.GetKey(KeyCode.RightArrow)  || m_buttonRight.m_isPointerIn)
         {
             vel.x = m_speed;
         }
-        else if (Input.GetKey(m_moveLeft) ||m_buttonLeft.m_isPointerIn)
+        else if (Input.GetKey(m_moveLeft) || Input.GetKey(KeyCode.LeftArrow)  || m_buttonLeft.m_isPointerIn)
         {
             vel.x = -m_speed;
         }
@@ -63,11 +89,9 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Reset the paddle
     /// </summary>
-    public void RestartGame()
+    public void ResetPosition()
     {
-      
         transform.position = m_startPos;
-
     }
 
   

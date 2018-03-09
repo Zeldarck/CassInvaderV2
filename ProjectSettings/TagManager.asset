@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Trail
+    uniqueID: 3059565869
+    locked: 0
+  - name: GameplayElement
+    uniqueID: 3247370219
+    locked: 0
