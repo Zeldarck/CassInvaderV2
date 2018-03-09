@@ -7,13 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class EnemyBehavior : MonoBehaviour {
 
-    protected static int _POS_X = 0; // TO SET : Initial Z position of the enemy
-    protected static int _POS_Y = 0; // TO SET : Initial Y position of the enemy
-    protected static int _DEADZONE = 0; // TO SET : Lower limit for which the game ends if an invader come through
+    protected static float _DEADZONE = -3.1f; // Lower limit for which the game ends if an invader goes through
 
-    protected float _enemyRadius;
-    protected float _XReverse = -1;
-    protected float _YForward = 0;
+    // Parameters below to be used in the Group manager !!
+    protected static float _X_MOVE_EAST = 1; // East movement limit per enemy
+    protected static float _X_MOVE_WEST = -1; // West movement limit per enemy
+    protected static float _enemyRadius = 0.25f;
+
+    // Not useful anymore
+    protected float _INIT_POS_X = 0; // Initial X position of the enemy
+    protected float _INIT_POS_Y = 0; // Initial Y position of the enemy
+
+    protected float _XDir = 1;
+    protected float _YDir = 0;
 
     [SerializeField]
     protected float _enemySpeed;
@@ -21,35 +27,33 @@ public class EnemyBehavior : MonoBehaviour {
     [SerializeField]
     protected int m_life;
 
-    public UnityEvent OnDie; // TO CHECK
+    public UnityEvent OnDie;
 
     // Use this for initialization
     protected void Start()
     {
-        
-        // Set the initial position of the enemy     
-        gameObject.transform.position = new Vector2(_POS_X, _POS_Y);
-        
-        OnDie.AddListener(() => StartCoroutine(AutoDestroy())); // TO CHECK
-                
+        // Set the initial position of the enemy for later use
+        _INIT_POS_X = gameObject.transform.position.x;
+        _INIT_POS_Y = gameObject.transform.position.y;
+
+        Debug.Log(_INIT_POS_X);
+        Debug.Log(_INIT_POS_Y);
+
+        OnDie.AddListener(() => StartCoroutine(AutoDestroy()));    
     }
     
     // On trigger get damages from any damage source
     public bool GetDamage(int a_damage)
     {
-
         m_life -= a_damage;
         if (m_life <= 0)
         {
-            OnDie.Invoke(); // TO CHECK
+            OnDie.Invoke();
             return true;
         }
-
         return false;
-
     }
 
-    
     // Self Destruction on trigger
     IEnumerator AutoDestroy()
     {
@@ -57,27 +61,23 @@ public class EnemyBehavior : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         Destroy(gameObject);
     }
-
-
     
-    // In case of collision with the border walls, change the direction of the ennemy
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.collider.CompareTag("Wall"))
-        {
-            _XReverse *= -1;
-            _YForward = -1;
-        }
-    }
-    
-
+    // Compute the direction vector of the enemy depending of the current situation
     protected Vector2 DirectionComputation()
     {
-        Vector2 directionComputed = new Vector2(_XReverse, _YForward);
+        // Check if the invader is too close to the edge and change its direction accordingly
+        if (gameObject.transform.position.x >= (_INIT_POS_X + _X_MOVE_EAST) || gameObject.transform.position.x <= (_INIT_POS_X + _X_MOVE_WEST))
+        {
+            _XDir *= -1;
+            _YDir = -10;
+        }
 
+        Vector2 directionComputed = new Vector2(_XDir, _YDir);
         directionComputed *= _enemySpeed;
 
-        Debug.Log(directionComputed);
+        // Reset the _YDir variable to avoid the enemmies to keep going downward
+        _YDir = 0;
+
         return directionComputed;
     }
 
@@ -85,7 +85,6 @@ public class EnemyBehavior : MonoBehaviour {
     // Position update which is called once per frame
     void FixedUpdate()
     {
-        
         // check if an invader has made it to the Dead Zone
         if (gameObject.transform.position.y < (_DEADZONE + _enemyRadius))
         {
@@ -94,13 +93,10 @@ public class EnemyBehavior : MonoBehaviour {
             // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
             Destroy(gameObject);
         }
-                
+                       
         // move accordingly 
         Vector2 direction = DirectionComputation();
         Debug.Log(direction);
         gameObject.transform.position = (Vector2) gameObject.transform.position + direction * Time.deltaTime;
-
     }
-
-
 }
