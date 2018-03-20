@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Util {
+public class Utils {
 
     public static void DestroyChilds(Transform a_transform)
     {
