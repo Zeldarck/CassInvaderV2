@@ -24,9 +24,9 @@ public class Utils {
         return (float)r.NextDouble() * (max - min) + min;
     }
 
-    public static int SignWithZero(float a_value)
+    public static int SignWithZero(float a_value, float a_epsilon = 0)
     {
-        return a_value == 0 ? 0 : (int)Mathf.Sign(a_value);
+        return a_value >= -a_epsilon && a_value <= a_epsilon ? 0 : (int)Mathf.Sign(a_value);
     }
 
 }

@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.touchCount > 0)
         {
             float x = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
-            vel.x = m_speed * -1 * Utils.SignWithZero(transform.position.x - x);
+            vel.x = m_speed * -1 * Utils.SignWithZero(transform.position.x - x,0.1f);
         }
         else if (Input.GetKey(m_moveRight) || Input.GetKey(KeyCode.RightArrow))
         {
