@@ -244,11 +244,10 @@ MonoBehaviour:
   m_moveLeft: 113
   m_speed: 4
   m_boundY: 2.75
-  m_buttonRight: {fileID: 0}
-  m_buttonLeft: {fileID: 0}
   m_ballPrefab: {fileID: 1252923666813102, guid: 28387d599ef699240846646eced24865,
     type: 2}
   m_ballSpawnPosition: {fileID: 4866002991477672}
+  m_percentageScreenFire: 0.19
 --- !u!212 &212620642990205300
 SpriteRenderer:
   m_ObjectHideFlags: 1
