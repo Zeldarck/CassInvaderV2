@@ -20,6 +20,14 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// To Delete
     /// </summary>
+    public ButtonMove m_buttonRight;
+    /// <summary>
+    /// To Delete
+    /// </summary>
+    public ButtonMove m_buttonLeft;
+    /// <summary>
+    /// To Delete
+    /// </summary>
     float t = 1000;
 
     /// <summary>
@@ -36,17 +44,7 @@ public class PlayerController : MonoBehaviour {
 
     private Vector3 m_startPos;
 
-    /// <summary>
-    /// PercentageScreenFire
-    /// </summary>
-    [SerializeField]
-    float m_percentageScreenFire;
-
-
-
-
-    void Start()
-    {
+    void Start () {
         m_rb2d = GetComponent<Rigidbody2D>();
         m_startPos = transform.position;
     }
@@ -59,11 +57,10 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate () {
 
         t += Time.deltaTime;
-        if ( Input.GetKeyDown(KeyCode.Space) && t > 3.0f /* && m_chargeur.value == m_chargeur.maxValue*/)
+        if ((Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.Space) ) && t > 3.0f /* && m_chargeur.value == m_chargeur.maxValue*/)
         {
             Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation);
             t = 0;
@@ -72,28 +69,11 @@ public class PlayerController : MonoBehaviour {
 
 
         var vel = m_rb2d.velocity;
-        if (Input.touchCount > 0)
-        {
-
-            if (Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && t > 1.0f  /* && m_chargeur.value == m_chargeur.maxValue*/)
-            {
-                Debug.Log(Input.GetTouch(0).position.y + "   " + Screen.height * m_percentageScreenFire);
-
-                Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation);
-                t = 0;
-                //TODO : add velocity depend on player velocity
-            }
-            else
-            {
-                float x = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
-                vel.x = m_speed * -1 * Utils.SignWithZero(transform.position.x - x, 0.1f);
-            }
-        }
-        else if (Input.GetKey(m_moveRight) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(m_moveRight) || Input.GetKey(KeyCode.RightArrow)  || m_buttonRight.m_isPointerIn)
         {
             vel.x = m_speed;
         }
-        else if (Input.GetKey(m_moveLeft) || Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(m_moveLeft) || Input.GetKey(KeyCode.LeftArrow)  || m_buttonLeft.m_isPointerIn)
         {
             vel.x = -m_speed;
         }
@@ -101,8 +81,6 @@ public class PlayerController : MonoBehaviour {
         {
             vel.x = 0;
         }
-
-
         m_rb2d.velocity = vel;
 
     }

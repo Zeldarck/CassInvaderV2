@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Utils {
+public class Util {
 
     public static void DestroyChilds(Transform a_transform)
     {
@@ -24,9 +24,9 @@ public class Utils {
         return (float)r.NextDouble() * (max - min) + min;
     }
 
-    public static int SignWithZero(float a_value, float a_epsilon = 0)
+    public static int SignWithZero(float a_value)
     {
-        return a_value >= -a_epsilon && a_value <= a_epsilon ? 0 : (int)Mathf.Sign(a_value);
+        return a_value == 0 ? 0 : (int)Mathf.Sign(a_value);
     }
 
 }
