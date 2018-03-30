@@ -17,12 +17,12 @@ public class EnemyManager : MonoBehaviour
     /// <summary>
     /// Path to the level designs file and associated attributes
     /// </summary>
-    private string gameDataProjectFilePath = "/Assets/Levels/level_1.txt";
+    private string gameLevel = "level_1";
 
     private float spawnTime = 25f;            // How long between each spawn.
     private int _nbEnemyToSpawn = 6;
     private int _nbWavesEnemys = 6;
-
+    
     private Vector3 initialPosition = new Vector3(0, 5, 0);
     private Vector3 enemyPosition = new Vector3(0, 5, 0);
     private Quaternion initialRotation = new Quaternion(0, 0, 0, 0);
@@ -39,8 +39,18 @@ public class EnemyManager : MonoBehaviour
             INSTANCE = this;
         }
         
-        // Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
-        InvokeRepeating("Spawn", spawnTime, spawnTime);
+
+            loadGameData();
+
+            // Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
+            for (float j = 0 ; j < _nbWavesEnemys; j++)
+            {
+                Spawn();
+                StartCoroutine(Timer());
+            }
+
+            Debug.Log("1st wave finished");
+        
     }
 
     void Spawn()
@@ -73,54 +83,26 @@ public class EnemyManager : MonoBehaviour
 
     void loadGameData()
     {
-
-
+        /// <summary>
+        /// BUUUUGGGGGG  : La fonction bloque à la ligne jsonString = textAsset.text; 
+        /// L'idée est de récupérer le texte du fichier json et ensuite updater les variables concernées pour 
+        /// mettre a jour le level.
+        /// Aucune idée du type qu'il faut mettre après "FromJson"... le type EnemyManager ne fonctionne
+        /// pas.......
+        /// </summary>
+        TextAsset textAsset = (TextAsset)Resources.Load("level_1"); // Don't include the .json extension
+        Debug.Log("step1");
+        string jsonString = textAsset.text;
+        Debug.Log("step2");
+        JsonUtility.FromJsonOverwrite(JsonUtility.FromJson<string> (jsonString), this);
 
     }
 
-
-
-
-
-
-
-
-
-
-    /*
-    public GameData gameData;
-
-    
-
-    [MenuItem("Window/Game Data Editor")]
-    static void Init()
+    IEnumerator Timer()
     {
-        EditorWindow.GetWindow(typeof(GameDataEditor)).Show();
+        print(Time.time);
+        yield return new WaitForSecondsRealtime(spawnTime);
+        print(Time.time);
     }
-
-    private void LoadGameData()
-    {
-        string filePath = Application.dataPath + gameDataProjectFilePath;
-
-        if (File.Exists(filePath))
-        {
-            string dataAsJson = File.ReadAllText(filePath);
-            gameData = JsonUtility.FromJson<GameData>(dataAsJson);
-        }
-        else
-        {
-            gameData = new GameData();
-        }
-    }
-
-
-
-    */
-
-
-
-
-
-
 
 }
