@@ -76,7 +76,6 @@ public class EnemyGroupBehavior : Ennemies
 
         // move accordingly 
         Vector2 direction = DirectionComputation();
-        Debug.Log(direction);
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
 
     }
