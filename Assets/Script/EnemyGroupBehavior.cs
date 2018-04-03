@@ -82,17 +82,7 @@ public class EnemyGroupBehavior : Ennemies
 
     void Update()
     {
-        // Cancel all Invoke calls
-        if (_nbWavesEnemysExecuted > _nbWavesEnemys)
-        {
-            CancelInvoke();
-            ++_currentLevel;
-            _nbWavesEnemysExecuted = 0;
-            if (_currentLevel <= _nbOfLevels)
-            {
-                LevelInvoker();
-            }
-        }
+       
     }
 
 
