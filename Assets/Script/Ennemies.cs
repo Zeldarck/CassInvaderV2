@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+
 
 public abstract class Ennemies : MonoBehaviour {
 
@@ -19,7 +17,7 @@ public abstract class Ennemies : MonoBehaviour {
 
     protected float _enemyRadius;
     protected float _enemySpeed = 0.5f;
-    protected int m_life;
+    protected int m_life = 1;
 
     public UnityEvent OnDie;
 
@@ -68,7 +66,7 @@ public abstract class Ennemies : MonoBehaviour {
     /// <summary>
     /// Self Destruction on trigger
     /// </summary>
-    IEnumerator AutoDestroy()
+    protected IEnumerator AutoDestroy()
     {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
