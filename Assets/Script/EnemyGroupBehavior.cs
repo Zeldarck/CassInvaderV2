@@ -48,6 +48,7 @@ public class EnemyGroupBehavior : Ennemies
         if (gameObject.transform.position.x >= (_INIT_POS_X + _X_MOVE_EAST) || gameObject.transform.position.x <= (_INIT_POS_X + _X_MOVE_WEST))
         {
             _XDir *= -1;
+            _YDir = -25;
         }
         // Use the number of ennmies in the wave to move everybody accordingly
 
