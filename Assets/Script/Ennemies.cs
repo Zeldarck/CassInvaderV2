@@ -9,8 +9,8 @@ public abstract class Ennemies : MonoBehaviour {
 
 
     protected static float _DEADZONE = -3.1f; // Lower limit for which the game ends if an invader goes through
-    protected float _X_MOVE_EAST = 1; // East movement limit per enemy
-    protected float _X_MOVE_WEST = -1; // West movement limit per enemy
+    protected float _X_MOVE_EAST = 2; // East movement limit per enemy
+    protected float _X_MOVE_WEST = -2; // West movement limit per enemy
 
     protected float _INIT_POS_X = 0; // Initial X position of the enemy
     protected float _INIT_POS_Y = 0; // Initial Y position of the enemy
@@ -18,7 +18,7 @@ public abstract class Ennemies : MonoBehaviour {
     protected float _YDir = 0;
 
     protected float _enemyRadius;
-    protected float _enemySpeed = 0.5f;
+    protected float _enemySpeed = 1f;
     protected int m_life;
 
     public UnityEvent OnDie;

@@ -159,6 +159,10 @@ public class BallController : MonoBehaviour {
 
     }
 
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
 
 
 }

@@ -263,7 +263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &358886158
 Transform:
   m_ObjectHideFlags: 0
@@ -494,8 +494,9 @@ MonoBehaviour:
     type: 2}
   m_enemyPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
     type: 2}
+  m_gameConfig: levelConfig
   m_nbOfLevels: 1
-  m_spawnTime: 25
+  m_spawnTime: 5
   m_nbEnemyToSpawn: 3
   m_nbWavesEnemys: 3
 --- !u!4 &1637747018
