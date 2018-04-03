@@ -490,14 +490,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e715dbd309d8843b7a927739ebf67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyGroupPrefab: {fileID: 1841244649382648, guid: 6acb6296ab9d6d343ba3fe969e765343,
+  m_enemyGroupPrefab: {fileID: 1841244649382648, guid: 6acb6296ab9d6d343ba3fe969e765343,
     type: 2}
-  m_EnemyPrefab: {fileID: 114075541746934162, guid: daa3547cfe88b334f9d7299d60ebcecc,
+  m_enemyPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
     type: 2}
-  _nbOfLevels: 1
-  spawnTime: 25
-  _nbEnemyToSpawn: 3
-  _nbWavesEnemys: 3
+  m_nbOfLevels: 1
+  m_spawnTime: 25
+  m_nbEnemyToSpawn: 3
+  m_nbWavesEnemys: 3
 --- !u!4 &1637747018
 Transform:
   m_ObjectHideFlags: 0
