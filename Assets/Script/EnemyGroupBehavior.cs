@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+
 
 public class EnemyGroupBehavior : Ennemies
 {
@@ -34,10 +30,6 @@ public class EnemyGroupBehavior : Ennemies
     /// </summary>
     override protected void Start()
     {
-
-        // IF enemyStartCount = 1 : 
-        // enemyCount = this.transform.childCount; 
-        // else : nothing
 
     }
 
@@ -82,7 +74,11 @@ public class EnemyGroupBehavior : Ennemies
 
     void Update()
     {
-       
+        // Destroy the enemygroup when it has no more enemmies within
+        if (transform.childCount <= 0)
+        {
+            AutoDestroy();
+        }
     }
 
 

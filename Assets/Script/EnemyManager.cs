@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
-using System.IO;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -52,7 +49,7 @@ public class EnemyManager : MonoBehaviour
         {
             INSTANCE = this;
         }
-
+        
         LoadGameData(m_gameConfig);
         LevelInvoker();
         
@@ -73,14 +70,9 @@ public class EnemyManager : MonoBehaviour
                 EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(m_enemyPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
             }
         }
-
-        else
-        {
-
-        }
-            
-
+                 
         ++m_nbWavesEnemysExecuted;
+
     }
 
 
@@ -93,16 +85,13 @@ public class EnemyManager : MonoBehaviour
         string jsonString = textAsset.text;
         JsonUtility.FromJsonOverwrite(jsonString, this);
 
-        Debug.Log(string.Concat("levels :", m_nbOfLevels));
-        Debug.Log(string.Concat("spwantime", m_spawnTime));
-        Debug.Log(string.Concat("enemy2spawn", m_nbEnemyToSpawn));
-        Debug.Log(string.Concat("nbwaves", m_nbWavesEnemys));
-
     }
 
     void LevelInvoker()
     {
+
         LoadGameData(string.Concat(m_gameLevel, m_currentLevel));
+
         // Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
         InvokeRepeating("Spawn", 2, m_spawnTime);
 
