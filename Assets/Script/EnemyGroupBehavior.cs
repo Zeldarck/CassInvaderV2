@@ -22,7 +22,7 @@ public class EnemyGroupBehavior : Ennemies
     /// </summary>
     public void AddChild(Ennemies child)
     {
-        child.transform.SetParent(this.transform);
+        child.transform.SetParent(transform);
     }
 
     /// <summary>

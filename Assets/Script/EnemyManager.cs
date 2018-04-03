@@ -10,33 +10,33 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     
     [SerializeField]
-    GameObject EnemyGroupPrefab;
+    GameObject m_enemyGroupPrefab;
 
     [SerializeField]
-    Ennemies m_EnemyPrefab;
+    GameObject m_enemyPrefab;
 
-    private Vector3 initialPosition = new Vector3(0, 5, 0);
-    private Vector3 enemyPosition = new Vector3(0, 5, 0);
-    private Quaternion initialRotation = new Quaternion(0, 0, 0, 0);
+    private Vector3 m_initialPosition = new Vector3(0, 5, 0);
+    private Vector3 m_enemyPosition = new Vector3(0, 5, 0);
+    private Quaternion m_initialRotation = new Quaternion(0, 0, 0, 0);
 
     /// <summary>
     /// Path to the level designs file and bunch of associated attributes
     /// </summary>
+    [SerializeField]
+    private string m_gameConfig = "levelConfig";
+    private string m_gameLevel = "level_";
 
-    private string gameConfig = "levelConfig";
-    private string gameLevel = "level_";
+    [SerializeField]
+    private int m_nbOfLevels = 1;
+    [SerializeField]
+    private int m_spawnTime = 25;            // How long between each spawn.
+    [SerializeField]
+    private int m_nbEnemyToSpawn = 3;
+    [SerializeField]
+    private int m_nbWavesEnemys = 3;
 
-    [SerializeField]
-    private int _nbOfLevels = 1;
-    [SerializeField]
-    private int spawnTime = 25;            // How long between each spawn.
-    [SerializeField]
-    private int _nbEnemyToSpawn = 3;
-    [SerializeField]
-    private int _nbWavesEnemys = 3;
-
-    private int _nbWavesEnemysExecuted = 0;
-    private int _currentLevel = 1;
+    private int m_nbWavesEnemysExecuted = 0;
+    private int m_currentLevel = 1;
 
     void Start()
     {
@@ -49,8 +49,8 @@ public class EnemyManager : MonoBehaviour
         {
             INSTANCE = this;
         }
-
-        LoadGameData(gameConfig);
+        
+        LoadGameData(m_gameConfig);
         LevelInvoker();
         
     }
@@ -61,17 +61,18 @@ public class EnemyManager : MonoBehaviour
         /// Instantiate a new group of ennemies
         /// </summary>
                 
-        if (_nbWavesEnemysExecuted < _nbWavesEnemys)
+        if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
-            GameObject EnemyGroup = Instantiate(EnemyGroupPrefab, initialPosition, initialRotation);
-            for (float i = 0; i < _nbEnemyToSpawn; ++i)
+            GameObject EnemyGroup = Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation);
+            for (float i = 0; i < m_nbEnemyToSpawn; ++i)
             {
-                enemyPosition = new Vector3(((i * 1.2f) / 2 - ((_nbEnemyToSpawn - 1) * 1.2f) / 4), 5, 0);
-                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(m_EnemyPrefab, enemyPosition, initialRotation));
+                m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_nbEnemyToSpawn - 1) * 1.2f) / 4), 4, 0);
+                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(m_enemyPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
             }
         }
-                  
-        ++_nbWavesEnemysExecuted;
+                 
+        ++m_nbWavesEnemysExecuted;
+
     }
 
 
@@ -83,13 +84,16 @@ public class EnemyManager : MonoBehaviour
         TextAsset textAsset = (TextAsset)Resources.Load(fileName); // Don't include the .json extension
         string jsonString = textAsset.text;
         JsonUtility.FromJsonOverwrite(jsonString, this);
+
     }
 
     void LevelInvoker()
     {
-        LoadGameData(string.Concat(gameLevel, _currentLevel));
+
+        LoadGameData(string.Concat(m_gameLevel, m_currentLevel));
+
         // Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
-        InvokeRepeating("Spawn", 2, spawnTime);
+        InvokeRepeating("Spawn", 2, m_spawnTime);
 
         // Here some UI stuff to show that a new level is upcoming...
     }
@@ -98,12 +102,12 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         // Cancel all Invoke calls
-        if (_nbWavesEnemysExecuted > _nbWavesEnemys)
+        if (m_nbWavesEnemysExecuted > m_nbWavesEnemys)
         {
             CancelInvoke();
-            ++_currentLevel;
-            _nbWavesEnemysExecuted = 0;
-            if (_currentLevel <= _nbOfLevels)
+            ++m_currentLevel;
+            m_nbWavesEnemysExecuted = 0;
+            if (m_currentLevel <= m_nbOfLevels)
             {
                 LevelInvoker();
             }

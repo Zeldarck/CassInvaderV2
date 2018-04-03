@@ -25,6 +25,14 @@ public class BallController : MonoBehaviour {
     [SerializeField]
     float m_step = 0.05f;
 
+
+    /// <summary>
+    /// damage done
+    /// </summary>
+    [SerializeField]
+    int m_strength = 1;
+
+
     /// <summary>
     /// Modificator of speed
     /// </summary>
@@ -107,6 +115,12 @@ public class BallController : MonoBehaviour {
             }
 
 
+        }
+        EnemyBehavior ennemy =  coll.gameObject.GetComponent<EnemyBehavior>();
+
+        if (ennemy)
+        {
+            ennemy.GetDamage(m_strength);
         }
     }
 
