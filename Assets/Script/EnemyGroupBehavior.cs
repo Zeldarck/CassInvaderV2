@@ -79,4 +79,21 @@ public class EnemyGroupBehavior : Ennemies
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
 
     }
+
+    void Update()
+    {
+        // Cancel all Invoke calls
+        if (_nbWavesEnemysExecuted > _nbWavesEnemys)
+        {
+            CancelInvoke();
+            ++_currentLevel;
+            _nbWavesEnemysExecuted = 0;
+            if (_currentLevel <= _nbOfLevels)
+            {
+                LevelInvoker();
+            }
+        }
+    }
+
+
 }

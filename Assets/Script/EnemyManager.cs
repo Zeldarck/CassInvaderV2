@@ -113,7 +113,7 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         // Cancel all Invoke calls
-        if (_nbWavesEnemysExecuted > _nbWavesEnemys)
+        if (Transform.childCount)
         {
             CancelInvoke();
             ++_currentLevel;
