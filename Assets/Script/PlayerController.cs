@@ -43,6 +43,12 @@ public class PlayerController : MonoBehaviour {
     float m_percentageScreenFire;
 
 
+    /// <summary>
+    /// Collectable boosts
+    /// </summary>
+    private Collectable m_boostCollected = null;
+    private bool m_boostActive = false;
+
 
 
     void Start()
@@ -116,10 +122,22 @@ public class PlayerController : MonoBehaviour {
         transform.position = m_startPos;
     }
 
-  
 
-   
-    
 
+
+    public void SetBoost(Collectable a_boost)
+    {
+        m_boostCollected = a_boost;
+    }
+
+    public void SetActiveBoost(bool a_isActive)
+    {
+        m_boostActive = a_isActive;
+    }
+
+    public bool IsBoostActive()
+    {
+        return m_boostActive;
+    }
 
 }
