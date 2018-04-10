@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
     /// Nb Bamm max at one time
     /// </summary>
     [SerializeField]
-    float m_nbMaxBall = 1;
+    int m_nbMaxBall = 1;
 
 
     /// <summary>
@@ -66,7 +66,9 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Collectable boosts
     /// </summary>
+    [SerializeField]
     private Collectable m_boostCollected = null;
+    [SerializeField]
     private bool m_boostActive = false;
 
 
@@ -133,6 +135,12 @@ public class PlayerController : MonoBehaviour {
 
         m_rb2d.velocity = vel;
 
+        if (Input.GetKeyDown(KeyCode.E) && m_boostActive)
+        {
+            if (m_boostCollected != null) m_boostCollected.PlayerUse();
+            m_boostActive = false;
+        }
+
     }
 
 
@@ -144,7 +152,16 @@ public class PlayerController : MonoBehaviour {
         transform.position = m_startPos;
     }
 
+    public void SetReloadTime(float a_reloadTime)
+    {
+        m_timeToReload = a_reloadTime;
+    }
 
+
+    public void SetNbMaxBall(int a_nbBall)
+    {
+        m_nbMaxBall = a_nbBall;
+    }
 
 
     public void SetBoost(Collectable a_boost)

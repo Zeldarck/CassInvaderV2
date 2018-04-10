@@ -49,4 +49,12 @@ public abstract class Collectable : MonoBehaviour {
     /// </summary>
     public abstract Color GetColorPower();
 
+    public void DestroyUsedBoost()
+    {
+        m_playerController.SetActiveBoost(false);
+        m_playerController.SetBoost(null);
+        m_playerController = null;
+
+        Destroy(gameObject);
+    }
 }
