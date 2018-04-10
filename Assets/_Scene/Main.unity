@@ -364,6 +364,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &378375411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 378375412}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &378375412
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 378375411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0487626, y: -3.0443215, z: 0.14324243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &428073481
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,12 +442,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -13
-  m_Sprite: {fileID: 21300000, guid: e35775985df409342bf7f3259c86d26c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 26b93604d8634ce448132cb0c2fac56e, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.8, y: 8.54}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -694,7 +722,7 @@ SpriteRenderer:
   m_Size: {x: 0.25, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!61 &1739221252
 BoxCollider2D:
@@ -732,6 +760,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588483e36dbbce94cb72183da435cc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 0}
+  m_observers: []
+  m_baseColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!1 &2066411626
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +894,7 @@ SpriteRenderer:
   m_Size: {x: 0.25, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!61 &2073750822
 BoxCollider2D:
@@ -897,3 +932,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588483e36dbbce94cb72183da435cc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 0}
+  m_observers: []
+  m_baseColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
