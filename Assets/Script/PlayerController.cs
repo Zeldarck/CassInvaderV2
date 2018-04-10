@@ -17,10 +17,30 @@ public class PlayerController : MonoBehaviour {
     float m_boundY = 2.25f;
     private Rigidbody2D m_rb2d;
 
+
+    //mettr eun temps d ereload et un nombre de ball limité 
+
+
     /// <summary>
-    /// To Delete
+    /// Time to reload
     /// </summary>
-    float t = 1000;
+    [SerializeField]
+    float m_timeToReload = 30;
+
+
+    /// <summary>
+    /// Nb Bamm max at one time
+    /// </summary>
+    [SerializeField]
+    float m_nbMaxBall = 1;
+
+
+    /// <summary>
+    /// Slider UI
+    /// </summary>
+    [SerializeField]
+    Slider m_sliderReload;
+
 
     /// <summary>
     /// Ball Prefab
@@ -55,6 +75,8 @@ public class PlayerController : MonoBehaviour {
     {
         m_rb2d = GetComponent<Rigidbody2D>();
         m_startPos = transform.position;
+        m_sliderReload.maxValue = m_timeToReload;
+        m_sliderReload.value = m_sliderReload.maxValue;
     }
 
     private void Update()
@@ -68,11 +90,11 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate()
     {
 
-        t += Time.deltaTime;
-        if ( Input.GetKeyDown(KeyCode.Space) && t > 3.0f /* && m_chargeur.value == m_chargeur.maxValue*/)
+        m_sliderReload.value += Time.deltaTime;
+        if ( Input.GetKeyDown(KeyCode.Space) && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
         {
             Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation);
-            t = 0;
+            m_sliderReload.value = 0;
             //TODO : add velocity depend on player velocity
         }
 
@@ -81,12 +103,12 @@ public class PlayerController : MonoBehaviour {
         if (Input.touchCount > 0)
         {
 
-            if (Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && t > 1.0f  /* && m_chargeur.value == m_chargeur.maxValue*/)
+            if (Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
             {
                 Debug.Log(Input.GetTouch(0).position.y + "   " + Screen.height * m_percentageScreenFire);
 
                 Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation);
-                t = 0;
+                m_sliderReload.value = 0;
                 //TODO : add velocity depend on player velocity
             }
             else
