@@ -4,11 +4,11 @@ using UnityEngine.Events;
 public abstract class Ennemies : MonoBehaviour {
 
 
-    protected static float _DEADZONE = -3.1f; // Lower limit for which the game ends if an invader goes through
+    protected static float _DEADZONE = -4.1f; // Lower limit for which the game ends if an invader goes through
 
     protected float _X_MOVE_EAST = 1; // East movement limit per enemy
     protected float _X_MOVE_WEST = -1; // West movement limit per enemy
-    protected float m_enemySpeed = 0.5f;
+    protected float m_enemySpeed = 1;
 
     protected float _INIT_POS_X = 0; // Initial X position of the enemy
     protected float _INIT_POS_Y = 0; // Initial Y position of the enemy
@@ -18,12 +18,7 @@ public abstract class Ennemies : MonoBehaviour {
 
 
     #region GameObject Setup
-    protected int _enemyLevel = 1;
-
-    protected float _enemyRadius;
-
-    protected float _enemySpeed = 1f;
-
+    
     /// <summary>
     /// Set defaults values as soon as the object gets created
     /// </summary>

@@ -83,11 +83,9 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     void LoadGameData(string fileName)
     {
-        
         TextAsset textAsset = (TextAsset)Resources.Load(fileName); // Don't include the .json extension
         string jsonString = textAsset.text;
         JsonUtility.FromJsonOverwrite(jsonString, this);
-
     }
 
     #endregion
@@ -131,8 +129,6 @@ public class EnemyManager : MonoBehaviour
                 currentPrefab = m_walkerPrefab;
                 break;
         }
-
-        Debug.Log("spawn passed");
         
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
@@ -145,6 +141,8 @@ public class EnemyManager : MonoBehaviour
         }
 
         ++m_nbWavesEnemysExecuted;
+
+        Debug.Log(m_nbWavesEnemysExecuted);
     }
 
     /// <summary>
