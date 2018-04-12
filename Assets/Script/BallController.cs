@@ -2,9 +2,6 @@
 using UnityEngine;
 
 public class BallController : MonoBehaviour {
-
-    static int m_nbBallAlive = 0;
-
     private Rigidbody2D m_rb2d;
     /// <summary>
     /// Velocity if pause
@@ -41,19 +38,10 @@ public class BallController : MonoBehaviour {
     /// </summary>
     float m_countBoost = 0;
 
-    public static int NbBallAlive
-    {
-        get
-        {
-            return m_nbBallAlive;
-        }
-    }
-
     void Start()
     {
         m_rb2d = GetComponent<Rigidbody2D>();
         m_currentSpeed = m_speed;
-        ++m_nbBallAlive;
         GoBall(0f);
     }
 
@@ -171,14 +159,6 @@ public class BallController : MonoBehaviour {
 
     }
 
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
 
-    private void OnDestroy()
-    {
-        --m_nbBallAlive;       
-    }
 
 }

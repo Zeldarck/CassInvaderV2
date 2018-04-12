@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenu : Menu {
+public class StartMenu : MonoBehaviour {
 
 
-    public void OnPlayButton()
+    public void onPlayButton()
     {
         GameManager.INSTANCE.StartGame();
     }
