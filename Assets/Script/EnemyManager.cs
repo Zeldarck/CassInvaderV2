@@ -15,7 +15,13 @@ public class EnemyManager : MonoBehaviour
     GameObject m_enemyGroupPrefab;
 
     [SerializeField]
-    GameObject m_enemyPrefab;
+    GameObject m_walkerPrefab;
+
+    [SerializeField]
+    GameObject m_runnerPrefab;
+
+    [SerializeField]
+    GameObject m_giantPrefab;
 
     private Vector3 m_initialPosition = new Vector3(0, 5, 0);
     private Vector3 m_enemyPosition = new Vector3(0, 5, 0);
@@ -36,9 +42,12 @@ public class EnemyManager : MonoBehaviour
     private int m_nbEnemyToSpawn = 3;
     [SerializeField]
     private int m_nbWavesEnemys = 3;
+    [SerializeField]
+    private string m_type = "walker";
 
     private int m_nbWavesEnemysExecuted = 0;
     private int m_currentLevel = 1;
+    private GameObject currentPrefab;
 
     #endregion
 
@@ -101,6 +110,12 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     void Spawn()
     {
+        switch case
+
+
+
+
+
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
             GameObject EnemyGroup = Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation);
