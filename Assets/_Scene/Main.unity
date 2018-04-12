@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1297670711}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 735654c4c8c81734cbad6d9cc6c17215, type: 3}
+  m_Script: {fileID: 11500000, guid: f85954df026db4f40a9ee80812717a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &1297670715
@@ -1046,13 +1046,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemyGroupPrefab: {fileID: 1841244649382648, guid: 6acb6296ab9d6d343ba3fe969e765343,
     type: 2}
-  m_enemyPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
+  m_walkerPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
+    type: 2}
+  m_runnerPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
+    type: 2}
+  m_giantPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
     type: 2}
   m_gameConfig: levelConfig
   m_nbOfLevels: 1
   m_spawnTime: 5
   m_nbEnemyToSpawn: 3
   m_nbWavesEnemys: 3
+  m_type: walker
 --- !u!4 &1637747018
 Transform:
   m_ObjectHideFlags: 0

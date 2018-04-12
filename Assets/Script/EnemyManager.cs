@@ -138,7 +138,7 @@ public class EnemyManager : MonoBehaviour
             for (float i = 0; i < m_nbEnemyToSpawn; ++i)
             {
                 m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_nbEnemyToSpawn - 1) * 1.2f) / 4), 4, 0);
-                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(currentPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
+                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(m_walkerPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
             }
         }
 
