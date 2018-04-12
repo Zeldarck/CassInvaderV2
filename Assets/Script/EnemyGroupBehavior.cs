@@ -3,8 +3,6 @@
 
 public class EnemyGroupBehavior : Ennemies
 {
-    [SerializeField]
-    Ennemies m_EnemyPrefab;
         
     #region ChildsManagement
 

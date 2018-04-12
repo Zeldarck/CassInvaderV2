@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4825340349268612}
   - component: {fileID: 212189968975501634}
   - component: {fileID: 58533656244433412}
-  - component: {fileID: 114296296169605818}
+  - component: {fileID: 114655581643521768}
   m_Layer: 0
   m_Name: Walker
   m_TagString: Untagged
@@ -57,7 +57,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.01
---- !u!114 &114296296169605818
+--- !u!114 &114655581643521768
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -65,9 +65,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1320280875878234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 772708a80c3c1ad4894424f4988d3294, type: 3}
+  m_Script: {fileID: 11500000, guid: e09860b02a6b79a49a3c68258443723d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!212 &212189968975501634
 SpriteRenderer:
   m_ObjectHideFlags: 1

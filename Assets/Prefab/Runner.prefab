@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4676321980696838}
   - component: {fileID: 212763117752274040}
   - component: {fileID: 58456081441754486}
-  - component: {fileID: 114075541746934162}
+  - component: {fileID: 114458198498681800}
   m_Layer: 0
   m_Name: Runner
   m_TagString: Untagged
@@ -57,7 +57,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.01
---- !u!114 &114075541746934162
+--- !u!114 &114458198498681800
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -65,23 +65,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1354493535595868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 772708a80c3c1ad4894424f4988d3294, type: 3}
+  m_Script: {fileID: 11500000, guid: 44000c6926b750942b07f3f6c1fb2e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnDie:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!212 &212763117752274040
@@ -118,7 +107,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 98a5c6f8a290f174ea362bbd55c34445, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 25a779f844f1a84449ad5c8327d89116, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

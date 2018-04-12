@@ -10,6 +10,7 @@ public class EnemyBehavior : Ennemies
 
     public UnityEvent OnDie;
 
+
     #region GameObject Setup
 
     /// <summary>

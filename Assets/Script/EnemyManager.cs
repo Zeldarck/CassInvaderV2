@@ -65,9 +65,12 @@ public class EnemyManager : MonoBehaviour
             INSTANCE = this;
         }
         
+    }
+
+    public void StartSpawn()
+    {
         LoadGameData(m_gameConfig);
         LevelInvoker();
-        
     }
 
     #endregion
@@ -128,6 +131,8 @@ public class EnemyManager : MonoBehaviour
                 currentPrefab = m_walkerPrefab;
                 break;
         }
+
+        Debug.Log("spawn passed");
         
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Ennemies : MonoBehaviour {
 
@@ -22,9 +23,7 @@ public abstract class Ennemies : MonoBehaviour {
     protected float _enemyRadius;
 
     protected float _enemySpeed = 1f;
-    protected int m_life = 1;
 
-    
     /// <summary>
     /// Set defaults values as soon as the object gets created
     /// </summary>
