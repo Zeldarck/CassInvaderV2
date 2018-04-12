@@ -1,19 +1,24 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.Events;
-
+﻿using UnityEngine;
 
 public abstract class Ennemies : MonoBehaviour {
 
 
     protected static float _DEADZONE = -3.1f; // Lower limit for which the game ends if an invader goes through
-    protected float _X_MOVE_EAST = 2; // East movement limit per enemy
-    protected float _X_MOVE_WEST = -2; // West movement limit per enemy
+
+    protected float _X_MOVE_EAST = 1; // East movement limit per enemy
+    protected float _X_MOVE_WEST = -1; // West movement limit per enemy
+    protected float m_enemySpeed = 0.5f;
+
 
     protected float _INIT_POS_X = 0; // Initial X position of the enemy
     protected float _INIT_POS_Y = 0; // Initial Y position of the enemy
+    protected float _maxWindowX = 6.2f;
     protected float _XDir = 1;
     protected float _YDir = 0;
+
+        
+    #region GameObject Setup
+
 
     protected float _enemyRadius;
 
@@ -22,14 +27,13 @@ public abstract class Ennemies : MonoBehaviour {
 
     public UnityEvent OnDie;
 
+
     /// <summary>
-    /// Set defaults values as soon as the object get created
+    /// Set defaults values as soon as the object gets created
     /// </summary>
     protected virtual void Awake()
     {
-        // Set default values
-        _enemySpeed = 1;
-        _enemyRadius = 0.25f;
+
     }
     
     /// <summary>
@@ -37,42 +41,13 @@ public abstract class Ennemies : MonoBehaviour {
     /// </summary>
     protected virtual void Start()
     {
-        OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
+        _INIT_POS_X = this.transform.position.x;
+        _INIT_POS_Y = this.transform.position.y;
     }
 
-    /// <summary>
-    /// Function managing the apparition of ennemies groups as waves
-    /// Inputs : • numberEnnemies : the number of ennemies in the group
-    ///          • type : type of ennemies in the group
-    /// </summary>
-    protected void EnemyManager(int numberEnnemies, int type)
-    {
-        // TO DO in an another class
-    }
+    #endregion
 
-    /// <summary>
-    /// On trigger get damages from any damage source
-    /// </summary>
-    public bool GetDamage(int a_damage)
-    {
-        m_life -= a_damage;
-        if (m_life <= 0)
-        {
-            OnDie.Invoke();
-            return true;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Self Destruction on trigger
-    /// </summary>
-    protected IEnumerator AutoDestroy()
-    {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        Destroy(gameObject);
-    }
+    #region GameObject movement Behavior
 
     /// <summary>
     /// Abstrat function to compute the direction vector of the ennemies depending of the current situation
@@ -84,4 +59,5 @@ public abstract class Ennemies : MonoBehaviour {
     /// </summary>
     protected abstract void FixedUpdate();
 
+    #endregion
 }
