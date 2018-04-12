@@ -9,7 +9,6 @@ public abstract class Ennemies : MonoBehaviour {
     protected float _X_MOVE_WEST = -1; // West movement limit per enemy
     protected float m_enemySpeed = 0.5f;
 
-
     protected float _INIT_POS_X = 0; // Initial X position of the enemy
     protected float _INIT_POS_Y = 0; // Initial Y position of the enemy
     protected float _maxWindowX = 6.2f;
@@ -25,9 +24,7 @@ public abstract class Ennemies : MonoBehaviour {
     protected float _enemySpeed = 1f;
     protected int m_life = 1;
 
-    public UnityEvent OnDie;
-
-
+    
     /// <summary>
     /// Set defaults values as soon as the object gets created
     /// </summary>
