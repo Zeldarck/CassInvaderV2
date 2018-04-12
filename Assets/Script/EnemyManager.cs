@@ -5,10 +5,12 @@ public class EnemyManager : MonoBehaviour
 
     public static EnemyManager INSTANCE;
 
+    #region Variables
+
     /// <summary>
     /// Serialization of prefabs and set of spawn attributes
     /// </summary>
-    
+
     [SerializeField]
     GameObject m_enemyGroupPrefab;
 
@@ -47,6 +49,10 @@ public class EnemyManager : MonoBehaviour
     private int m_currentLevel = 1;
     private GameObject currentPrefab;
 
+    #endregion
+
+    #region SetUp
+
     void Start()
     {
 
@@ -64,38 +70,30 @@ public class EnemyManager : MonoBehaviour
         
     }
 
-    void Spawn()
-    {
-        /// <summary>
-        /// Instantiate a new group of ennemies
-        /// </summary>
-                
-        if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
-        {
-            GameObject EnemyGroup = Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation);
-            for (float i = 0; i < m_nbEnemyToSpawn; ++i)
-            {
-                m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_nbEnemyToSpawn - 1) * 1.2f) / 4), 4, 0);
-                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(m_enemyPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
-            }
-        }
-                 
-        ++m_nbWavesEnemysExecuted;
+    #endregion
 
-    }
+    #region JSON
 
-
+    /// <summary>
+    /// Read a JSON file with indications about the current level
+    /// Ideally, to put into another JSON function with a dissociation of level parameters 
+    /// </summary>
     void LoadGameData(string fileName)
     {
-        /// <summary>
-        /// Read a JSON file with indications about the current level.
-        /// </summary>
+        
         TextAsset textAsset = (TextAsset)Resources.Load(fileName); // Don't include the .json extension
         string jsonString = textAsset.text;
         JsonUtility.FromJsonOverwrite(jsonString, this);
 
     }
 
+    #endregion
+
+    #region LevelManagement
+
+    /// <summary>
+    /// Load a new level and start invoking ennemies waves
+    /// </summary>
     void LevelInvoker()
     {
 
@@ -106,14 +104,15 @@ public class EnemyManager : MonoBehaviour
 
         // Here some UI stuff to show that a new level is upcoming...
     }
-<<<<<<< HEAD
     
     /// <summary>
     /// Instantiate a new group of ennemies
     /// </summary>
     void Spawn()
     {
-        switch case
+        switch (m_type)
+
+            case 
 
 
 
@@ -128,10 +127,14 @@ public class EnemyManager : MonoBehaviour
                 EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(m_enemyPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
             }
         }
-=======
->>>>>>> d2a09b4990de8366c10c40bbeec16451c6a444b0
 
+        ++m_nbWavesEnemysExecuted;
+    }
 
+    /// <summary>
+    /// Check out the number of waves already invoked and cancel the LevelInvoker function accordingly
+    /// Ideally to rework accordingly to the JSON rework
+    /// </summary>
     void Update()
     {
         // Cancel all Invoke calls
@@ -146,4 +149,6 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }
