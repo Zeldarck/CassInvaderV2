@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Collectable : MonoBehaviour {
+public abstract class Collectable : MonoBehaviour
+{
 
     private bool m_notPicked = true;
     protected PlayerController m_playerController = null;
