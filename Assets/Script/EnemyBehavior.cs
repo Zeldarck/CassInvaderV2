@@ -1,92 +1,47 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Events;
 
 public class EnemyBehavior : Ennemies
 {
+ 
 
-    protected float m_enemyRadius = 1;
-    protected int m_life = 1;
-
-    public UnityEvent OnDie;
-
-    #region GameObject Setup
-
-    /// <summary>
-    /// Start an OnDie Listener which whill trigger when an enemy shall be destroyed
-    /// </summary>
-    override protected void Start()
-    {
-        _INIT_POS_X = this.transform.position.x;
-        _INIT_POS_Y = this.transform.position.y;
-
-        _X_MOVE_EAST = (this.transform.parent.childCount)/10;
-        _X_MOVE_WEST = (this.transform.parent.childCount)/10;
-
-        OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
-    }
-
-    #endregion
-
-    #region Damage undertaking
-
-    /// <summary>
-    /// On trigger get damages from any damage source
-    /// </summary>
-    public bool GetDamage(int a_damage)
-    {
-        m_life -= a_damage;
-        if (m_life <= 0)
-        {
-            OnDie.Invoke();
-            return true;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Self Destruction on trigger and wait two frames in order to let the ball bounce on the collider
-    /// Without this part of code, the ball would go through the enemy and not bounce
-    /// </summary>
-    protected IEnumerator AutoDestroy()
-    {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        Destroy(gameObject);
-    }
-
-    #endregion
-
-    #region Movement behavior
-
-    /// <summary>
-    /// Compute the direction vector of the enemy depending of the current situation
-    /// Here a default null vector is computed as this function shall be overriden by each kind of enemy
-    /// </summary>
+    // Compute the direction vector of the enemy depending of the current situation
     override protected Vector2 DirectionComputation()
     {
-        return new Vector2(0, 0);
+        
+        // Check if the invader is too close to the edge and change its direction accordingly
+        if (gameObject.transform.position.x >= (_INIT_POS_X + _X_MOVE_EAST) || gameObject.transform.position.x <= (_INIT_POS_X + _X_MOVE_WEST))
+        {
+            _XDir *= -1;
+            _YDir = -10;
+        }
+
+        Vector2 directionComputed = new Vector2(_XDir, _YDir);
+        directionComputed *= _enemySpeed;
+
+        // Reset the _YDir variable to avoid the enemmies to keep going downward
+        _YDir = 0;
+
+        return directionComputed;
+        
     }
 
-    /// <summary>
-    /// Update the position of the enemy
-    /// </summary>
+    // Update the position of the enemy
     override protected void FixedUpdate()
     {
+        /*
         // check if an invader has made it to the Dead Zone
-        if (gameObject.transform.position.y < (_DEADZONE + m_enemyRadius))
+        if (gameObject.transform.position.y < (_DEADZONE + _enemyRadius))
         {
-            // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
             Debug.Log("An Enemy reached the bottom!");
-            
+
+            // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
             Destroy(gameObject);
         }
 
         // move accordingly 
         Vector2 direction = DirectionComputation();
+        Debug.Log(direction);
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
+        */
     }
-
-    #endregion
-
 }

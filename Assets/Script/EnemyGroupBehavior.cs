@@ -5,8 +5,17 @@ public class EnemyGroupBehavior : Ennemies
 {
     [SerializeField]
     Ennemies m_EnemyPrefab;
-        
-    #region ChildsManagement
+
+    protected int enemyCount;
+    protected int enemyStartCount;
+
+    /// <summary>
+    /// Later use to count the number of ennemies in the group
+    /// </summary>
+    override protected void Awake()
+    {
+        enemyStartCount = 1;
+    }
 
     /// <summary>
     /// Add the enemy child in the group and link its transform to the group
@@ -17,29 +26,14 @@ public class EnemyGroupBehavior : Ennemies
     }
 
     /// <summary>
-    /// Check if there are still childs within the enemy group
+    /// In this override, we count the number of ennemies in the group once
     /// </summary>
-    protected bool IsChilds()
+    override protected void Start()
     {
-        if (this.transform.childCount <= 0)
-        {
-            return true;
-        }
 
-        else
-        {
-            return false;
-        }
     }
 
-
-    #endregion
-
-    #region MovementBehavior
-
-    /// <summary>
-    /// Compute the direction vector of the enemy group depending of the current situation
-    /// </summary>
+    // Compute the direction vector of the enemy depending of the current situation
     override protected Vector2 DirectionComputation()
     {
         // Check if the invader is too close to the edge and change its direction accordingly
@@ -51,7 +45,7 @@ public class EnemyGroupBehavior : Ennemies
         // Use the number of ennmies in the wave to move everybody accordingly
 
         Vector2 directionComputed = new Vector2(_XDir, _YDir);
-        directionComputed *= m_enemySpeed;
+        directionComputed *= _enemySpeed;
 
         // Reset the _YDir variable to avoid the enemmies to keep going downward
         _YDir = 0;
@@ -59,21 +53,33 @@ public class EnemyGroupBehavior : Ennemies
         return directionComputed;
     }
 
-    /// <summary>
-    /// Update the position of the enemy group
-    /// </summary>
+    // Update the position of the enemy group
     override protected void FixedUpdate()
     {
-        // Destroy the enemygroup when it has no more enemmies within
-        if (IsChilds())
+
+        // check if an invader has made it to the Dead Zone
+        if (gameObject.transform.position.y < (_DEADZONE + _enemyRadius))
         {
+            Debug.Log("An Enemy reached the bottom!");
+
+            // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
             Destroy(gameObject);
         }
 
         // move accordingly 
         Vector2 direction = DirectionComputation();
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
+
     }
 
-    #endregion
+    void Update()
+    {
+        // Destroy the enemygroup when it has no more enemmies within
+        if (transform.childCount <= 0)
+        {
+            AutoDestroy();
+        }
+    }
+
+
 }
