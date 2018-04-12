@@ -769,6 +769,48 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1081267838}
+--- !u!1 &1118310430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1118310432}
+  - component: {fileID: 1118310431}
+  m_Layer: 0
+  m_Name: CollectableManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1118310431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1118310430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 083f0b6ca3979294cba6547ca8c75cb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_collectables:
+  - {fileID: 1953393675672686, guid: 1b13dd44c33365940ba7dbc76c5cf991, type: 2}
+--- !u!4 &1118310432
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1118310430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.39084536, y: 3.3125296, z: 13.765041}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1176362134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,11 +1088,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemyGroupPrefab: {fileID: 1841244649382648, guid: 6acb6296ab9d6d343ba3fe969e765343,
     type: 2}
-  m_walkerPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
+  m_walkerPrefab: {fileID: 1320280875878234, guid: f69ce4ec7d3a03e41b4edfb13e3f4cda,
     type: 2}
   m_runnerPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
     type: 2}
-  m_giantPrefab: {fileID: 1354493535595868, guid: daa3547cfe88b334f9d7299d60ebcecc,
+  m_giantPrefab: {fileID: 1737856206623766, guid: 8655238f30664b04bb57c04c72c7f5e8,
     type: 2}
   m_gameConfig: levelConfig
   m_nbOfLevels: 1

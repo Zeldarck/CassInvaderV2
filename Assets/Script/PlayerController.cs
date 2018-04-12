@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviour {
     public void SetReloadTime(float a_reloadTime)
     {
         m_timeToReload = a_reloadTime;
+        m_sliderReload.maxValue = m_timeToReload;
     }
 
 
