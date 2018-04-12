@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50154891727387834}
   - component: {fileID: 58512116993389556}
   m_Layer: 8
-  m_Name: FastReloadBoost
+  m_Name: Collectable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

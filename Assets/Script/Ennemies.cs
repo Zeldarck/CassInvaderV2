@@ -17,9 +17,9 @@ public abstract class Ennemies : MonoBehaviour {
     protected float _XDir = 1;
     protected float _YDir = 0;
 
-        
-    #region GameObject Setup
 
+    #region GameObject Setup
+    protected int _enemyLevel = 1;
 
     protected float _enemyRadius;
 
