@@ -50,9 +50,12 @@ public class EnemyManager : MonoBehaviour
             INSTANCE = this;
         }
         
+    }
+
+    public void StartSpawn()
+    {
         LoadGameData(m_gameConfig);
         LevelInvoker();
-        
     }
 
     void Spawn()

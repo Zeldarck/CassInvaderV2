@@ -8,6 +8,6 @@ public class StartMenu : Menu {
 
     public void OnPlayButton()
     {
-        MenuManager.INSTANCE.CloseMenu();
+        GameManager.INSTANCE.StartGame();
     }
 }

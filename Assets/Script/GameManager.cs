@@ -33,7 +33,13 @@ public class GameManager : MonoBehaviour {
         {
             INSTANCE = this;
         }
-        NetworkServer.SpawnObjects();
+    }
+
+    public void StartGame()
+    {
+        m_playerScore = 0;
+        MenuManager.INSTANCE.CloseMenu();
+        EnemyManager.INSTANCE.StartSpawn();
     }
 
     void Update()
