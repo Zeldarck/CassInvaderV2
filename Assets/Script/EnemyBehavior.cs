@@ -26,9 +26,11 @@ public class EnemyBehavior : Ennemies
         _X_MOVE_EAST = 2; // ( this.transform.parent.childCount)/2;
         _X_MOVE_WEST = 2; // (this.transform.parent.childCount)/2;
 
-        OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(m_enemyLevel, gameObject.transform.position); });
+
         OnDie.AddListener(() => { GameManager.INSTANCE.AddPoint(m_enemyLevel); });
         OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
+        OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(m_enemyLevel, gameObject.transform.position); });
+        
     }
 
     #endregion
@@ -63,6 +65,7 @@ public class EnemyBehavior : Ennemies
         {
             yield return new WaitForEndOfFrame();
         }
+
         Destroy(gameObject);
     }
 
