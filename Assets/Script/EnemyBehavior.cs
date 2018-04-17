@@ -26,6 +26,7 @@ public class EnemyBehavior : Ennemies
         _X_MOVE_WEST = 1; // (this.transform.parent.childCount)/2;
 
         OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(_enemyLevel, gameObject.transform.position); });
+        OnDie.AddListener(() => { GameManager.INSTANCE.AddPoint(_enemyLevel); });
         OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
     }
 
