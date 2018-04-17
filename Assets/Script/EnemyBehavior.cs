@@ -8,6 +8,7 @@ public class EnemyBehavior : Ennemies
     protected float m_enemyRadius = 1;
     protected int m_life = 1;
     protected int _enemyLevel = 1;
+    protected int m_frameCount = 0;
 
     public UnityEvent OnDie;
 
@@ -22,8 +23,8 @@ public class EnemyBehavior : Ennemies
         _INIT_POS_X = this.transform.position.x;
         _INIT_POS_Y = this.transform.position.y;
 
-        _X_MOVE_EAST = 1; // ( this.transform.parent.childCount)/2;
-        _X_MOVE_WEST = 1; // (this.transform.parent.childCount)/2;
+        _X_MOVE_EAST = 2; // ( this.transform.parent.childCount)/2;
+        _X_MOVE_WEST = 2; // (this.transform.parent.childCount)/2;
 
         OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(_enemyLevel, gameObject.transform.position); });
         OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
@@ -41,9 +42,13 @@ public class EnemyBehavior : Ennemies
         m_life -= a_damage;
         if (m_life <= 0)
         {
+            GetComponent<ParticleSystem>().Play(true);
+            ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
+            em.enabled = true;
             OnDie.Invoke();
             return true;
         }
+
         return false;
     }
 
@@ -53,8 +58,10 @@ public class EnemyBehavior : Ennemies
     /// </summary>
     protected IEnumerator AutoDestroy()
     {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
+        for(int i=0; i<10; ++i)
+        {
+            yield return new WaitForEndOfFrame();
+        }
         Destroy(gameObject);
     }
 
