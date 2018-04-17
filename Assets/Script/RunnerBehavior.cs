@@ -10,7 +10,7 @@ public class RunnerBehavior : EnemyBehavior
     /// </summary>
     override protected void Awake()
     {
-        m_enemySpeed = 0.4f;
+        m_enemySpeed = 0.8f;
         m_enemyRadius = 1;
         m_life = 1;
     }

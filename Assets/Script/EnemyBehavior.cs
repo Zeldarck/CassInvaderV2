@@ -43,9 +43,9 @@ public class EnemyBehavior : Ennemies
         m_life -= a_damage;
         if (m_life <= 0)
         {
-            GetComponent<ParticleSystem>().Play(true);
-            ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
-            em.enabled = true;
+            GetComponent<ParticleSystem>().Emit(10);
+            // ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
+            // em.enabled = true;
             OnDie.Invoke();
             return true;
         }
