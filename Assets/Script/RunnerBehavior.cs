@@ -13,6 +13,7 @@ public class RunnerBehavior : EnemyBehavior
         m_enemySpeed = 0.3f;
         m_enemyRadius = 1;
         m_life = 1;
+        m_enemyLevel = 2;
     }
 
     #endregion

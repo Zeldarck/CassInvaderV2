@@ -7,7 +7,7 @@ public class EnemyBehavior : Ennemies
 
     protected float m_enemyRadius = 1;
     protected int m_life = 1;
-    protected int _enemyLevel = 1;
+    protected int m_enemyLevel = 1;
 
     public UnityEvent OnDie;
 
@@ -25,7 +25,7 @@ public class EnemyBehavior : Ennemies
         _X_MOVE_EAST = 1; // ( this.transform.parent.childCount)/2;
         _X_MOVE_WEST = 1; // (this.transform.parent.childCount)/2;
 
-        OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(_enemyLevel, gameObject.transform.position); });
+        OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(m_enemyLevel, gameObject.transform.position); });
         OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
     }
 
