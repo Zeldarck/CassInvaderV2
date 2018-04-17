@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,14 +13,19 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// Score of player 1
     /// </summary>
-    static int m_playerScore = 0;
+    int m_playerScore = 0;
 
 
-    public static int PlayerScore
+    public int PlayerScore
     {
         get
         {
             return m_playerScore;
+        }
+        private set
+        {
+            m_playerScore = value;
+            HUDManager.INSTANCE.SetScore(m_playerScore);
         }
     }
 
@@ -37,7 +43,7 @@ public class GameManager : MonoBehaviour {
 
     public void StartGame()
     {
-        m_playerScore = 0;
+        PlayerScore = 0;
         MenuManager.INSTANCE.CloseMenu();
         EnemyManager.INSTANCE.StartSpawn();
     }
@@ -46,5 +52,8 @@ public class GameManager : MonoBehaviour {
     {
     }
 
-
+    internal void AddPoint(int a_enemyLevel)
+    {
+        PlayerScore += a_enemyLevel;
+    }
 }
