@@ -36,10 +36,10 @@ public class BallController : MonoBehaviour {
     int m_strength = 1;
 
     /// <summary>
-    /// Minimum horizontal Angle
+    /// Minimum horizontal Angle in degree
     /// </summary>
     [SerializeField]
-    int m_minAngle = 20;
+    float m_minAngle = 20;
 
 
     /// <summary>
