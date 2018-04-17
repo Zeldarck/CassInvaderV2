@@ -35,6 +35,12 @@ public class BallController : MonoBehaviour {
     [SerializeField]
     int m_strength = 1;
 
+    /// <summary>
+    /// Minimum horizontal Angle
+    /// </summary>
+    [SerializeField]
+    int m_minAngle = 20;
+
 
     /// <summary>
     /// Modificator of speed
@@ -123,11 +129,23 @@ public class BallController : MonoBehaviour {
             //Force y velocity to avoid ball move horizontally
             if (m_rb2d)
             {
-                vel.y = Mathf.Abs(m_rb2d.velocity.y) < 0.35f ? (m_rb2d.velocity.y + 0.1f) * m_currentSpeed : m_rb2d.velocity.y;
+                vel.y = (Vector3.Angle(m_rb2d.velocity, new Vector3(1, 0, 0)) + m_minAngle) % 180 < 2 * m_minAngle ? (m_rb2d.velocity.y + 0.1f) * m_currentSpeed : m_rb2d.velocity.y;
                 m_rb2d.velocity = vel;
                 m_currentSpeed += m_step;
             }
 
+
+        }
+        else if (coll.collider.CompareTag("Wall"))
+        {
+            Vector2 vel = Vector2.zero;
+            //Force y velocity to avoid ball move horizontally
+            if (m_rb2d && (Vector3.Angle(m_rb2d.velocity, new Vector3(1,0,0)) + m_minAngle) % 180 < 2 * m_minAngle )
+            {
+                vel.y = (m_rb2d.velocity.y + 0.1f) * m_currentSpeed;
+                vel.x = m_rb2d.velocity.x;
+                m_rb2d.velocity = vel;
+            }
 
         }
         EnemyBehavior ennemy =  coll.gameObject.GetComponent<EnemyBehavior>();
