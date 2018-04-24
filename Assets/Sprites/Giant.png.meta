@@ -1,9 +1,13 @@
 fileFormatVersion: 2
-guid: 6afc366df1b52dc449c7254d02f8df99
-timeCreated: 1523565130
+guid: a66c8727e2bfb234eab1c21af22ff9d3
+timeCreated: 1524599409
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Giant_0
+    21300002: Giant_1
+    21300004: Giant_2
+    21300006: Giant_3
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -98,7 +102,63 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Giant_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 237
+        width: 259
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Giant_1
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 237
+        width: 259
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Giant_2
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 28
+        width: 259
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Giant_3
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 28
+        width: 259
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
