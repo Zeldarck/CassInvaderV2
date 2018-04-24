@@ -15,7 +15,7 @@ public class FastReloadBoost : Collectable
 
     public override void PlayerUse()
     {
-        m_playerController.SetNbMaxBall(5);
+        m_playerController.SetNbMaxBall(4);
         m_playerController.SetReloadTime(1f);
 
         m_used = true;

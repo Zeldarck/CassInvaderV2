@@ -160,18 +160,18 @@ public class BallController : MonoBehaviour {
     /// <summary>
     /// Boost Speed
     /// </summary>
-    void Boost(float a_value)
+    public void Boost(float a_value, float a_time)
     {
         m_countBoost += a_value;
         m_currentSpeed += a_value;
         UpdateColorBall();
-        StartCoroutine(UndoBoost(a_value));
+        StartCoroutine(UndoBoost(a_value, a_time));
     }
 
 
-    IEnumerator UndoBoost(float a_value)
+    IEnumerator UndoBoost(float a_value, float a_time)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(a_time);
         m_countBoost += -a_value;
         Debug.Log(m_countBoost);
         m_currentSpeed -= a_value;

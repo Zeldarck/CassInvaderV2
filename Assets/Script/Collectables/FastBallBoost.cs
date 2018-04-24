@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AdditionalBallBoost : Collectable
+public class FastBallBoost : Collectable
 {
 
     [SerializeField]
-    private float m_boostDuration = 5f;
+    private float m_boostDuration = 6f;
+
+    [SerializeField]
+    private float m_boostSpeed = 1.5f;
 
     private float m_usedTime;
     private bool m_used = false;
@@ -15,8 +18,11 @@ public class AdditionalBallBoost : Collectable
 
     public override void PlayerUse()
     {
-        m_playerController.AddNbMaxBall(1);
-        m_playerController.SetReloadTime(0f);
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+        foreach (GameObject ball in balls)
+        {
+            ball.GetComponent<BallController>().Boost(m_boostSpeed,m_boostDuration);
+        }
 
         m_used = true;
         m_usedTime = Time.time;
@@ -26,14 +32,11 @@ public class AdditionalBallBoost : Collectable
     {
         if (m_used && Time.time > m_usedTime + m_boostDuration)
         {
-            m_playerController.AddNbMaxBall(-1);
-            m_playerController.SetReloadTime(30f);
-
             DestroyUsedBoost();
         }
     }
     public override Color GetColorPower()
     {
-        return Color.green;
+        return Color.blue;
     }
 }

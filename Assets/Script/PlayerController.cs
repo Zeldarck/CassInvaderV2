@@ -164,6 +164,12 @@ public class PlayerController : MonoBehaviour {
         m_nbMaxBall = a_nbBall;
     }
 
+    public void AddNbMaxBall(int a_nbBall)
+    {
+        m_nbMaxBall += a_nbBall;
+        if (m_nbMaxBall < 1) m_nbMaxBall = 1;
+    }
+
 
     public void SetBoost(Collectable a_boost)
     {
