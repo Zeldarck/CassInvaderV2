@@ -13,6 +13,7 @@ public class GiantBehavior : EnemyBehavior
         m_enemySpeed = 0.1f;
         m_enemyRadius = 2;
         m_life = 4;
+        m_enemyLevel = 3;
     }
 
     #endregion

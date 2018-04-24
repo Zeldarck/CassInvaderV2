@@ -11,7 +11,7 @@ public class CollectableManager : MonoBehaviour
     List<GameObject> m_collectables;
 
     [SerializeField]
-    static float m_spawnProba = 0.5f;
+    List<float> m_spawnProba;
 
     private void Start()
     {
@@ -29,12 +29,12 @@ public class CollectableManager : MonoBehaviour
 
     public void EnemyDestroyed(int a_enemyLvl, Vector3 a_pos)
     {
-        Debug.Log("EnemyDestroyed");
+        int enemyIndex = a_enemyLvl - 1;
         float proba = Random.Range(0f, 1f);
 
-        if (proba >= m_spawnProba)
+       if (proba <= m_spawnProba[enemyIndex])
         {
-            SpawnCollectable(a_pos, m_collectables[0]);
+            SpawnCollectable(a_pos, m_collectables[enemyIndex]);
         }
     }
 

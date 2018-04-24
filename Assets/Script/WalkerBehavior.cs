@@ -13,6 +13,7 @@ public class WalkerBehavior : EnemyBehavior
         m_enemySpeed = 0;
         m_enemyRadius = 1;
         m_life = 1;
+        m_enemyLevel = 1;
     }
 
     #endregion
