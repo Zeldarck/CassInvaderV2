@@ -40,7 +40,7 @@ public class EnemyBehavior : Ennemies
     /// <summary>
     /// On trigger get damages from any damage source
     /// </summary>
-    public bool GetDamage(int a_damage)
+    public virtual bool GetDamage(int a_damage)
     {
         m_life -= a_damage;
         if (m_life <= 0)

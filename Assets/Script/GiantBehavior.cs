@@ -3,6 +3,9 @@
 public class GiantBehavior : EnemyBehavior
 {
 
+    protected Animator m_giantAnim;
+    protected int targetHash = Animator.StringToHash("Targeted");
+
     #region GameObject Setup
 
     /// <summary>
@@ -14,9 +17,28 @@ public class GiantBehavior : EnemyBehavior
         m_enemyRadius = 2;
         m_life = 4;
         m_enemyLevel = 3;
+
+        m_giantAnim = GetComponent<Animator>();
     }
 
     #endregion
+
+    override public bool GetDamage(int a_damage)
+    {
+        m_life -= a_damage;
+        m_giantAnim.SetTrigger(targetHash);
+
+        if (m_life <= 0)
+        {
+            GetComponent<ParticleSystem>().Emit(10);
+            // ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
+            // em.enabled = true;
+            OnDie.Invoke();
+            return true;
+        }      
+
+        return false;
+    }
 
     #region Movement behavior
 
