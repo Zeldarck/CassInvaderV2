@@ -23,6 +23,12 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     GameObject m_giantPrefab;
 
+    [SerializeField]
+    GameObject m_flankerPrefab;
+
+    [SerializeField]
+    GameObject m_sweeperPrefab;
+
     private Vector3 m_initialPosition = new Vector3(0, 5, 0);
     private Vector3 m_enemyPosition = new Vector3(0, 5, 0);
     private Quaternion m_initialRotation = new Quaternion(0, 0, 0, 0);
@@ -127,6 +133,14 @@ public class EnemyManager : MonoBehaviour
 
                     case "giant":
                         currentPrefab = m_giantPrefab;
+                        break;
+
+                    case "flanker":
+                        currentPrefab = m_flankerPrefab;
+                        break;
+
+                    case "sweeper":
+                        currentPrefab = m_sweeperPrefab;
                         break;
 
                     default:
