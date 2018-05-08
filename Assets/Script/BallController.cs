@@ -115,10 +115,6 @@ public class BallController : MonoBehaviour {
     {
         if (coll.collider.CompareTag("Player"))
         {
-            //Reset speed modifier
-            StopAllCoroutines();
-            m_currentSpeed -= m_countBoost;
-            m_countBoost = 0;
             UpdateColorBall();
 
             Vector2 vel = Vector2.zero;
@@ -160,22 +156,35 @@ public class BallController : MonoBehaviour {
     /// <summary>
     /// Boost Speed
     /// </summary>
-    public void Boost(float a_value, float a_time)
+    public void BoostSpeed(float a_value, float a_time)
     {
         m_countBoost += a_value;
         m_currentSpeed += a_value;
         UpdateColorBall();
-        StartCoroutine(UndoBoost(a_value, a_time));
+        StartCoroutine(UndoBoostSpeed(a_value, a_time));
     }
 
 
-    IEnumerator UndoBoost(float a_value, float a_time)
+    IEnumerator UndoBoostSpeed(float a_value, float a_time)
     {
         yield return new WaitForSeconds(a_time);
-        m_countBoost += -a_value;
+        m_countBoost -= a_value;
         Debug.Log(m_countBoost);
         m_currentSpeed -= a_value;
         UpdateColorBall();
+    }
+
+    public void BoostStrength(int a_value, float a_time)
+    {
+        m_strength += a_value;
+        StartCoroutine(UndoBoostStrength(a_value, a_time));
+    }
+
+
+    IEnumerator UndoBoostStrength(int a_value, float a_time)
+    {
+        yield return new WaitForSeconds(a_time);
+        m_strength -= a_value;
     }
 
     void UpdateColorBall()
