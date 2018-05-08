@@ -39,11 +39,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private int m_spawnTime = 25;            // How long between each spawn.
     [SerializeField]
-    private int m_nbEnemyToSpawn = 3;
-    [SerializeField]
     private int m_nbWavesEnemys = 3;
     [SerializeField]
-    private string m_type = "walker";
+    private string[] m_typeArray = { "walker" };
 
     private int m_nbWavesEnemysExecuted = 0;
     private int m_currentLevel = 1;
@@ -111,31 +109,32 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     void Spawn()
     {
-        switch (m_type)
-        {
-            case "walker" :
-                currentPrefab = m_walkerPrefab;
-                break;
-
-            case "runner" :
-                currentPrefab = m_runnerPrefab;
-                break;
-
-            case "giant" :
-                currentPrefab = m_giantPrefab;
-                break;
-
-            default:
-                currentPrefab = m_walkerPrefab;
-                break;
-        }
         
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
             GameObject EnemyGroup = Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation);
-            for (float i = 0; i < m_nbEnemyToSpawn; ++i)
+            for (int i = 0; i < m_typeArray.Length; ++i)
             {
-                m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_nbEnemyToSpawn - 1) * 1.2f) / 4), 4, 0);
+                switch (m_typeArray[i])
+                {
+                    case "walker":
+                        currentPrefab = m_walkerPrefab;
+                        break;
+
+                    case "runner":
+                        currentPrefab = m_runnerPrefab;
+                        break;
+
+                    case "giant":
+                        currentPrefab = m_giantPrefab;
+                        break;
+
+                    default:
+                        currentPrefab = m_walkerPrefab;
+                        break;
+                }
+
+                m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_typeArray.Length - 1) * 1.2f) / 4), 4, 0);
                 EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(currentPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
             }
         }

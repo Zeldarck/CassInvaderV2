@@ -1,1 +1,1 @@
-{"m_spawnTime":7, "m_nbEnemyToSpawn":4, "m_nbWavesEnemys":2, "m_type":"runner"}
+{"m_spawnTime":7, "m_nbWavesEnemys":3, "m_typeArray": ["walker","runner","runner","runner","walker"] }
