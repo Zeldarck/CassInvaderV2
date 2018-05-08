@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour {
     private Collectable m_boostCollected = null;
     [SerializeField]
     private bool m_boostActive = false;
+    [SerializeField]
+    private Button m_boostButton = null;
 
 
 
@@ -135,12 +137,6 @@ public class PlayerController : MonoBehaviour {
 
         m_rb2d.velocity = vel;
 
-        if (Input.GetKeyDown(KeyCode.E) && m_boostActive)
-        {
-            if (m_boostCollected != null) m_boostCollected.PlayerUse();
-            m_boostActive = false;
-        }
-
     }
 
 
@@ -170,15 +166,24 @@ public class PlayerController : MonoBehaviour {
         if (m_nbMaxBall < 1) m_nbMaxBall = 1;
     }
 
+    public void UseBoost()
+    {
+        Debug.Log("BoostUsed!");
+        if (m_boostCollected != null) m_boostCollected.PlayerUse();
+        m_boostActive = false;
+    }
+
 
     public void SetBoost(Collectable a_boost)
     {
         m_boostCollected = a_boost;
+        m_boostButton.image.color = a_boost.GetColorPower();
     }
 
     public void SetActiveBoost(bool a_isActive)
     {
         m_boostActive = a_isActive;
+        m_boostButton.interactable = a_isActive;
     }
 
     public bool IsBoostActive()
