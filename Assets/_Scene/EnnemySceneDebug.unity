@@ -384,6 +384,48 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &295721588
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.7459247
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.013551
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.009590634
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.999962
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.008726558
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054643110942336, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 6633fc535d2b1af449c28208fdc180fb, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &300171826
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +870,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &847507551
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.7459247
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.013551
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.009590634
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262017595307966, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ebe1e6599405265449bb3fa613a14afc, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &863835554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,6 +1456,8 @@ MonoBehaviour:
     type: 2}
   m_giantPrefab: {fileID: 1737856206623766, guid: 8655238f30664b04bb57c04c72c7f5e8,
     type: 2}
+  m_flankerPrefab: {fileID: 0}
+  m_sweeperPrefab: {fileID: 0}
   m_gameConfig: levelConfig
   m_nbOfLevels: 1
   m_spawnTime: 25

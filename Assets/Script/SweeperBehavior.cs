@@ -14,6 +14,8 @@ public class SweeperBehavior : EnemyBehavior
         m_enemyRadius = 1;
         m_life = 1;
         m_enemyLevel = 2;
+
+        // InvokeRepeating("LaunchProjectile", 2.0f, 5.6f);
     }
 
     #endregion
@@ -26,6 +28,11 @@ public class SweeperBehavior : EnemyBehavior
     override protected Vector2 DirectionComputation()
     {
         return new Vector2(0, 0);
+    }
+
+    void LaunchProjectile()
+    {
+       // Rigidbody instance = Instantiate(projectile);
     }
 
     #endregion
