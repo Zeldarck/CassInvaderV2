@@ -23,10 +23,17 @@ public class MenuBackGround : MonoBehaviour {
 
     public void SetAlpha(float a_alpha)
     {
-        Color temp = GetComponent<Image>().color;
+        Image back = GetComponent<Image>();
+        back.enabled = true;
+
+        Color temp = back.color;
         temp.a = a_alpha;
-        GetComponent<Image>().color = temp;
+        back.color = temp;
     }
 
+    public void Disable()
+    {
+        GetComponent<Image>().enabled = false;
+    }
 
 }
