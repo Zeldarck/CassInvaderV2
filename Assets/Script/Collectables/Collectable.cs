@@ -5,9 +5,16 @@ using UnityEngine;
 
 public abstract class Collectable : MonoBehaviour
 {
+    [SerializeField]
+    private float m_collectSpeed = 2f;
 
     private bool m_notPicked = true;
     protected PlayerController m_playerController = null;
+
+    private void FixedUpdate()
+    {
+        gameObject.transform.position = gameObject.transform.position + Vector3.down* m_collectSpeed * Time.deltaTime;
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
