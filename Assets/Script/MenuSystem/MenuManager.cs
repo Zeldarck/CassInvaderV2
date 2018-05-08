@@ -77,7 +77,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            MenuBackGround.INSTANCE.SetAlpha(0.0f);
+            MenuBackGround.INSTANCE.Disable();
         }
 
     }

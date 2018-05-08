@@ -1282,6 +1282,10 @@ MonoBehaviour:
     type: 2}
   m_giantPrefab: {fileID: 1737856206623766, guid: 8655238f30664b04bb57c04c72c7f5e8,
     type: 2}
+  m_flankerPrefab: {fileID: 1737856206623766, guid: ce88a9fb699c33342ad615fcc4f8e11e,
+    type: 2}
+  m_sweeperPrefab: {fileID: 1737856206623766, guid: b76fb5dc269b43045939cd355065986c,
+    type: 2}
   m_gameConfig: levelConfig
   m_nbOfLevels: 1
   m_spawnTime: 5
