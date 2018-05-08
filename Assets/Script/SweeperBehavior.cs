@@ -2,6 +2,11 @@
 
 public class SweeperBehavior : EnemyBehavior
 {
+    [SerializeField]
+    GameObject m_fireProjectile;
+
+    private Vector3 m_currentPosition = new Vector3(0, 0, 0);
+    private Quaternion m_initialRotation = new Quaternion(0, 0, 0, 0);
 
     #region GameObject Setup
 
@@ -15,7 +20,7 @@ public class SweeperBehavior : EnemyBehavior
         m_life = 1;
         m_enemyLevel = 2;
 
-        // InvokeRepeating("LaunchProjectile", 2.0f, 5.6f);
+        InvokeRepeating("LaunchProjectile", 2.0f, 7.1f);
     }
 
     #endregion
@@ -32,7 +37,8 @@ public class SweeperBehavior : EnemyBehavior
 
     void LaunchProjectile()
     {
-       // Rigidbody instance = Instantiate(projectile);
+        m_currentPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+        Instantiate(m_fireProjectile, m_currentPosition, m_initialRotation);
     }
 
     #endregion
