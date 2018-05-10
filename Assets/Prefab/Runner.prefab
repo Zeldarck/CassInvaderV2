@@ -75,6 +75,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  m_iceProjectile: {fileID: 1849894298988960, guid: ebe1e6599405265449bb3fa613a14afc,
+    type: 2}
 --- !u!198 &198801710058736100
 ParticleSystem:
   m_ObjectHideFlags: 1
