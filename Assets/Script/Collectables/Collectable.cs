@@ -34,7 +34,6 @@ public abstract class Collectable : MonoBehaviour
             else
             {
                 m_playerController.SetBoost(this);
-                m_playerController.SetActiveBoost(true);
             }
         }
     }

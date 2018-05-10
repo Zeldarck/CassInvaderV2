@@ -28,6 +28,8 @@ public class FastReloadBoost : Collectable
         {
             m_playerController.SetNbMaxBall(1);
             m_playerController.SetReloadTime(30f);
+
+            m_playerController.SetActiveBoost(false);
             DestroyUsedBoost();
         }
     }

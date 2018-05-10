@@ -36,6 +36,7 @@ public class FastBallBoost : Collectable
     {
         if (m_used && Time.time > m_usedTime + m_boostDuration)
         {
+            m_playerController.SetActiveBoost(false);
             DestroyUsedBoost();
         }
     }

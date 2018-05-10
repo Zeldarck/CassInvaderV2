@@ -909,7 +909,7 @@ MonoBehaviour:
   - {fileID: 1948269149828564, guid: ed665db34be03934f978e078ccc543a6, type: 2}
   - {fileID: 1953393675672686, guid: 1b13dd44c33365940ba7dbc76c5cf991, type: 2}
   m_spawnProba:
-  - 0.1
+  - 1
   - 0.15
   - 0.2
 --- !u!4 &1118310432
@@ -1173,6 +1173,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1297670711}
+--- !u!114 &1459572760 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1694594145}
+  m_Script: {fileID: 11500000, guid: b93f515155d6e5345bc4b658abbf1944, type: 3}
 --- !u!1 &1571912486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,6 +1359,71 @@ Prefab:
         type: 2}
       propertyPath: m_timeToReload
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_boostButton
+      value: 
+      objectReference: {fileID: 2033406987}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98659fa48047eb24391ad2a280fb66a9, type: 2}
@@ -1967,7 +2038,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 0.678}
     m_HighlightedColor: {r: 0.6745098, g: 0.6745098, b: 0.6745098, a: 0.6784314}
-    m_PressedColor: {r: 0.6745098, g: 0.6745098, b: 0.6745098, a: 0.6784314}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 0.6784314}
     m_DisabledColor: {r: 0.16176468, g: 0.16176468, b: 0.16176468, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1984,7 +2055,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2033406988}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1459572760}
+        m_MethodName: UseBoost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2033406988
