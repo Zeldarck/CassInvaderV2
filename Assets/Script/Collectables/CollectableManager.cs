@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectableManager : MonoBehaviour
+public class CollectableManager : Singleton<CollectableManager>
 {
 
-    public static CollectableManager INSTANCE;
 
     [SerializeField]
     List<GameObject> m_collectables;
@@ -15,16 +14,6 @@ public class CollectableManager : MonoBehaviour
 
     private void Start()
     {
-        #region Singleton
-        if (INSTANCE != null && INSTANCE != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            INSTANCE = this;
-        }
-        #endregion
     }
 
     public void EnemyDestroyed(int a_enemyLvl, Vector3 a_pos)
