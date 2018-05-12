@@ -98,6 +98,10 @@ public class Utils {
         return ClampVector(a_vector, new Vector2(Mathf.Cos(Mathf.Deg2Rad * a_degreMin), Mathf.Sin(Mathf.Deg2Rad * a_degreMin)), new Vector2(Mathf.Cos(Mathf.Deg2Rad * a_degreMax), Mathf.Sin(Mathf.Deg2Rad * a_degreMax)));
     }
 
+	public static bool IsColorBright(Color color)
+    {
+        double a = 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b);
 
-
+        return a < 0.5;
+    }
 }
