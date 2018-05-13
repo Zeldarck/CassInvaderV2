@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public KeyCode m_moveRight = KeyCode.D;
     public KeyCode m_moveLeft = KeyCode.Q;
     public float m_speed = 10.0f;
+    protected int m_life = 10;
 
     /// <summary>
     /// Limit of move (considering center on x=0)
@@ -184,6 +185,18 @@ public class PlayerController : MonoBehaviour {
     public bool IsBoostActive()
     {
         return m_boostActive;
+    }
+
+    public bool GetDamage(int a_damage)
+    {
+        m_life -= a_damage;
+        if (m_life <= 0)
+        {
+            Debug.Log("Vous avez perdu, vous etes nuls, noob go uninstall please !!");
+            return true;
+        }
+
+        return false;
     }
 
 }

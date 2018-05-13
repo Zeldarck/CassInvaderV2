@@ -16,7 +16,7 @@ public class FlankerBehavior : EnemyBehavior
     {
         m_enemySpeed = 0;
         m_enemyRadius = 1;
-        m_life = 2;
+        m_life = 1;
         m_enemyLevel = 3;
         m_rngHideStartLowLimit = 0;
         m_rngHideStopLowLimit = 0;
@@ -38,6 +38,11 @@ public class FlankerBehavior : EnemyBehavior
 
     override public bool GetDamage(int a_damage)
     {
+        if (m_hidden)
+        {
+            a_damage = 0;
+        }
+
         m_life -= a_damage;
         gameObject.GetComponent<Renderer>().enabled = false;
         m_hidden = true;
@@ -80,7 +85,16 @@ public class FlankerBehavior : EnemyBehavior
                 m_rngHideStartLowLimit = 0;
             }
         }
-        
+
+        // check if an invader has made it to the Dead Zone
+        if (gameObject.transform.position.y < (_DEADZONE + m_enemyRadius))
+        {
+            // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
+            Debug.Log("An Enemy reached the bottom!");
+
+            Destroy(gameObject);
+        }
+
         // move accordingly 
         Vector2 direction = DirectionComputation();
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
