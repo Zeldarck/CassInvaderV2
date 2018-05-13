@@ -70,7 +70,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Collectable m_boostCollected = null;
     [SerializeField]
-    private bool m_boostActive = false;
+    private Button m_boostButton = null;
+    private bool m_boostPicked = false;
 
 
 
@@ -136,12 +137,6 @@ public class PlayerController : MonoBehaviour {
 
         m_rb2d.velocity = vel;
 
-        if (Input.GetKeyDown(KeyCode.E) && m_boostActive)
-        {
-            if (m_boostCollected != null) m_boostCollected.PlayerUse();
-            m_boostActive = false;
-        }
-
     }
 
 
@@ -171,20 +166,44 @@ public class PlayerController : MonoBehaviour {
         if (m_nbMaxBall < 1) m_nbMaxBall = 1;
     }
 
+    public void UseBoost()
+    {
+        if (m_boostCollected != null)
+        {
+            Debug.Log("BoostUsed");
+            m_boostCollected.PlayerUse();
+            m_boostButton.image.color = Color.white;
+            SetUsableBoost(false);
+        }
+    }
+
 
     public void SetBoost(Collectable a_boost)
     {
+        Debug.Log("SetBoost");
         m_boostCollected = a_boost;
+        if(a_boost != null)
+        {
+            m_boostButton.image.color = a_boost.GetColorPower();
+            SetUsableBoost(true);
+            SetActiveBoost(true);
+        }
+        
     }
 
     public void SetActiveBoost(bool a_isActive)
     {
-        m_boostActive = a_isActive;
+        m_boostPicked = a_isActive;
+    }
+
+    public void SetUsableBoost(bool a_isUsable)
+    {
+        m_boostButton.interactable = a_isUsable;
     }
 
     public bool IsBoostActive()
     {
-        return m_boostActive;
+        return m_boostPicked;
     }
 
     public bool GetDamage(int a_damage)

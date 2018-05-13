@@ -60,28 +60,34 @@ public class Utils {
         a_vector.Normalize();
         a_vectorMin.Normalize();
         a_vectorMax.Normalize();
+
         Vector2 res = a_vector;
-        float current = (Vector2.SignedAngle(new Vector2(1,0), a_vector) + 360) % 360;
-        float min = (Vector2.SignedAngle(new Vector2(1,0), a_vectorMin) + 360) % 360;
+        float current = (Vector2.SignedAngle(new Vector2(1, 0), a_vector) + 360) % 360;
+        float negCurrent = current - 360;
+        float min = ((Vector2.SignedAngle(new Vector2(1, 0), a_vectorMin) + 360) % 360) - 360;
         float max = (Vector2.SignedAngle(new Vector2(1, 0), a_vectorMax) + 360) % 360;
 
-        //see if there is a mean to avoid to calculate angle before know that
-        if(min > max)
+        if (current > max && negCurrent < min)
         {
-            current = Vector2.SignedAngle(new Vector2(1, 0), a_vector) ;
-            min = Vector2.SignedAngle(new Vector2(1, 0), a_vectorMin) ;
-            max = Vector2.SignedAngle(new Vector2(1, 0), a_vectorMax) ;
+            if (current - max < Mathf.Abs(negCurrent - min))
+            {
+                res = a_vectorMax;
+                Debug.Log("Get Max cur " + current + " neg " + negCurrent + " min " + min + " max " + max);
+
+            }
+            else
+
+            {
+
+                res = a_vectorMin;
+                Debug.Log("Get Min");
+
+            }
         }
 
-        if (current > max)
-        {
-            res = a_vectorMax;
-        }else if (current < min)
-        {
-            res = a_vectorMin;
-        }
 
-         return res;
+        return res;
+
         //Seem to work only with 0 - 180 ?
         //return Vector2.Min(a_vectorMax, Vector2.Max(a_vectorMin, a_vector));
 
@@ -92,6 +98,10 @@ public class Utils {
         return ClampVector(a_vector, new Vector2(Mathf.Cos(Mathf.Deg2Rad * a_degreMin), Mathf.Sin(Mathf.Deg2Rad * a_degreMin)), new Vector2(Mathf.Cos(Mathf.Deg2Rad * a_degreMax), Mathf.Sin(Mathf.Deg2Rad * a_degreMax)));
     }
 
+	public static bool IsColorBright(Color color)
+    {
+        double a = 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b);
 
-
+        return a < 0.5;
+    }
 }

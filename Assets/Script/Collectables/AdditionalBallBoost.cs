@@ -7,7 +7,7 @@ public class AdditionalBallBoost : Collectable
 {
 
     [SerializeField]
-    private float m_boostDuration = 5f;
+    private float m_boostDuration = 3f;
 
     private float m_usedTime;
     private bool m_used = false;
@@ -28,7 +28,7 @@ public class AdditionalBallBoost : Collectable
         {
             m_playerController.AddNbMaxBall(-1);
             m_playerController.SetReloadTime(30f);
-
+            m_playerController.SetActiveBoost(false);
             DestroyUsedBoost();
         }
     }

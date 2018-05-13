@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Singleton<EnemyManager>
 {
 
-    public static EnemyManager INSTANCE;
 
     #region Variables
 
@@ -59,15 +58,6 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
-
-        if (INSTANCE != null && INSTANCE != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            INSTANCE = this;
-        }
         
     }
 

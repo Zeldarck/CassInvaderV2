@@ -127,7 +127,7 @@ public class BallController : MonoBehaviour {
             {
                 m_currentSpeed += m_step;
                 vel.y = m_rb2d.velocity.y;
-                vel = Utils.ClampVector(m_rb2d.velocity, m_minAngle, 360 - m_minAngle);
+                vel = Utils.ClampVector(vel, m_minAngle, 360 - m_minAngle);
                 vel = Utils.ClampVector(vel, 180 + m_minAngle, 180 - m_minAngle) * m_currentSpeed;
 
                 m_rb2d.velocity = vel;

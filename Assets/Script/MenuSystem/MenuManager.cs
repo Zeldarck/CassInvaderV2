@@ -16,13 +16,13 @@ public class MenuEntry
 #if NETWORK
 public class MenuManager : NetworkBehaviour
 #else
-public class MenuManager : MonoBehaviour
+public class MenuManager : Singleton<MenuManager>
 #endif
 {
     [SerializeField]
 	List<MenuEntry> m_listMenu;
-	static public MenuManager INSTANCE;
-	MENUTYPE m_currentMenu = MENUTYPE.NOTHING;
+
+    MENUTYPE m_currentMenu = MENUTYPE.NOTHING;
 	[SerializeField]
 	MENUTYPE m_startMenu;
 
@@ -30,14 +30,6 @@ public class MenuManager : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-		if (INSTANCE != null && INSTANCE != this)
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-			INSTANCE = this;
-		}
 #if NETWORK
         StartCoroutine(StartUp());
 #else

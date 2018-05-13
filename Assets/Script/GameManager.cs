@@ -7,9 +7,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 
-public class GameManager : MonoBehaviour {
+public class GameManager : Singleton<GameManager> {
 
-    public static GameManager INSTANCE;
     /// <summary>
     /// Score of player 1
     /// </summary>
@@ -31,14 +30,6 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        if (INSTANCE != null && INSTANCE != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            INSTANCE = this;
-        }
     }
 
     public void StartGame()
