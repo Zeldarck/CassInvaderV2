@@ -7,7 +7,7 @@ public class RunnerBehavior : EnemyBehavior
     GameObject m_iceProjectile;
 
     private Vector3 m_currentPosition = new Vector3(0, 0, 0);
-    private Quaternion m_initialRotation = new Quaternion(0, 0, 0, 0);
+    private Quaternion m_initialRotation = new Quaternion(180, 0, 0, 0);
 
     #region GameObject Setup
 
@@ -21,7 +21,7 @@ public class RunnerBehavior : EnemyBehavior
         m_life = 1;
         m_enemyLevel = 2;
 
-        InvokeRepeating("LaunchProjectile", 2.0f, 7.1f);
+        InvokeRepeating("LaunchProjectile", Random.Range(0.8f, 12.1f), Random.Range(5f, 15f));
     }
 
     #endregion
