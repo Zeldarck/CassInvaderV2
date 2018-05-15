@@ -28,3 +28,9 @@
 	 - Déclanché un son en loop en choisissant le channel
 	 - Pouvoir choisir un subchannel pour les fades
 	 -Son aléa parmis une banque de son
+	 
+  - To tweak :
+     - Revoir positionnement barre recharge (en bas )
+	 - Revoir positionnement score (dans un coin)
+	 - Revoir utilisation Bonus : un tap sur l'écran l'active
+	 - Set l'acceleration Logarithmique sans palier max ?
