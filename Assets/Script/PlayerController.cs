@@ -115,6 +115,10 @@ public class PlayerController : MonoBehaviour {
                 m_sliderReload.value = 0;
                 //TODO : add velocity depend on player velocity
             }
+            else if(m_boostPicked && Input.GetTouch(0).tapCount>1 && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
+            {
+                UseBoost();
+            }
             else
             {
                 float x = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
