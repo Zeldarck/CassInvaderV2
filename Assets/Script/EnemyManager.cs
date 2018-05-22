@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEditor;
+using System.IO;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
@@ -81,7 +83,7 @@ public class EnemyManager : Singleton<EnemyManager>
         string jsonString = textAsset.text;
         JsonUtility.FromJsonOverwrite(jsonString, this);
     }
-
+        
     #endregion
 
     #region LevelManagement

@@ -5,9 +5,10 @@ using UnityEngine.Events;
 
 public class IceProjectileBehavior : Projectile
 {
-    protected float m_projectileSpeed = 1f;
+    protected float m_projectileSpeed = 3f;
     public UnityEvent OnDie;
 
+    
     #region Damage undertaking
 
 
@@ -17,11 +18,12 @@ public class IceProjectileBehavior : Projectile
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (collider.CompareTag("Player"))
         {
-            player.m_speed -= 0.1f;
-            if(player.m_speed < 0)
+            player.m_speed -= 1f;
+            if(player.m_speed < 1.5f)
             {
-                player.m_speed = 0.0f;
+                player.m_speed = 1.5f;
             }
+            player.m_countSlowDebuff = 500;
 
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;

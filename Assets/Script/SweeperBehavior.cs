@@ -17,7 +17,7 @@ public class SweeperBehavior : EnemyBehavior
     {
         m_enemySpeed = 0;
         m_enemyRadius = 1;
-        m_life = 1;
+        m_life = 2;
         m_enemyLevel = 2;
 
         InvokeRepeating("LaunchProjectile", Random.Range(0.8f, 12.1f), Random.Range(5f, 15f));
