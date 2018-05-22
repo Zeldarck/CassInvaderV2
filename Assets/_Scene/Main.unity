@@ -1364,7 +1364,7 @@ Prefab:
         type: 2}
       propertyPath: m_boostButton
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2033406987}
     - target: {fileID: 224762095902700800, guid: 98659fa48047eb24391ad2a280fb66a9,
         type: 2}
       propertyPath: m_LocalRotation.x

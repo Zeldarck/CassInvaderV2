@@ -102,6 +102,10 @@ public class PlayerController : MonoBehaviour {
             //TODO : add velocity depend on player velocity
         }
 
+        if (Input.GetKeyDown(KeyCode.E) && m_boostPicked)
+        {
+            UseBoost();
+        }
 
         var vel = m_rb2d.velocity;
         if (Input.touchCount > 0)
