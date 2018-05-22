@@ -14,6 +14,21 @@ public class Utils {
         }
     }
 
+    public static void RandomizeChildren(Transform a_transform, System.Random r = null)
+    {
+        if (r == null)
+        {
+            r = m_random;
+        }
+
+        for (int i = 0; i < a_transform.childCount; i++)
+        {
+            int randomIndex = r.Next(0, a_transform.childCount);
+            a_transform.GetChild(i).SetSiblingIndex(randomIndex);
+        }
+    }
+
+
     public static bool RandomBool( int probability, System.Random r = null)
     {
         if (r == null)
@@ -104,4 +119,10 @@ public class Utils {
 
         return a < 0.5;
     }
+
+    public static bool IsTapping(Touch a_touch, int m_minTap = 1)
+    {
+        return a_touch.tapCount > m_minTap && a_touch.phase == TouchPhase.Began;
+    }
+
 }

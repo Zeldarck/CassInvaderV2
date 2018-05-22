@@ -107,11 +107,12 @@ public class PlayerController : MonoBehaviour {
             UseBoost();
         }
 
+
         var vel = m_rb2d.velocity;
         if (Input.touchCount > 0)
         {
-
-            if (Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
+            
+            if (Utils.IsTapping(Input.GetTouch(0), 0) && Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
             {
                 Debug.Log(Input.GetTouch(0).position.y + "   " + Screen.height * m_percentageScreenFire);
 
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour {
                 m_sliderReload.value = 0;
                 //TODO : add velocity depend on player velocity
             }
-            else if(m_boostPicked && Input.GetTouch(0).tapCount>1 && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
+            else if(m_boostPicked && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
                 UseBoost();
             }
