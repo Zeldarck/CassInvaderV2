@@ -16,10 +16,15 @@ public class FireProjectileBehavior : Projectile
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (collider.CompareTag("Player"))
         {
-            player.GetDamage(1);
+            if (player.GetDamage(1))
+            {
+                GameObjectManager.INSTANCE.DestroyObjects("Destructible");
+            }
+
             player.SetUsableBoost(false);
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
+
         }
     }
 

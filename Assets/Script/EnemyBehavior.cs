@@ -87,11 +87,8 @@ public class EnemyBehavior : Ennemies
     {
         // check if an invader has made it to the Dead Zone
         if (gameObject.transform.position.y < (_DEADZONE + m_enemyRadius))
-        {
-            // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
-            Debug.Log("An Enemy reached the bottom!");
-            
-            Destroy(gameObject);
+        {           
+            GameObjectManager.INSTANCE.DestroyObjects("Destructible");
         }
 
         // move accordingly 
