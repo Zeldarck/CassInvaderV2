@@ -7,13 +7,23 @@ using UnityEngine.Networking;
 #if NETWORK
 public class Menu : NetworkBehaviour
 #else
-public class Menu : MonoBehaviour
+public abstract class Menu : MonoBehaviour
 #endif
 {
     public void CloseMenu()
 	{
 		MenuManager.INSTANCE.CloseMenu();
 	}
+
+    public virtual void OnOpen()
+    {
+
+    }
+
+    public virtual void OnClose()
+    {
+
+    }
 
 #if NETWORK
     [ClientRpc]

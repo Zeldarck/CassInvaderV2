@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Button m_boostButton = null;
     private bool m_boostPicked = false;
+    private bool m_boostUsable = false;
 
 
 
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour {
             //TODO : add velocity depend on player velocity
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && m_boostPicked)
+        if (Input.GetKeyDown(KeyCode.E) && m_boostUsable)
         {
             UseBoost();
         }
@@ -120,7 +121,7 @@ public class PlayerController : MonoBehaviour {
                 m_sliderReload.value = 0;
                 //TODO : add velocity depend on player velocity
             }
-            else if(m_boostPicked && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
+            else if(m_boostUsable && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
                 UseBoost();
             }
@@ -180,9 +181,9 @@ public class PlayerController : MonoBehaviour {
         if (m_boostCollected != null)
         {
             Debug.Log("BoostUsed");
+            SetUsableBoost(false);
             m_boostCollected.PlayerUse();
             m_boostButton.image.color = Color.white;
-            SetUsableBoost(false);
         }
     }
 
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour {
 
     public void SetUsableBoost(bool a_isUsable)
     {
-        m_boostButton.interactable = a_isUsable;
+        m_boostUsable = a_isUsable;
     }
 
     public bool IsBoostActive()

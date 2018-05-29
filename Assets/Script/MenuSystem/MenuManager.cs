@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public enum MENUTYPE {NOTHING, MAIN, END, GAME, PAUSE, SCORE, CHRONO, LOADING , START};
+public enum MENUTYPE { NOTHING, MAIN, END, GAME, PAUSE, SCORE, CHRONO, LOADING, START, LEVEL_CHOOSER, WIN, OPTION, CREDITS };
 
 
 [System.Serializable]
@@ -87,11 +87,13 @@ public class MenuManager : Singleton<MenuManager>
 		{
             CloseMenu();
             menuEntry.m_menu.gameObject.SetActive(true);
-			m_currentMenu = a_type;
+            menuEntry.m_menu.OnOpen();
+            m_currentMenu = a_type;
 		}
         return menuEntry != null ? menuEntry.m_menu : null;
 
     }
+
 
 #if NETWORK
     public Menu OpenMenuEverywhere(MENUTYPE a_type)
@@ -114,10 +116,16 @@ public class MenuManager : Singleton<MenuManager>
 		MenuEntry menuEntry = m_listMenu.Find(x => x.m_type == m_currentMenu);
 		if(menuEntry != null)
 		{
-			menuEntry.m_menu.gameObject.SetActive(false);
+            menuEntry.m_menu.OnClose();
+            menuEntry.m_menu.gameObject.SetActive(false);
 			m_currentMenu = MENUTYPE.NOTHING;
 		}
 	}
+
+    public void BackToMainMenu()
+    {
+        OpenMenu(m_startMenu);
+    }
 
 
 }
