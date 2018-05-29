@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+public enum SPAWN_CONTAINER_TYPE { NOTHING, DESTRUCTIBLE, UNDESTRUCTIBLE };
 
 public class GameObjectManager : Singleton<GameObjectManager>
 {
@@ -20,17 +21,17 @@ public class GameObjectManager : Singleton<GameObjectManager>
     {
     }
 
-    public GameObject SpawnObject(GameObject a_gameObject, Vector3 a_position, Quaternion a_rotation, string a_type)
+    public GameObject SpawnObject(GameObject a_gameObject, Vector3 a_position, Quaternion a_rotation, SPAWN_CONTAINER_TYPE a_type = SPAWN_CONTAINER_TYPE.NOTHING)
     {
         GameObject container;
 
         switch (a_type)
         {
-            case "Destructible":
+            case SPAWN_CONTAINER_TYPE.DESTRUCTIBLE:
                 container = m_spawnDestructibleObjectsContainer;
                 break;
 
-            case "Undestructible":
+            case SPAWN_CONTAINER_TYPE.UNDESTRUCTIBLE:
                 container = m_spawnUndestructiblesObjectsContainer;
                 break;
                 
@@ -43,17 +44,17 @@ public class GameObjectManager : Singleton<GameObjectManager>
 
     }
     
-    public void DestroyObjects(string a_type)
+    public void DestroyObjects(SPAWN_CONTAINER_TYPE a_type)
     {
         GameObject container;
 
         switch (a_type)
         {
-            case "Destructible":
+            case SPAWN_CONTAINER_TYPE.DESTRUCTIBLE:
                 container = m_spawnDestructibleObjectsContainer;
                 break;
 
-            case "Undestructible":
+            case SPAWN_CONTAINER_TYPE.UNDESTRUCTIBLE:
                 container = m_spawnUndestructiblesObjectsContainer;
                 break;
 
@@ -61,7 +62,7 @@ public class GameObjectManager : Singleton<GameObjectManager>
                 container = m_spawnDestructibleObjectsContainer;
                 break;
         }
-
+        
         Utils.DestroyChilds(container.transform);
     }
     

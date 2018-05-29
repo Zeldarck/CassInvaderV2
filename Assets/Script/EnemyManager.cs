@@ -50,9 +50,11 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     private string[] m_typeArray = { "walker" };
 
-    private int m_nbWavesEnemysExecuted = 0;
-    private int m_currentLevel = 1;
-    private GameObject currentPrefab;
+    int m_nbWavesEnemysExecuted = 0;
+    int m_currentLevel = 1;
+    protected GameObject currentPrefab;
+
+    protected bool m_IsPlaying = false;
 
     #endregion
 
@@ -66,6 +68,8 @@ public class EnemyManager : Singleton<EnemyManager>
     public void StartSpawn()
     {
         LoadGameData(m_gameConfig);
+        m_IsPlaying = true;
+        
         LevelInvoker();
     }
 
@@ -110,7 +114,7 @@ public class EnemyManager : Singleton<EnemyManager>
         
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
-            GameObject EnemyGroup = Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation);
+            GameObject EnemyGroup = GameObjectManager.INSTANCE.SpawnObject(m_enemyGroupPrefab, m_initialPosition, m_initialRotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
             for (int i = 0; i < m_typeArray.Length; ++i)
             {
                 switch (m_typeArray[i])
@@ -141,7 +145,7 @@ public class EnemyManager : Singleton<EnemyManager>
                 }
 
                 m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_typeArray.Length - 1) * 1.2f) / 4), 4, 0);
-                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(GameObjectManager.INSTANCE.SpawnObject(currentPrefab, m_enemyPosition ,m_initialRotation, "Destructible").GetComponent<Ennemies>());
+                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(GameObjectManager.INSTANCE.SpawnObject(currentPrefab, m_enemyPosition ,m_initialRotation).GetComponent<Ennemies>());
             }
         }
 
@@ -164,7 +168,10 @@ public class EnemyManager : Singleton<EnemyManager>
             m_nbWavesEnemysExecuted = 0;
             if (m_currentLevel <= m_nbOfLevels)
             {
-                LevelInvoker();
+                if (m_IsPlaying)
+                {
+                    LevelInvoker();
+                }
             }
         }
     }
@@ -172,6 +179,7 @@ public class EnemyManager : Singleton<EnemyManager>
     public void StopSpawn()
     {
         CancelInvoke();
+        m_IsPlaying = false;
     }
 
 
