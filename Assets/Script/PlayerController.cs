@@ -9,8 +9,10 @@ public class PlayerController : MonoBehaviour {
     public KeyCode m_moveRight = KeyCode.D;
     public KeyCode m_moveLeft = KeyCode.Q;
     public float m_speed = 10.0f;
+    protected float m_baseSpeed = 10.0f;
+    public int m_countSlowDebuff = 0;
     protected int m_life = 10;
-
+  
     /// <summary>
     /// Limit of move (considering center on x=0)
     /// </summary>
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour {
         m_startPos = transform.position;
         m_sliderReload.maxValue = m_timeToReload;
         m_sliderReload.value = m_sliderReload.maxValue;
+        m_baseSpeed = m_speed;
     }
 
     private void Update()
@@ -103,12 +106,21 @@ public class PlayerController : MonoBehaviour {
             //TODO : add velocity depend on player velocity
         }
 
+        
+        if(m_countSlowDebuff != 0)
+        {
+            --m_countSlowDebuff;
+            if (m_countSlowDebuff == 0)
+            {
+                m_speed = m_baseSpeed;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.E) && m_boostUsable)
         {
             UseBoost();
         }
-
-
+        
         var vel = m_rb2d.velocity;
         if (Input.touchCount > 0)
         {

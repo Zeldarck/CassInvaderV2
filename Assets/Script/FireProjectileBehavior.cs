@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class FireProjectileBehavior : Projectile
 {
-    protected float m_projectileSpeed = 1f;
+    protected float m_projectileSpeed = 3f;
     public UnityEvent OnDie;
 
     #region Damage undertaking
@@ -17,6 +17,7 @@ public class FireProjectileBehavior : Projectile
         if (collider.CompareTag("Player"))
         {
             player.GetDamage(1);
+            player.SetUsableBoost(false);
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
         }

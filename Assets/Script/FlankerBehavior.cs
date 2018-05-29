@@ -66,8 +66,8 @@ public class FlankerBehavior : EnemyBehavior
         // check if the invader is hidden
         if (m_hidden)
         {
-            m_rngHideStopLowLimit += 0.0001f;
-            if (Random.Range(m_rngHideStopLowLimit, 1f) > 0.98f)
+            m_rngHideStopLowLimit += 0.01f;
+            if (Random.Range(m_rngHideStopLowLimit, 1000) > 900)
             {
                 gameObject.GetComponent<Renderer>().enabled = true;
                 m_hidden = false;
@@ -77,8 +77,8 @@ public class FlankerBehavior : EnemyBehavior
 
         else
         {
-            m_rngHideStartLowLimit += 0.0001f;
-            if (Random.Range(m_rngHideStartLowLimit, 1f) > 0.98f)
+            m_rngHideStartLowLimit += 0.01f;
+            if (Random.Range(m_rngHideStartLowLimit, 1000) > 900)
             {
                 gameObject.GetComponent<Renderer>().enabled = false;
                 m_hidden = true;
