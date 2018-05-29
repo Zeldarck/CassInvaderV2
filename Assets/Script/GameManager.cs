@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     int m_playerScore = 0;
 
+    [SerializeField]
+    AudioClip m_noemieTest;
 
     public int PlayerScore
     {
@@ -30,6 +32,10 @@ public class GameManager : Singleton<GameManager> {
 
     void Start()
     {
+        if (m_noemieTest != null)
+        {
+            SoundManager.INSTANCE.StartAudio(m_noemieTest);
+        }
     }
 
     public void StartGame()
