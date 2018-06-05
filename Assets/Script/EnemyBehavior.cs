@@ -88,7 +88,7 @@ public class EnemyBehavior : Ennemies
         // check if an invader has made it to the Dead Zone
         if (gameObject.transform.position.y < (_DEADZONE + m_enemyRadius))
         {           
-            GameObjectManager.INSTANCE.DestroyObjects(SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+            GameManager.INSTANCE.EndGame();
         }
 
         // move accordingly 

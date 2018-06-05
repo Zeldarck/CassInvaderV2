@@ -73,6 +73,13 @@ public class EnemyManager : Singleton<EnemyManager>
         LevelInvoker();
     }
 
+    public void StopSpawn()
+    {
+        m_IsPlaying = false;
+        
+        CancelInvoke();
+    }
+
     #endregion
 
     #region JSON
@@ -111,7 +118,7 @@ public class EnemyManager : Singleton<EnemyManager>
     /// </summary>
     void Spawn()
     {
-        
+
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
             GameObject EnemyGroup = GameObjectManager.INSTANCE.SpawnObject(m_enemyGroupPrefab, m_initialPosition, m_initialRotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
@@ -151,7 +158,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
         ++m_nbWavesEnemysExecuted;
 
-        Debug.Log(m_nbWavesEnemysExecuted);
     }
 
     /// <summary>
@@ -161,7 +167,7 @@ public class EnemyManager : Singleton<EnemyManager>
     void Update()
     {
         // Cancel all Invoke calls
-        if (m_nbWavesEnemysExecuted > m_nbWavesEnemys)
+        if (m_nbWavesEnemysExecuted > m_nbWavesEnemys && m_IsPlaying)
         {
             CancelInvoke();
             ++m_currentLevel;
@@ -175,13 +181,6 @@ public class EnemyManager : Singleton<EnemyManager>
             }
         }
     }
-
-    public void StopSpawn()
-    {
-        CancelInvoke();
-        m_IsPlaying = false;
-    }
-
 
     #endregion
 }

@@ -47,9 +47,10 @@ public class GameManager : Singleton<GameManager> {
 
     public void EndGame()
     {
-        EnemyManager.INSTANCE.StopSpawn();
+        // EnemyManager.INSTANCE.StartSpawn();
         GameObjectManager.INSTANCE.DestroyObjects(SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
-        // MenuManager.INSTANCE.OpenMenu(a_type); //Open EndGame Menu, TODO
+        EnemyManager.INSTANCE.StopSpawn();
+        MenuManager.INSTANCE.OpenMenu(MENUTYPE.END); //Open EndGame Menu, TODO
     }
 
     void Update()

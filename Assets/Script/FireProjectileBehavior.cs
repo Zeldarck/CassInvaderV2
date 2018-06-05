@@ -18,7 +18,7 @@ public class FireProjectileBehavior : Projectile
         {
             if (player.GetDamage(1))
             {
-                GameObjectManager.INSTANCE.DestroyObjects(SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+                GameManager.INSTANCE.EndGame();
             }
 
             player.SetUsableBoost(false);
