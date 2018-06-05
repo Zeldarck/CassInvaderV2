@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Audio;
 
-
-public enum RANDOM_SOUND_TYPE {  };
+public enum RANDOM_SOUND_TYPE { };
 
 [System.Serializable]
 public class RandomSound
@@ -15,6 +14,7 @@ public class RandomSound
     [SerializeField]
     List<AudioClip> m_listSounds;
     List<AudioClip> m_everUsed;
+    int m_audioSourceKey = (int)AUDIOSOURCE_KEY.NOTHING;
 
     public List<AudioClip> ListSounds
     {
@@ -52,6 +52,19 @@ public class RandomSound
         private set
         {
             m_everUsed = value;
+        }
+    }
+
+    public int AudioSourceKey
+    {
+        get
+        {
+            return m_audioSourceKey;
+        }
+
+        set
+        {
+            m_audioSourceKey = value;
         }
     }
 }
@@ -93,6 +106,8 @@ public class MixerGroupLink
     }
 }
 
+public enum AUDIOSOURCE_KEY { NOTHING };
+
 
 
 public class SoundManager : Singleton<SoundManager>
@@ -104,38 +119,97 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField]
     List<RandomSound> m_listRandomSound;
 
+    Dictionary<int, AudioSource> m_audioSources = new Dictionary<int, AudioSource>();
+
+    int m_maxAllocatedKey = (int)AUDIOSOURCE_KEY.NOTHING;
+ 
 
 
+    public bool IsAudioPlaying(int a_key)
+    {
+        bool res = false;
+        AudioSource output;
+        if(m_audioSources.TryGetValue(a_key, out output))
+        {
+            res = output.isPlaying;
+        }
 
-    private AudioSource CreateAudioSource(AudioMixerGroup a_mixerGroup)
+        return res;
+    }
+
+
+    AudioSource GetAudioSource(int a_key)
+    {
+        AudioSource res;
+        if (!m_audioSources.TryGetValue(a_key, out res))
+        {
+            res = CreateAudioSource();
+            m_audioSources.Add(a_key, res);
+        }
+
+        return res;
+    }
+
+    AudioSource CreateAudioSource()
     {
         AudioSource res;
         res = gameObject.AddComponent<AudioSource>();
         res.loop = true;
         res.Stop();
-        res.outputAudioMixerGroup = a_mixerGroup;
         return res;
     }
-    
 
-    public void StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isLooping = true)
+    int GetKey(int a_key)
     {
+
+        if(a_key < 0 || a_key > m_maxAllocatedKey)
+        {
+            Debug.LogError("Bad sound key");
+            a_key = (int)AUDIOSOURCE_KEY.NOTHING;
+        }
+
+        if (a_key == (int)AUDIOSOURCE_KEY.NOTHING)
+        {
+            a_key = ++m_maxAllocatedKey;
+        }
+        return a_key;
+    }
+
+
+    public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isLooping = true, int a_key = (int)AUDIOSOURCE_KEY.NOTHING, ulong a_delay = 0)
+    {
+        int res = -1;
+        res = GetKey(a_key);
         try
         {
             AudioMixerGroup mixer = m_listMixerGroup.Find(x => x.MixerType == a_mixerGroupType).MixerGroup;
-            AudioSource new_source = CreateAudioSource(mixer);
+            AudioSource new_source = GetAudioSource(a_key);
+            new_source.outputAudioMixerGroup = mixer;
             new_source.clip = a_clip;
             new_source.loop = a_isLooping;
-            new_source.Play();
+            new_source.Play(0);
             Debug.Log("StartAudio : " + a_clip.name);
         }
         catch
         {
-            Debug.LogError("No mixerGroup of type " + a_mixerGroupType);
+            Debug.LogError("Error when try to launch sound");
         }
+        return res;
     }
 
 
+    public void StopAudio(int a_key = (int)AUDIOSOURCE_KEY.NOTHING)
+    {
+        AudioSource audioSource;
+        if (INSTANCE.m_audioSources.TryGetValue(a_key, out audioSource))
+        {
+            audioSource.Stop();
+            audioSource.clip = null;
+            Debug.Log("StopAudio : " + a_key);
+        }
+    }
+
+  
     public void StartRandom(RANDOM_SOUND_TYPE a_randomSoundType, MIXER_GROUP_TYPE a_mixerGroupType)
     {
 
@@ -144,7 +218,7 @@ public class SoundManager : Singleton<SoundManager>
         {
             int rnd = Random.Range(0, randomSound.ListSounds.Count);
             AudioClip toPlay = randomSound.ListSounds[rnd];
-            StartAudio(randomSound.ListSounds[rnd], a_mixerGroupType, false);
+            randomSound.AudioSourceKey = StartAudio(randomSound.ListSounds[rnd], a_mixerGroupType, false, randomSound.AudioSourceKey);
             randomSound.EverUsed.Add(toPlay);
             randomSound.ListSounds.Remove(toPlay);
 
