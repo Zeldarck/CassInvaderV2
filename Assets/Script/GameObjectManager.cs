@@ -6,39 +6,24 @@ using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public enum SPAWN_CONTAINER_TYPE { NOTHING, DESTRUCTIBLE, UNDESTRUCTIBLE };
+public enum SPAWN_CONTAINER_TYPE { NOTHING, DESTRUCTIBLE, UNDESTRUCTIBLE , NBCATEGORY};
 
 public class GameObjectManager : Singleton<GameObjectManager>
 {
-
-    [SerializeField]
-    GameObject m_spawnDestructibleObjectsContainer;
-
-    [SerializeField]
-    GameObject m_spawnUndestructiblesObjectsContainer;
+    Dictionary<SPAWN_CONTAINER_TYPE, GameObject> m_containers = new Dictionary<SPAWN_CONTAINER_TYPE, GameObject>();
 
     void Start()
     {
+        for(int i = 0; i < (int)SPAWN_CONTAINER_TYPE.NBCATEGORY; ++i )
+        {
+            GameObject go = new GameObject("GameObjectManagerContainer : " + (SPAWN_CONTAINER_TYPE) i);
+            m_containers.Add((SPAWN_CONTAINER_TYPE)i, go);
+        }
     }
 
     public GameObject SpawnObject(GameObject a_gameObject, Vector3 a_position, Quaternion a_rotation, SPAWN_CONTAINER_TYPE a_type = SPAWN_CONTAINER_TYPE.NOTHING)
     {
-        GameObject container;
-
-        switch (a_type)
-        {
-            case SPAWN_CONTAINER_TYPE.DESTRUCTIBLE:
-                container = m_spawnDestructibleObjectsContainer;
-                break;
-
-            case SPAWN_CONTAINER_TYPE.UNDESTRUCTIBLE:
-                container = m_spawnUndestructiblesObjectsContainer;
-                break;
-                
-            default:
-                container = m_spawnDestructibleObjectsContainer;
-                break;
-        }
+        GameObject container = m_containers[a_type];
 
         return Instantiate(a_gameObject, a_position, a_rotation, container.transform);
 
@@ -46,28 +31,8 @@ public class GameObjectManager : Singleton<GameObjectManager>
     
     public void DestroyObjects(SPAWN_CONTAINER_TYPE a_type)
     {
-        GameObject container;
+        GameObject container = m_containers[a_type];
 
-        switch (a_type)
-        {
-            case SPAWN_CONTAINER_TYPE.DESTRUCTIBLE:
-                container = m_spawnDestructibleObjectsContainer;
-                break;
-
-            case SPAWN_CONTAINER_TYPE.UNDESTRUCTIBLE:
-                container = m_spawnUndestructiblesObjectsContainer;
-                break;
-
-            default:
-                container = m_spawnDestructibleObjectsContainer;
-                break;
-        }
-        
         Utils.DestroyChilds(container.transform);
     }
-    
-    void Update()
-    {
-    }
-    
 }
