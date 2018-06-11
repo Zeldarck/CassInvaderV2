@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Audio;
+using UnityEngine.Assertions;
 
 public enum RANDOM_SOUND_TYPE { };
 
@@ -14,7 +15,7 @@ public class RandomSound
     [SerializeField]
     List<AudioClip> m_listSounds;
     List<AudioClip> m_everUsed;
-    int m_audioSourceKey = (int)AUDIOSOURCE_KEY.NOTHING;
+    int m_audioSourceKey = (int)AUDIOSOURCE_KEY.CREATE_KEY;
 
     public List<AudioClip> ListSounds
     {
@@ -106,7 +107,7 @@ public class MixerGroupLink
     }
 }
 
-public enum AUDIOSOURCE_KEY { NOTHING };
+public enum AUDIOSOURCE_KEY { NO_KEY_AUTODESTROY, CREATE_KEY };
 
 
 
@@ -120,8 +121,8 @@ public class SoundManager : Singleton<SoundManager>
     List<RandomSound> m_listRandomSound;
 
     Dictionary<int, AudioSource> m_audioSources = new Dictionary<int, AudioSource>();
-
-    int m_maxAllocatedKey = (int)AUDIOSOURCE_KEY.NOTHING;
+    List<AudioSource> m_autoDestroyAudioSources = new List<AudioSource>();
+    int m_maxAllocatedKey = (int)AUDIOSOURCE_KEY.CREATE_KEY;
  
 
 
@@ -144,7 +145,14 @@ public class SoundManager : Singleton<SoundManager>
         if (!m_audioSources.TryGetValue(a_key, out res))
         {
             res = CreateAudioSource();
-            m_audioSources.Add(a_key, res);
+            if(a_key != (int)AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY)
+            {
+                m_audioSources.Add(a_key, res);
+            }
+            else
+            {
+                m_autoDestroyAudioSources.Add(res);
+            }
         }
 
         return res;
@@ -161,22 +169,22 @@ public class SoundManager : Singleton<SoundManager>
 
     int GetKey(int a_key)
     {
-
-        if(a_key < 0 || a_key > m_maxAllocatedKey)
-        {
-            Debug.LogError("Bad sound key");
-            a_key = (int)AUDIOSOURCE_KEY.NOTHING;
-        }
-
-        if (a_key == (int)AUDIOSOURCE_KEY.NOTHING)
+        Assert.IsFalse(a_key < 0 || a_key > m_maxAllocatedKey, "Bad sound key");
+  
+        if (a_key == (int)AUDIOSOURCE_KEY.CREATE_KEY)
         {
             a_key = ++m_maxAllocatedKey;
         }
         return a_key;
     }
 
+    public int GenerateKey()
+    {
+        return GetKey((int)AUDIOSOURCE_KEY.CREATE_KEY);
+    }
+    //TODO Make Fade if id ever exist, Destroy auto destroy audiosources, see to move initialisation of audiosource elsewhere
 
-    public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isLooping = true, int a_key = (int)AUDIOSOURCE_KEY.NOTHING, ulong a_delay = 0)
+    public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isLooping = true, int a_key = (int)AUDIOSOURCE_KEY.CREATE_KEY, ulong a_delay = 0)
     {
         int res = -1;
         res = GetKey(a_key);
@@ -198,7 +206,7 @@ public class SoundManager : Singleton<SoundManager>
     }
 
 
-    public void StopAudio(int a_key = (int)AUDIOSOURCE_KEY.NOTHING)
+    public void StopAudio(int a_key = (int)AUDIOSOURCE_KEY.CREATE_KEY)
     {
         AudioSource audioSource;
         if (INSTANCE.m_audioSources.TryGetValue(a_key, out audioSource))
@@ -209,7 +217,6 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-  
     public void StartRandom(RANDOM_SOUND_TYPE a_randomSoundType, MIXER_GROUP_TYPE a_mixerGroupType)
     {
 
