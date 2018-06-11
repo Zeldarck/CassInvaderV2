@@ -1303,6 +1303,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scoreText: {fileID: 1571912488}
+--- !u!1 &966078511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 966078512}
+  - component: {fileID: 966078513}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &966078512
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966078511}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966078513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966078511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfd340ddb04e23459e93ca78e44ff32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_listMixerGroup:
+  - m_mixerType: 0
+    m_mixerGroup: {fileID: 243304475738698754, guid: 2059b0cbf121e954185a33cb932a6ccb,
+      type: 2}
+  - m_mixerType: 1
+    m_mixerGroup: {fileID: 243257983478164746, guid: 2059b0cbf121e954185a33cb932a6ccb,
+      type: 2}
+  - m_mixerType: 2
+    m_mixerGroup: {fileID: 243596001712044522, guid: 2059b0cbf121e954185a33cb932a6ccb,
+      type: 2}
+  - m_mixerType: 3
+    m_mixerGroup: {fileID: 243763395077185460, guid: 2059b0cbf121e954185a33cb932a6ccb,
+      type: 2}
+  m_listRandomSound: []
 --- !u!1 &966952472
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,7 +1395,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &968359775
 GameObject:
@@ -1757,7 +1811,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1176362134
 GameObject:
