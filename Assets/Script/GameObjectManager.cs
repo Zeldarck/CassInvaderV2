@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ public class GameObjectManager : Singleton<GameObjectManager>
 
     public GameObject SpawnObject(GameObject a_gameObject, Vector3 a_position, Quaternion a_rotation, SPAWN_CONTAINER_TYPE a_type = SPAWN_CONTAINER_TYPE.NOTHING)
     {
+        Assert.AreNotEqual(a_type, SPAWN_CONTAINER_TYPE.NBCATEGORY, "Type not allowed");
+
         GameObject container = m_containers[a_type];
 
         return Instantiate(a_gameObject, a_position, a_rotation, container.transform);
@@ -31,6 +34,9 @@ public class GameObjectManager : Singleton<GameObjectManager>
     
     public void DestroyObjects(SPAWN_CONTAINER_TYPE a_type)
     {
+
+        Assert.AreNotEqual(a_type, SPAWN_CONTAINER_TYPE.NBCATEGORY, "Type not allowed");
+
         GameObject container = m_containers[a_type];
 
         Utils.DestroyChilds(container.transform);
