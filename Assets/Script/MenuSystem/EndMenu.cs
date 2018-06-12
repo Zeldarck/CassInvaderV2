@@ -11,38 +11,36 @@ public class EndMenu : Menu
     [SerializeField]
     Button m_menuButton;
 
-    
+    [SerializeField]
+    Button m_restartButton;
+
     public override void OnOpen()
     {
-        Clean();
-        /*
-        WordData level = GameManager.Instance.CurrentLevel;
-        m_wordText.text = level + "";
-        WordData nextLevel = DataManager.Instance.GetNextWordData(level);
-        if (nextLevel == null)
+        string endText;
+        int level = EnemyManager.INSTANCE.GetCurrentLevel();
+        int score = GameManager.INSTANCE.PlayerScore;
+
+        if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel())
         {
-            m_nextButton.gameObject.SetActive(false);
+            endText = "That's a win !";
         }
+
         else
         {
-            m_nextButton.onClick.AddListener(() =>
-            {
-                GameManager.Instance.BeginGame(nextLevel);
-            });
+            endText = "Noob, go uninstall please !!";
         }
-        */
-    }
 
-    void Clean()
-    {
-        /*
-        m_nextButton.gameObject.SetActive(true);
-        m_nextButton.onClick.RemoveAllListeners();
-        */
+        m_wordText.text = string.Concat(endText, "\n Current level : ", level, "\n Score : ", score);
     }
 
     public void OnBackButton()
     {
         MenuManager.INSTANCE.BackToMainMenu();
     }
+
+    public void OnRestartButton()
+    {
+        GameManager.INSTANCE.StartGame();
+    }
+
 }

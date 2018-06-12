@@ -80,6 +80,16 @@ public class EnemyManager : Singleton<EnemyManager>
         CancelInvoke();
     }
 
+    public int GetCurrentLevel()
+    {
+        return m_currentLevel;
+    }
+
+    public int GetMaxLevel()
+    {
+        return m_nbOfLevels;
+    }
+
     #endregion
 
     #region JSON
