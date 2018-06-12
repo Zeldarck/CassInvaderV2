@@ -68,6 +68,7 @@ public class EnemyManager : Singleton<EnemyManager>
     public void StartSpawn()
     {
         LoadGameData(m_gameConfig);
+        int m_currentLevel = 1;
         m_IsPlaying = true;
         
         LevelInvoker();

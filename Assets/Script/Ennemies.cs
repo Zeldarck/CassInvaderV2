@@ -8,7 +8,7 @@ public abstract class Ennemies : MonoBehaviour {
 
     protected float _X_MOVE_EAST = 1; // East movement limit per enemy
     protected float _X_MOVE_WEST = -1; // West movement limit per enemy
-    protected float m_enemySpeed = 1;
+    protected float m_enemySpeed = 3;
 
     protected float _INIT_POS_X = 0; // Initial X position of the enemy
     protected float _INIT_POS_Y = 0; // Initial Y position of the enemy
