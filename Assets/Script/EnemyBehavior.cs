@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class EnemyBehavior : Ennemies
 {
@@ -46,6 +47,7 @@ public class EnemyBehavior : Ennemies
         m_life -= a_damage;
         if (m_life <= 0)
         {
+            GetComponent<ParticleSystem>().time = 0;
             GetComponent<ParticleSystem>().Emit(10);
             OnDie.Invoke();
             return true;
@@ -58,12 +60,11 @@ public class EnemyBehavior : Ennemies
     /// Self Destruction on trigger and wait two frames in order to let the ball bounce on the collider
     /// Without this part of code, the ball would go through the enemy and not bounce
     /// </summary>
-    protected IEnumerator AutoDestroy()
+    protected IEnumerator AutoDestroy(float a_delay = 0.1f)
     {
-        for(int i=0; i<10; ++i)
-        {
-            yield return new WaitForEndOfFrame();
-        }
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(a_delay);
 
         Destroy(gameObject);
     }

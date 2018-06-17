@@ -25,19 +25,9 @@ public class GiantBehavior : EnemyBehavior
 
     override public bool GetDamage(int a_damage)
     {
-        m_life -= a_damage;
         m_giantAnim.SetTrigger(targetHash);
 
-        if (m_life <= 0)
-        {
-            GetComponent<ParticleSystem>().Emit(10);
-            // ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
-            // em.enabled = true;
-            OnDie.Invoke();
-            return true;
-        }      
-
-        return false;
+        return base.GetDamage(a_damage);
     }
 
     #region Movement behavior
