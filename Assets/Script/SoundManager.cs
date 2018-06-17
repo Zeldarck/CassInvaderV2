@@ -255,7 +255,7 @@ public class SoundManager : Singleton<SoundManager>
     /// Step to fade sounds
     /// </summary>
     [SerializeField]
-    float m_stepFade;
+    float m_stepFade = 0.1f;
 
 
     void Update()
