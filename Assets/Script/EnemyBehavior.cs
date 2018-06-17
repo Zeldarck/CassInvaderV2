@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class EnemyBehavior : Ennemies
 {
 
+    protected float m_localMovementSpeed = 0;
     protected float m_enemyRadius = 1;
     protected int m_life = 1;
     protected int m_enemyLevel = 1;
@@ -13,8 +14,8 @@ public class EnemyBehavior : Ennemies
     public UnityEvent OnDie;
 
 
-    #region GameObject Setup
-
+    // GameObject Setup
+    //------------------------------------------------------------------------------------
     /// <summary>
     /// Start an OnDie Listener which whill trigger when an enemy shall be destroyed
     /// </summary>
@@ -33,9 +34,9 @@ public class EnemyBehavior : Ennemies
         
     }
 
-    #endregion
 
-    #region Damage undertaking
+    // Damage undertaking
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// On trigger get damages from any damage source
@@ -67,9 +68,10 @@ public class EnemyBehavior : Ennemies
         Destroy(gameObject);
     }
 
-    #endregion
 
-    #region Movement behavior
+
+    // Movement behavior
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Compute the direction vector of the enemy depending of the current situation
@@ -96,6 +98,6 @@ public class EnemyBehavior : Ennemies
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
     }
 
-    #endregion
+    
 
 }
