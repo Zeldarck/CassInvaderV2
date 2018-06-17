@@ -132,7 +132,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
-            GameObject EnemyGroup = GameObjectManager.INSTANCE.SpawnObject(m_enemyGroupPrefab, m_initialPosition, m_initialRotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+            GameObject EnemyGroup = GameObjectManager.INSTANCE.Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
             for (int i = 0; i < m_typeArray.Length; ++i)
             {
                 switch (m_typeArray[i])
@@ -163,7 +163,7 @@ public class EnemyManager : Singleton<EnemyManager>
                 }
 
                 m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_typeArray.Length - 1) * 1.2f) / 4), 4, 0);
-                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(GameObjectManager.INSTANCE.SpawnObject(currentPrefab, m_enemyPosition ,m_initialRotation).GetComponent<Ennemies>());
+                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(GameObjectManager.INSTANCE.Instantiate(currentPrefab, m_enemyPosition ,m_initialRotation).GetComponent<Ennemies>());
             }
         }
 

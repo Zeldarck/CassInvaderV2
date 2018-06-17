@@ -43,11 +43,11 @@ public class GameManager : Singleton<GameManager> {
         PlayerScore = 0;
         MenuManager.INSTANCE.CloseMenu();
         EnemyManager.INSTANCE.StartSpawn();
+        PlayerController.INSTANCE.StartGame();
     }
 
     public void EndGame()
     {
-        // EnemyManager.INSTANCE.StartSpawn();
         GameObjectManager.INSTANCE.DestroyObjects(SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
         EnemyManager.INSTANCE.StopSpawn();
         MenuManager.INSTANCE.OpenMenu(MENUTYPE.END);

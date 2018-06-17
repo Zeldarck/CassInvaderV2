@@ -22,7 +22,7 @@ public class GameObjectManager : Singleton<GameObjectManager>
         }
     }
 
-    public GameObject SpawnObject(GameObject a_gameObject, Vector3 a_position, Quaternion a_rotation, SPAWN_CONTAINER_TYPE a_type = SPAWN_CONTAINER_TYPE.NOTHING)
+    public GameObject Instantiate(GameObject a_gameObject, Vector3 a_position, Quaternion a_rotation, SPAWN_CONTAINER_TYPE a_type = SPAWN_CONTAINER_TYPE.NOTHING)
     {
         Assert.AreNotEqual(a_type, SPAWN_CONTAINER_TYPE.NBCATEGORY, "Type not allowed");
 
