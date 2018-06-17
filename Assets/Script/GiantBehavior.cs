@@ -13,7 +13,7 @@ public class GiantBehavior : EnemyBehavior
     /// </summary>
     override protected void Awake()
     {
-        m_enemySpeed = 0.1f;
+        //m_enemySpeed = 0.1f;
         m_enemyRadius = 2;
         m_life = 4;
         m_enemyLevel = 3;
@@ -55,7 +55,7 @@ public class GiantBehavior : EnemyBehavior
         }
 
         Vector2 directionComputed = new Vector2(_XDir, 0);
-        directionComputed *= m_enemySpeed;
+        directionComputed *= EnemyManager.INSTANCE.EnemySpeed;
 
         return directionComputed;
     }

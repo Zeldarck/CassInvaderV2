@@ -27,7 +27,7 @@ public class EndMenu : Menu
 
         else
         {
-            endText = "Noob, go uninstall please !!";
+            endText = "Noob !!";
         }
 
         m_wordText.text = string.Concat(endText, "\n Current level : ", level, "\n Score : ", score);

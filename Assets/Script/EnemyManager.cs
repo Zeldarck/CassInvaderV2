@@ -6,7 +6,6 @@ public class EnemyManager : Singleton<EnemyManager>
 {
 
 
-    #region Variables
 
     /// <summary>
     /// Serialization of prefabs and set of spawn attributes
@@ -50,15 +49,35 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     private string[] m_typeArray = { "walker" };
 
+    [SerializeField]
+    float m_enemySpeed = 1;
+
+    float m_currentEnnemySpeed;
+    [SerializeField]
+    float m_enemySpeedStep = 0;
+
+
     int m_nbWavesEnemysExecuted = 0;
     int m_currentLevel = 1;
     protected GameObject currentPrefab;
 
     protected bool m_IsPlaying = false;
 
+
+    #region GetterSetter
+
+    public float EnemySpeed
+    {
+        get
+        {
+            return m_currentEnnemySpeed;
+        }
+    }
+
     #endregion
 
-    #region SetUp
+// SetUp
+//------------------------------------------------------------------------------------
 
     void Start()
     {
@@ -68,9 +87,9 @@ public class EnemyManager : Singleton<EnemyManager>
     public void StartSpawn()
     {
         LoadGameData(m_gameConfig);
-        int m_currentLevel = 1;
         m_IsPlaying = true;
-        
+        m_currentLevel = 1;
+        m_currentEnnemySpeed = m_enemySpeed;
         LevelInvoker();
     }
 
@@ -91,9 +110,9 @@ public class EnemyManager : Singleton<EnemyManager>
         return m_nbOfLevels;
     }
 
-    #endregion
 
-    #region JSON
+    // JSON
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Read a JSON file with indications about the current level
@@ -106,7 +125,6 @@ public class EnemyManager : Singleton<EnemyManager>
         JsonUtility.FromJsonOverwrite(jsonString, this);
     }
         
-    #endregion
 
     #region LevelManagement
 
@@ -132,6 +150,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
+            m_currentEnnemySpeed += m_enemySpeedStep;
             GameObject EnemyGroup = GameObjectManager.INSTANCE.Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
             for (int i = 0; i < m_typeArray.Length; ++i)
             {

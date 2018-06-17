@@ -14,7 +14,7 @@ public class FlankerBehavior : EnemyBehavior
     /// </summary>
     override protected void Awake()
     {
-        m_enemySpeed = 0;
+        //m_enemySpeed = 0;
         m_enemyRadius = 1;
         m_life = 1;
         m_enemyLevel = 3;

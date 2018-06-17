@@ -8,7 +8,6 @@ public abstract class Ennemies : MonoBehaviour {
 
     protected float _X_MOVE_EAST = 1; // East movement limit per enemy
     protected float _X_MOVE_WEST = -1; // West movement limit per enemy
-    protected float m_enemySpeed = 3;
 
     protected float _INIT_POS_X = 0; // Initial X position of the enemy
     protected float _INIT_POS_Y = 0; // Initial Y position of the enemy
@@ -17,8 +16,8 @@ public abstract class Ennemies : MonoBehaviour {
     protected float _YDir = 0;
 
 
-    #region GameObject Setup
-    
+ // GameObject Setup
+ //------------------------------------------------------------------------------------
     /// <summary>
     /// Set defaults values as soon as the object gets created
     /// </summary>
@@ -36,9 +35,8 @@ public abstract class Ennemies : MonoBehaviour {
         _INIT_POS_Y = this.transform.position.y;
     }
 
-    #endregion
-
-    #region GameObject movement Behavior
+// GameObject movement Behavior
+//------------------------------------------------------------------------------------
 
     /// <summary>
     /// Abstrat function to compute the direction vector of the ennemies depending of the current situation
@@ -50,5 +48,4 @@ public abstract class Ennemies : MonoBehaviour {
     /// </summary>
     protected abstract void FixedUpdate();
 
-    #endregion
 }
