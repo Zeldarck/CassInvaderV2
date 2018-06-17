@@ -37,7 +37,7 @@ public class SweeperBehavior : EnemyBehavior
     void LaunchProjectile()
     {
         m_currentPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-        Instantiate(m_fireProjectile, m_currentPosition, m_initialRotation);
+        GameObjectManager.INSTANCE.Instantiate(m_fireProjectile, m_currentPosition, m_initialRotation,SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
     }
 
     #endregion
