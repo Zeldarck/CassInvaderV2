@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 58404156813371070}
   - component: {fileID: 50025226322352748}
   - component: {fileID: 96192662445046032}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -204,6 +204,7 @@ MonoBehaviour:
   m_speed: 4
   m_step: 0.05
   m_strength: 1
+  m_minAngle: 20
 --- !u!212 &212833247634422802
 SpriteRenderer:
   m_ObjectHideFlags: 1

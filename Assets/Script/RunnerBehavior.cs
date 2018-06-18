@@ -16,7 +16,7 @@ public class RunnerBehavior : EnemyBehavior
     /// </summary>
     override protected void Awake()
     {
-        m_enemySpeed = 0.65f;
+        m_localMovementSpeed = 0.65f;
         m_enemyRadius = 1;
         m_life = 2;
         m_enemyLevel = 2;
@@ -41,7 +41,7 @@ public class RunnerBehavior : EnemyBehavior
         }
 
         Vector2 directionComputed = new Vector2(_XDir, 0);
-        directionComputed *= m_enemySpeed;
+        directionComputed *= m_localMovementSpeed;
         ++m_frameCount;
 
         return directionComputed;
@@ -50,7 +50,7 @@ public class RunnerBehavior : EnemyBehavior
     void LaunchProjectile()
     {
         m_currentPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-        Instantiate(m_iceProjectile, m_currentPosition, m_initialRotation);
+        GameObjectManager.INSTANCE.Instantiate(m_iceProjectile, m_currentPosition, m_initialRotation,SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
     }
 
     #endregion

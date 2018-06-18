@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Singleton<PlayerController> {
 
     public KeyCode m_moveRight = KeyCode.D;
     public KeyCode m_moveLeft = KeyCode.Q;
@@ -97,13 +98,15 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (!GameManager.INSTANCE.IsGameRunning)
+        {
+            return;
+        }
 
         m_sliderReload.value += Time.deltaTime;
         if ( Input.GetKeyDown(KeyCode.Space) && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
         {
-            Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation);
-            m_sliderReload.value = 0;
-            //TODO : add velocity depend on player velocity
+            Fire();
         }
 
         
@@ -128,10 +131,7 @@ public class PlayerController : MonoBehaviour {
             if (Utils.IsTapping(Input.GetTouch(0), 0) && Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
             {
                 Debug.Log(Input.GetTouch(0).position.y + "   " + Screen.height * m_percentageScreenFire);
-
-                Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation);
-                m_sliderReload.value = 0;
-                //TODO : add velocity depend on player velocity
+                Fire();
             }
             else if(m_boostUsable && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
@@ -159,6 +159,21 @@ public class PlayerController : MonoBehaviour {
 
         m_rb2d.velocity = vel;
 
+    }
+
+    void Fire()
+    {
+        GameObjectManager.INSTANCE.Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+        m_sliderReload.value = 0;
+        //TODO : add velocity depend on player velocity
+
+    }
+
+    public void StartGame()
+    {
+        transform.position = new Vector3(0, transform.position.y, transform.position.z);
+        m_sliderReload.value = m_timeToReload;
+        m_sliderReload.maxValue = m_timeToReload;
     }
 
 

@@ -29,6 +29,6 @@ public class CollectableManager : Singleton<CollectableManager>
 
     public void SpawnCollectable(Vector3 a_pos, GameObject a_boost)
     {
-        Instantiate(a_boost, a_pos, new Quaternion(0, 0, 0, 0));
+        GameObjectManager.INSTANCE.Instantiate(a_boost, a_pos, new Quaternion(0, 0, 0, 0), SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
     }
 }

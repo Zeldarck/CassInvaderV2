@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Audio;
+using UnityEngine.Assertions;
+using System;
 
-
-public enum RANDOM_SOUND_TYPE {  };
+public enum RANDOM_SOUND_TYPE { };
 
 [System.Serializable]
 public class RandomSound
@@ -15,7 +16,9 @@ public class RandomSound
     [SerializeField]
     List<AudioClip> m_listSounds;
     List<AudioClip> m_everUsed;
+    int m_audioSourceKey = (int)AUDIOSOURCE_KEY.CREATE_KEY;
 
+    #region GetterSetter
     public List<AudioClip> ListSounds
     {
         get
@@ -54,6 +57,20 @@ public class RandomSound
             m_everUsed = value;
         }
     }
+
+    public int AudioSourceKey
+    {
+        get
+        {
+            return m_audioSourceKey;
+        }
+
+        set
+        {
+            m_audioSourceKey = value;
+        }
+    }
+    #endregion
 }
 
 public enum MIXER_GROUP_TYPE { AMBIANT, SFX_MENU, SFX_GOOD, SFX_BAD };
@@ -94,57 +111,348 @@ public class MixerGroupLink
 }
 
 
+public class AudioSourceExtend
+{
+    AudioSource m_audioSource;
+    bool m_autoDestroy;
+    float m_step;
+    bool m_isDestroyed;
+    int m_key;
+
+#region GetterSetter
+    public bool IsDestroyed
+    {
+        get
+        {
+            return m_isDestroyed;
+        }
+
+        set
+        {
+            m_isDestroyed = value;
+        }
+    }
+
+    public AudioSource AudioSource
+    {
+        get
+        {
+            return m_audioSource;
+        }
+
+        set
+        {
+            m_audioSource = value;
+        }
+    }
+
+    public bool AutoDestroy
+    {
+        get
+        {
+            return m_autoDestroy;
+        }
+
+        set
+        {
+            m_autoDestroy = value;
+        }
+    }
+
+    public float Step
+    {
+        get
+        {
+            return m_step;
+        }
+
+        set
+        {
+            m_step = value;
+        }
+    }
+
+    public int Key
+    {
+        get
+        {
+            return m_key;
+        }
+
+        set
+        {
+            m_key = value;
+        }
+    }
+
+    #endregion
+
+    public AudioSourceExtend(AudioSource a_audioSource)
+    {
+        m_audioSource = a_audioSource;
+    }
+
+    public void Update()
+    {
+        AudioSource.volume += Step * Time.deltaTime;
+        TryToDestroy();
+    }
+
+    void TryToDestroy()
+    {
+        if (AutoDestroy && AudioSource && AudioSource.volume <= Step && AudioSource.clip != null && ( AudioSource.time >= AudioSource.clip.length - 0.001 && !AudioSource.loop))
+        {
+            GameObject.Destroy(AudioSource);
+            IsDestroyed = true;
+        }
+    }
+
+    public void Stop()
+    {
+        if (m_audioSource)
+        {
+            m_audioSource.Stop();
+        }
+    }
+}
+
+
+public enum AUDIOSOURCE_KEY { NO_KEY_AUTODESTROY, CREATE_KEY };
+
+
 
 public class SoundManager : Singleton<SoundManager>
 {
 
+    /// <summary>
+    /// Store mixers of game
+    /// </summary>
     [SerializeField]
     List<MixerGroupLink> m_listMixerGroup;
 
+    /// <summary>
+    /// Store set of random sounds
+    /// </summary>
     [SerializeField]
     List<RandomSound> m_listRandomSound;
 
+    /// <summary>
+    /// Store Audio Source Extend with their keys
+    /// </summary>
+    Dictionary<int, AudioSourceExtend> m_audioSourcesExtendWithKey = new Dictionary<int, AudioSourceExtend>();
+    /// <summary>
+    /// Store all AudioSource Extend know
+    /// </summary>
+    List<AudioSourceExtend> m_audioSourcesExtend = new List<AudioSourceExtend>();
+
+
+    /// <summary>
+    /// Key to allocate
+    /// </summary>
+    int m_maxAllocatedKey = (int)AUDIOSOURCE_KEY.CREATE_KEY;
+
+    /// <summary>
+    /// Step to fade sounds
+    /// </summary>
+    [SerializeField]
+    float m_stepFade = 0.1f;
+
+
+    void Update()
+    {
+
+
+        foreach (AudioSourceExtend audioSourceExtend in m_audioSourcesExtend)
+        {
+            audioSourceExtend.Update();
+            if (audioSourceExtend.IsDestroyed)
+            {
+                m_audioSourcesExtendWithKey.Remove(audioSourceExtend.Key);
+            }
+        }
+        m_audioSourcesExtend.RemoveAll(x => x.IsDestroyed);
+    }
 
 
 
-    private AudioSource CreateAudioSource(AudioMixerGroup a_mixerGroup)
+    /// <summary>
+    /// Check if an Audio is actually playing
+    /// </summary>
+    /// <param name="a_key">Key of the audio</param>
+    /// <returns>Do the audio playing</returns>
+    public bool IsAudioPlaying(int a_key)
+    {
+        bool res = false;
+        AudioSourceExtend output;
+        if(m_audioSourcesExtendWithKey.TryGetValue(a_key, out output))
+        {
+            res = output.AudioSource.isPlaying;
+        }
+
+        return res;
+    }
+
+    /// <summary>
+    /// Get audiosourceassociate to a key if it not exist will create a new depend of parameter
+    /// </summary>
+    /// <param name="a_key">key of the audio</param>
+    /// <param name="out_res">out</param>
+    /// <param name="a_createIfNotPresent">Do we create a new source if not exist</param>
+    /// <returns>True if the key ever exist, false if not</returns>
+    bool GetAudioSource(int a_key, out AudioSourceExtend out_res, bool a_createIfNotPresent = true)
+    {
+        Assert.IsFalse(a_key < 0 || a_key > m_maxAllocatedKey, "Bad sound key");
+
+        bool res = true;
+        if (!m_audioSourcesExtendWithKey.TryGetValue(a_key, out out_res))
+        {
+            res = false;
+            if (a_createIfNotPresent)
+            {
+                out_res = new AudioSourceExtend(CreateAudioSource());
+                if (a_key != (int)AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY)
+                {
+                    m_audioSourcesExtendWithKey.Add(a_key, out_res);
+                }
+                else
+                {
+                    out_res.AutoDestroy = true;
+                }
+                out_res.Key = a_key;
+                m_audioSourcesExtend.Add(out_res);
+            }
+
+        }
+
+  
+        return res;
+    }
+
+    /// <summary>
+    /// Create an audio source with looping true and not playing
+    /// </summary>
+    /// <returns>an Audios ource</returns>
+    AudioSource CreateAudioSource()
     {
         AudioSource res;
         res = gameObject.AddComponent<AudioSource>();
         res.loop = true;
         res.Stop();
-        res.outputAudioMixerGroup = a_mixerGroup;
         return res;
     }
-    
 
-    public void StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isLooping = true)
+
+    /// <summary>
+    /// depend of the key create a new one or just return this key.
+    /// </summary>
+    /// <param name="a_key">the key</param>
+    /// <returns>key created</returns>
+    int GetKey(int a_key)
     {
+        Assert.IsFalse(a_key < 0 || a_key > m_maxAllocatedKey, "Bad sound key");
+  
+        if (a_key == (int)AUDIOSOURCE_KEY.CREATE_KEY)
+        {
+            a_key = ++m_maxAllocatedKey;
+        }
+        return a_key;
+    }
+
+    /// <summary>
+    /// Get a key to keep tracking of audiosource
+    /// </summary>
+    /// <returns>a key</returns>
+    public int GenerateKey()
+    {
+        return GetKey((int)AUDIOSOURCE_KEY.CREATE_KEY);
+    }
+    //TODO see to move initialisation of audiosource elsewhere - store key inside audio extends instead of dictionnary?
+
+    /// <summary>
+    /// Start an audio depending of parameters - TODO simplify it and move elswhere some logic
+    /// </summary>
+    /// <param name="a_clip">Clip we want to play</param>
+    /// <param name="a_mixerGroupType">Mixer we want to output</param>
+    /// <param name="a_isFading">If the clip is fading</param>
+    /// <param name="a_isLooping">If the clip it autolooping</param>
+    /// <param name="a_key">the key we want</param>
+    /// <param name="a_delay">if we play with a delay</param>
+    /// <returns></returns>
+    public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isFading = true, bool a_isLooping = true, int a_key = (int)AUDIOSOURCE_KEY.CREATE_KEY, ulong a_delay = 0)
+    {
+        int res = -1;
+        res = GetKey(a_key);
         try
         {
             AudioMixerGroup mixer = m_listMixerGroup.Find(x => x.MixerType == a_mixerGroupType).MixerGroup;
-            AudioSource new_source = CreateAudioSource(mixer);
-            new_source.clip = a_clip;
-            new_source.loop = a_isLooping;
-            new_source.Play();
+            AudioSourceExtend source;
+
+            if (GetAudioSource(a_key, out source))
+            {
+                AudioSourceExtend new_source = new AudioSourceExtend(CreateAudioSource());
+                if (a_isFading)
+                {
+                    source.Step = -m_stepFade;
+                }
+                else
+                {
+                    source.Stop();
+                }
+                source.AutoDestroy = true;
+                AudioSourceExtend temp = source;
+                source = new_source;
+                new_source = temp;
+            }
+
+            if (a_isFading)
+            {
+
+                source.Step = m_stepFade;
+                source.AudioSource.volume = 0;
+            }
+
+            source.AudioSource.outputAudioMixerGroup = mixer;
+            source.AudioSource.clip = a_clip;
+            source.AudioSource.loop = a_isLooping;
+            source.AudioSource.Play(a_delay);
+
             Debug.Log("StartAudio : " + a_clip.name);
         }
         catch
         {
-            Debug.LogError("No mixerGroup of type " + a_mixerGroupType);
+            Debug.LogError("Error when try to launch sound");
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// Stop the audio specify if exist
+    /// </summary>
+    /// <param name="a_key">key of the audio we want to stop</param>
+    public void StopAudio(int a_key = (int)AUDIOSOURCE_KEY.CREATE_KEY)
+    {
+        AudioSourceExtend audioSourceExtend;
+        if (INSTANCE.m_audioSourcesExtendWithKey.TryGetValue(a_key, out audioSourceExtend))
+        {
+            audioSourceExtend.Stop();
+            Debug.Log("StopAudio : " + a_key);
         }
     }
 
-
+    /// <summary>
+    /// Start an audio of a random bank
+    /// </summary>
+    /// <param name="a_randomSoundType">id of the random bank</param>
+    /// <param name="a_mixerGroupType">id of the mixer we want to output through</param>
     public void StartRandom(RANDOM_SOUND_TYPE a_randomSoundType, MIXER_GROUP_TYPE a_mixerGroupType)
     {
 
         RandomSound randomSound = m_listRandomSound.Find(x => x.Type == a_randomSoundType);
         if (randomSound.ListSounds.Count > 0)
         {
-            int rnd = Random.Range(0, randomSound.ListSounds.Count);
+            int rnd = (int)Utils.RandomFloat(0, randomSound.ListSounds.Count);
             AudioClip toPlay = randomSound.ListSounds[rnd];
-            StartAudio(randomSound.ListSounds[rnd], a_mixerGroupType, false);
+            randomSound.AudioSourceKey = StartAudio(randomSound.ListSounds[rnd], a_mixerGroupType, false, false, randomSound.AudioSourceKey);
             randomSound.EverUsed.Add(toPlay);
             randomSound.ListSounds.Remove(toPlay);
 
@@ -156,4 +464,19 @@ public class SoundManager : Singleton<SoundManager>
         }
 
     }
+
+
+
+    /// <summary>
+    /// Stop an audio with a key
+    /// </summary>
+    /// <param name="a_key">key of the audio we want to stop</param>
+     public void StopAudioWithFadeOut(int a_key)
+     {
+        AudioSourceExtend audioSource;
+        GetAudioSource(a_key, out audioSource,  false);
+        audioSource.Step = -m_stepFade;
+        audioSource.AutoDestroy = true;
+     }
+
 }

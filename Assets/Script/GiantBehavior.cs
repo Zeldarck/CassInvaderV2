@@ -13,7 +13,7 @@ public class GiantBehavior : EnemyBehavior
     /// </summary>
     override protected void Awake()
     {
-        m_enemySpeed = 0.1f;
+        m_localMovementSpeed = 0.1f;
         m_enemyRadius = 2;
         m_life = 4;
         m_enemyLevel = 3;
@@ -25,19 +25,9 @@ public class GiantBehavior : EnemyBehavior
 
     override public bool GetDamage(int a_damage)
     {
-        m_life -= a_damage;
         m_giantAnim.SetTrigger(targetHash);
 
-        if (m_life <= 0)
-        {
-            GetComponent<ParticleSystem>().Emit(10);
-            // ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
-            // em.enabled = true;
-            OnDie.Invoke();
-            return true;
-        }      
-
-        return false;
+        return base.GetDamage(a_damage);
     }
 
     #region Movement behavior
@@ -55,7 +45,7 @@ public class GiantBehavior : EnemyBehavior
         }
 
         Vector2 directionComputed = new Vector2(_XDir, 0);
-        directionComputed *= m_enemySpeed;
+        directionComputed *= m_localMovementSpeed;
 
         return directionComputed;
     }

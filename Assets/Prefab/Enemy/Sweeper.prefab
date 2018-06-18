@@ -9,47 +9,48 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1320280875878234}
+  m_RootGameObject: {fileID: 1737856206623766}
   m_IsPrefabParent: 1
---- !u!1 &1320280875878234
+--- !u!1 &1737856206623766
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4825340349268612}
-  - component: {fileID: 212189968975501634}
-  - component: {fileID: 58533656244433412}
-  - component: {fileID: 114655581643521768}
-  - component: {fileID: 198843851322911974}
-  - component: {fileID: 199520853040085728}
-  m_Layer: 0
-  m_Name: Walker
+  - component: {fileID: 4735844639524024}
+  - component: {fileID: 212273160061334424}
+  - component: {fileID: 58818597923277144}
+  - component: {fileID: 95528762142998428}
+  - component: {fileID: 198292130924297140}
+  - component: {fileID: 199775984568987446}
+  - component: {fileID: 114404096643011634}
+  m_Layer: 9
+  m_Name: Sweeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4825340349268612
+--- !u!4 &4735844639524024
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320280875878234}
+  m_GameObject: {fileID: 1737856206623766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.517, y: 4.785, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58533656244433412
+--- !u!58 &58818597923277144
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320280875878234}
+  m_GameObject: {fileID: 1737856206623766}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: b1a0e89f501f5f041a89bcfa74e6f43c, type: 2}
@@ -58,16 +59,33 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2.01
---- !u!114 &114655581643521768
+  m_Radius: 0.5
+--- !u!95 &95528762142998428
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737856206623766}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 41986b5c377b7634f92eaecd80ada66d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114404096643011634
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320280875878234}
+  m_GameObject: {fileID: 1737856206623766}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e09860b02a6b79a49a3c68258443723d, type: 3}
+  m_Script: {fileID: 11500000, guid: 61435958ad38b3d4489eb1cb71238b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnDie:
@@ -75,12 +93,14 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!198 &198843851322911974
+  m_fireProjectile: {fileID: 1804156945912140, guid: 6633fc535d2b1af449c28208fdc180fb,
+    type: 2}
+--- !u!198 &198292130924297140
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320280875878234}
+  m_GameObject: {fileID: 1737856206623766}
   serializedVersion: 5
   lengthInSec: 2
   simulationSpeed: 1
@@ -134,8 +154,8 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
-  randomSeed: -626205992
+  scalingMode: 0
+  randomSeed: 685552390
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -183,7 +203,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -225,7 +245,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.10980393, g: 0.6745098, b: 0.69803923, a: 1}
+      maxColor: {r: 0.63529414, g: 0, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1037,15 +1057,15 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.11921499, g: 0.7450445, b: 0.77205884, a: 1}
+        key0: {r: 0.63529414, g: 0, b: 1, a: 1}
         key1: {r: 0, g: 0, b: 0, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
+        key2: {r: 0, g: 0, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 0
+        ctime0: 10409
         ctime1: 65535
         ctime2: 0
         ctime3: 0
@@ -1053,9 +1073,9 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime0: 44718
+        atime1: 61295
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -1063,7 +1083,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -3436,13 +3456,13 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &199520853040085728
+--- !u!199 &199775984568987446
 ParticleSystemRenderer:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320280875878234}
+  m_GameObject: {fileID: 1737856206623766}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -3474,8 +3494,8 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
-  m_MinParticleSize: 0.08
-  m_MaxParticleSize: 0.15
+  m_MinParticleSize: 0.01
+  m_MaxParticleSize: 0.02
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -3490,12 +3510,12 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!212 &212189968975501634
+--- !u!212 &212273160061334424
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320280875878234}
+  m_GameObject: {fileID: 1737856206623766}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -3524,12 +3544,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 98a5c6f8a290f174ea362bbd55c34445, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8cb3f3d7032f87b48a13965fa8a4fb7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.48, y: 0.49}
+  m_Size: {x: 2.59, y: 1.68}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

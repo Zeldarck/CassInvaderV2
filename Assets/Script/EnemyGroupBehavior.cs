@@ -49,7 +49,7 @@ public class EnemyGroupBehavior : Ennemies
         // Use the number of ennmies in the wave to move everybody accordingly
 
         Vector2 directionComputed = new Vector2(_XDir, _YDir);
-        directionComputed *= m_enemySpeed;
+        directionComputed *= EnemyManager.INSTANCE.EnemySpeed;
 
         // Reset the _YDir variable to avoid the enemmies to keep going downward
         _YDir = 0;

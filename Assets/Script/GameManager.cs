@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     int m_playerScore = 0;
 
+    bool m_isGameRunning = false;
+
     [SerializeField]
     AudioClip m_noemieTest;
 
@@ -30,6 +32,14 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+    public bool IsGameRunning
+    {
+        get
+        {
+            return m_isGameRunning;
+        }
+    }
+
     void Start()
     {
         if (m_noemieTest != null)
@@ -43,6 +53,16 @@ public class GameManager : Singleton<GameManager> {
         PlayerScore = 0;
         MenuManager.INSTANCE.CloseMenu();
         EnemyManager.INSTANCE.StartSpawn();
+        PlayerController.INSTANCE.StartGame();
+        m_isGameRunning = true;
+    }
+
+    public void EndGame()
+    {
+        GameObjectManager.INSTANCE.DestroyObjects(SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+        EnemyManager.INSTANCE.StopSpawn();
+        MenuManager.INSTANCE.OpenMenu(MENUTYPE.END);
+        m_isGameRunning = false;
     }
 
     void Update()

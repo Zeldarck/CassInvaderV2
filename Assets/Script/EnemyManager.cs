@@ -6,7 +6,6 @@ public class EnemyManager : Singleton<EnemyManager>
 {
 
 
-    #region Variables
 
     /// <summary>
     /// Serialization of prefabs and set of spawn attributes
@@ -50,13 +49,35 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     private string[] m_typeArray = { "walker" };
 
-    private int m_nbWavesEnemysExecuted = 0;
-    private int m_currentLevel = 1;
-    private GameObject currentPrefab;
+    [SerializeField]
+    float m_enemySpeed = 1;
+
+    float m_currentEnnemySpeed;
+    [SerializeField]
+    float m_enemySpeedStep = 0;
+
+
+    int m_nbWavesEnemysExecuted = 0;
+    int m_currentLevel = 1;
+    protected GameObject currentPrefab;
+
+    protected bool m_IsPlaying = false;
+
+
+    #region GetterSetter
+
+    public float EnemySpeed
+    {
+        get
+        {
+            return m_currentEnnemySpeed;
+        }
+    }
 
     #endregion
 
-    #region SetUp
+// SetUp
+//------------------------------------------------------------------------------------
 
     void Start()
     {
@@ -66,12 +87,32 @@ public class EnemyManager : Singleton<EnemyManager>
     public void StartSpawn()
     {
         LoadGameData(m_gameConfig);
+        m_IsPlaying = true;
+        m_currentLevel = 1;
+        m_currentEnnemySpeed = m_enemySpeed;
         LevelInvoker();
     }
 
-    #endregion
+    public void StopSpawn()
+    {
+        m_IsPlaying = false;
+        
+        CancelInvoke();
+    }
 
-    #region JSON
+    public int GetCurrentLevel()
+    {
+        return m_currentLevel;
+    }
+
+    public int GetMaxLevel()
+    {
+        return m_nbOfLevels;
+    }
+
+
+    // JSON
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Read a JSON file with indications about the current level
@@ -84,7 +125,6 @@ public class EnemyManager : Singleton<EnemyManager>
         JsonUtility.FromJsonOverwrite(jsonString, this);
     }
         
-    #endregion
 
     #region LevelManagement
 
@@ -107,10 +147,11 @@ public class EnemyManager : Singleton<EnemyManager>
     /// </summary>
     void Spawn()
     {
-        
+
         if (m_nbWavesEnemysExecuted < m_nbWavesEnemys)
         {
-            GameObject EnemyGroup = Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation);
+            m_currentEnnemySpeed += m_enemySpeedStep;
+            GameObject EnemyGroup = GameObjectManager.INSTANCE.Instantiate(m_enemyGroupPrefab, m_initialPosition, m_initialRotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
             for (int i = 0; i < m_typeArray.Length; ++i)
             {
                 switch (m_typeArray[i])
@@ -141,13 +182,12 @@ public class EnemyManager : Singleton<EnemyManager>
                 }
 
                 m_enemyPosition = new Vector3(((i * 1.2f) / 2 - ((m_typeArray.Length - 1) * 1.2f) / 4), 4, 0);
-                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(Instantiate(currentPrefab, m_enemyPosition, m_initialRotation).GetComponent<Ennemies>());
+                EnemyGroup.GetComponent<EnemyGroupBehavior>().AddChild(GameObjectManager.INSTANCE.Instantiate(currentPrefab, m_enemyPosition ,m_initialRotation).GetComponent<Ennemies>());
             }
         }
 
         ++m_nbWavesEnemysExecuted;
 
-        Debug.Log(m_nbWavesEnemysExecuted);
     }
 
     /// <summary>
@@ -157,14 +197,17 @@ public class EnemyManager : Singleton<EnemyManager>
     void Update()
     {
         // Cancel all Invoke calls
-        if (m_nbWavesEnemysExecuted > m_nbWavesEnemys)
+        if (m_nbWavesEnemysExecuted > m_nbWavesEnemys && m_IsPlaying)
         {
             CancelInvoke();
             ++m_currentLevel;
             m_nbWavesEnemysExecuted = 0;
             if (m_currentLevel <= m_nbOfLevels)
             {
-                LevelInvoker();
+                if (m_IsPlaying)
+                {
+                    LevelInvoker();
+                }
             }
         }
     }

@@ -15,7 +15,6 @@ public class SweeperBehavior : EnemyBehavior
     /// </summary>
     override protected void Awake()
     {
-        m_enemySpeed = 0;
         m_enemyRadius = 1;
         m_life = 2;
         m_enemyLevel = 2;
@@ -38,7 +37,7 @@ public class SweeperBehavior : EnemyBehavior
     void LaunchProjectile()
     {
         m_currentPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-        Instantiate(m_fireProjectile, m_currentPosition, m_initialRotation);
+        GameObjectManager.INSTANCE.Instantiate(m_fireProjectile, m_currentPosition, m_initialRotation,SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
     }
 
     #endregion

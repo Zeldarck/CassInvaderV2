@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class EnemyBehavior : Ennemies
 {
 
+    protected float m_localMovementSpeed = 0;
     protected float m_enemyRadius = 1;
     protected int m_life = 1;
     protected int m_enemyLevel = 1;
@@ -13,8 +15,8 @@ public class EnemyBehavior : Ennemies
     public UnityEvent OnDie;
 
 
-    #region GameObject Setup
-
+    // GameObject Setup
+    //------------------------------------------------------------------------------------
     /// <summary>
     /// Start an OnDie Listener which whill trigger when an enemy shall be destroyed
     /// </summary>
@@ -33,9 +35,9 @@ public class EnemyBehavior : Ennemies
         
     }
 
-    #endregion
 
-    #region Damage undertaking
+    // Damage undertaking
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// On trigger get damages from any damage source
@@ -45,6 +47,7 @@ public class EnemyBehavior : Ennemies
         m_life -= a_damage;
         if (m_life <= 0)
         {
+            GetComponent<ParticleSystem>().time = 0;
             GetComponent<ParticleSystem>().Emit(10);
             OnDie.Invoke();
             return true;
@@ -57,19 +60,19 @@ public class EnemyBehavior : Ennemies
     /// Self Destruction on trigger and wait two frames in order to let the ball bounce on the collider
     /// Without this part of code, the ball would go through the enemy and not bounce
     /// </summary>
-    protected IEnumerator AutoDestroy()
+    protected IEnumerator AutoDestroy(float a_delay = 0.1f)
     {
-        for(int i=0; i<10; ++i)
-        {
-            yield return new WaitForEndOfFrame();
-        }
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(a_delay);
 
         Destroy(gameObject);
     }
 
-    #endregion
 
-    #region Movement behavior
+
+    // Movement behavior
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Compute the direction vector of the enemy depending of the current situation
@@ -87,11 +90,8 @@ public class EnemyBehavior : Ennemies
     {
         // check if an invader has made it to the Dead Zone
         if (gameObject.transform.position.y < (_DEADZONE + m_enemyRadius))
-        {
-            // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
-            Debug.Log("An Enemy reached the bottom!");
-            
-            Destroy(gameObject);
+        {           
+            GameManager.INSTANCE.EndGame();
         }
 
         // move accordingly 
@@ -99,6 +99,6 @@ public class EnemyBehavior : Ennemies
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
     }
 
-    #endregion
+    
 
 }
