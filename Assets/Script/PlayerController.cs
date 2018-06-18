@@ -98,6 +98,10 @@ public class PlayerController : Singleton<PlayerController> {
 
     void FixedUpdate()
     {
+        if (!GameManager.INSTANCE.IsGameRunning)
+        {
+            return;
+        }
 
         m_sliderReload.value += Time.deltaTime;
         if ( Input.GetKeyDown(KeyCode.Space) && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)

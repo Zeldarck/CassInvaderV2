@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     int m_playerScore = 0;
 
+    bool m_isGameRunning = false;
+
     [SerializeField]
     AudioClip m_noemieTest;
 
@@ -27,6 +29,14 @@ public class GameManager : Singleton<GameManager> {
         {
             m_playerScore = value;
             HUDManager.INSTANCE.SetScore(m_playerScore);
+        }
+    }
+
+    public bool IsGameRunning
+    {
+        get
+        {
+            return m_isGameRunning;
         }
     }
 
@@ -44,6 +54,7 @@ public class GameManager : Singleton<GameManager> {
         MenuManager.INSTANCE.CloseMenu();
         EnemyManager.INSTANCE.StartSpawn();
         PlayerController.INSTANCE.StartGame();
+        m_isGameRunning = true;
     }
 
     public void EndGame()
@@ -51,6 +62,7 @@ public class GameManager : Singleton<GameManager> {
         GameObjectManager.INSTANCE.DestroyObjects(SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
         EnemyManager.INSTANCE.StopSpawn();
         MenuManager.INSTANCE.OpenMenu(MENUTYPE.END);
+        m_isGameRunning = false;
     }
 
     void Update()
