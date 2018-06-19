@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 using UnityEngine.Assertions;
 using System;
 
+
 public enum RANDOM_SOUND_TYPE { };
 
 [System.Serializable]
@@ -200,7 +201,7 @@ public class AudioSourceExtend
 
     void TryToDestroy()
     {
-        if (AutoDestroy && AudioSource && AudioSource.volume <= Step && AudioSource.clip != null && ( AudioSource.time >= AudioSource.clip.length - 0.001 && !AudioSource.loop))
+        if (AutoDestroy && AudioSource  && AudioSource.clip != null && (( AudioSource.time >= AudioSource.clip.length - 0.001 && !AudioSource.loop) || Mathf.Approximately(AudioSource.volume, 0)))
         {
             GameObject.Destroy(AudioSource);
             IsDestroyed = true;
@@ -217,7 +218,7 @@ public class AudioSourceExtend
 }
 
 
-public enum AUDIOSOURCE_KEY { NO_KEY_AUTODESTROY, CREATE_KEY };
+public enum AUDIOSOURCE_KEY { BACKGROUND, NO_KEY_AUTODESTROY, CREATE_KEY };
 
 
 
@@ -313,6 +314,8 @@ public class SoundManager : Singleton<SoundManager>
                 if (a_key != (int)AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY)
                 {
                     m_audioSourcesExtendWithKey.Add(a_key, out_res);
+                    out_res.Step = -m_stepFade;
+                    out_res.AutoDestroy = true;
                 }
                 else
                 {
@@ -366,7 +369,9 @@ public class SoundManager : Singleton<SoundManager>
     {
         return GetKey((int)AUDIOSOURCE_KEY.CREATE_KEY);
     }
+
     //TODO see to move initialisation of audiosource elsewhere - store key inside audio extends instead of dictionnary?
+    //TODO : Store a part of audioclips here and associate key
 
     /// <summary>
     /// Start an audio depending of parameters - TODO simplify it and move elswhere some logic
@@ -378,18 +383,21 @@ public class SoundManager : Singleton<SoundManager>
     /// <param name="a_key">the key we want</param>
     /// <param name="a_delay">if we play with a delay</param>
     /// <returns></returns>
-    public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isFading = true, bool a_isLooping = true, int a_key = (int)AUDIOSOURCE_KEY.CREATE_KEY, ulong a_delay = 0)
+    public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isFading = true, bool a_isLooping = true, AUDIOSOURCE_KEY a_key = AUDIOSOURCE_KEY.CREATE_KEY, ulong a_delay = 0)
     {
         int res = -1;
-        res = GetKey(a_key);
+        int key = (int)a_key;
+        res = GetKey(key);
         try
         {
             AudioMixerGroup mixer = m_listMixerGroup.Find(x => x.MixerType == a_mixerGroupType).MixerGroup;
             AudioSourceExtend source;
 
-            if (GetAudioSource(a_key, out source))
+            if (GetAudioSource(key, out source))
             {
                 AudioSourceExtend new_source = new AudioSourceExtend(CreateAudioSource());
+                m_audioSourcesExtend.Add(new_source);
+                m_audioSourcesExtendWithKey[key] = new_source;
                 if (a_isFading)
                 {
                     source.Step = -m_stepFade;
@@ -452,7 +460,7 @@ public class SoundManager : Singleton<SoundManager>
         {
             int rnd = (int)Utils.RandomFloat(0, randomSound.ListSounds.Count);
             AudioClip toPlay = randomSound.ListSounds[rnd];
-            randomSound.AudioSourceKey = StartAudio(randomSound.ListSounds[rnd], a_mixerGroupType, false, false, randomSound.AudioSourceKey);
+            randomSound.AudioSourceKey = StartAudio(randomSound.ListSounds[rnd], a_mixerGroupType, false, false,(AUDIOSOURCE_KEY) randomSound.AudioSourceKey);
             randomSound.EverUsed.Add(toPlay);
             randomSound.ListSounds.Remove(toPlay);
 
