@@ -61,7 +61,6 @@ public class EnemyManager : Singleton<EnemyManager>
     int m_currentLevel = 1;
     protected GameObject currentPrefab;
 
-    protected bool m_IsPlaying = false;
 
 
     #region GetterSetter
@@ -87,16 +86,13 @@ public class EnemyManager : Singleton<EnemyManager>
     public void StartSpawn()
     {
         LoadGameData(m_gameConfig);
-        m_IsPlaying = true;
         m_currentLevel = 1;
         m_currentEnnemySpeed = m_enemySpeed;
         LevelInvoker();
     }
 
     public void StopSpawn()
-    {
-        m_IsPlaying = false;
-        
+    {        
         CancelInvoke();
     }
 
@@ -197,17 +193,14 @@ public class EnemyManager : Singleton<EnemyManager>
     void Update()
     {
         // Cancel all Invoke calls
-        if (m_nbWavesEnemysExecuted > m_nbWavesEnemys && m_IsPlaying)
+        if (m_nbWavesEnemysExecuted > m_nbWavesEnemys && GameManager.INSTANCE.IsGameRunning)
         {
             CancelInvoke();
             ++m_currentLevel;
             m_nbWavesEnemysExecuted = 0;
             if (m_currentLevel <= m_nbOfLevels)
             {
-                if (m_IsPlaying)
-                {
-                    LevelInvoker();
-                }
+                LevelInvoker();
             }
         }
     }
