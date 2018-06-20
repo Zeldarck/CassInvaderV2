@@ -111,6 +111,31 @@ public class MixerGroupLink
     }
 }
 
+[System.Serializable]
+public class AudioClipLink
+{
+    [SerializeField]
+    AUDIOCLIP_KEY m_key;
+    [SerializeField]
+    AudioClip m_audioClip;
+
+    public AUDIOCLIP_KEY Key
+    {
+        get
+        {
+            return m_key;
+        }
+    }
+
+    public AudioClip AudioClip
+    {
+        get
+        {
+            return m_audioClip;
+        }
+    }
+}
+
 
 public class AudioSourceExtend
 {
@@ -220,6 +245,7 @@ public class AudioSourceExtend
 
 public enum AUDIOSOURCE_KEY { BACKGROUND, NO_KEY_AUTODESTROY, CREATE_KEY };
 
+public enum AUDIOCLIP_KEY{ BONUS_PICKED, BONUS_USED, ENEMY_DIE, ENEMY_FIRE, HITTED  };
 
 
 public class SoundManager : Singleton<SoundManager>
@@ -230,6 +256,13 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     [SerializeField]
     List<MixerGroupLink> m_listMixerGroup;
+
+    /// <summary>
+    /// Store audioClip
+    /// </summary>
+    [SerializeField]
+    List<AudioClipLink> m_listAudioClip;
+
 
     /// <summary>
     /// Store set of random sounds
@@ -370,20 +403,31 @@ public class SoundManager : Singleton<SoundManager>
         return GetKey((int)AUDIOSOURCE_KEY.CREATE_KEY);
     }
 
-    //TODO see to move initialisation of audiosource elsewhere - store key inside audio extends instead of dictionnary?
-    //TODO : Store a part of audioclips here and associate key
 
-    /// <summary>
-    /// Start an audio depending of parameters - TODO simplify it and move elswhere some logic
-    /// </summary>
-    /// <param name="a_clip">Clip we want to play</param>
-    /// <param name="a_mixerGroupType">Mixer we want to output</param>
-    /// <param name="a_isFading">If the clip is fading</param>
-    /// <param name="a_isLooping">If the clip it autolooping</param>
-    /// <param name="a_key">the key we want</param>
-    /// <param name="a_delay">if we play with a delay</param>
-    /// <returns></returns>
-    public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isFading = true, bool a_isLooping = true, AUDIOSOURCE_KEY a_key = AUDIOSOURCE_KEY.CREATE_KEY, ulong a_delay = 0)
+    public int StartAudio(AUDIOCLIP_KEY a_clipKey, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isFading = true, bool a_isLooping = true, AUDIOSOURCE_KEY a_key = AUDIOSOURCE_KEY.CREATE_KEY, ulong a_delay = 0)
+    {
+        AudioClipLink audioClip = m_listAudioClip.Find(o => o.Key == a_clipKey);
+
+        Assert.IsFalse(audioClip == null, "Bad audioclip key");
+
+        return StartAudio(audioClip.AudioClip,a_mixerGroupType, a_isFading,a_isLooping,a_key,a_delay);
+
+    }
+
+        //TODO see to move initialisation of audiosource elsewhere - store key inside audio extends instead of dictionnary?
+        //TODO : Store a part of audioclips here and associate key
+
+        /// <summary>
+        /// Start an audio depending of parameters - TODO simplify it and move elswhere some logic
+        /// </summary>
+        /// <param name="a_clip">Clip we want to play</param>
+        /// <param name="a_mixerGroupType">Mixer we want to output</param>
+        /// <param name="a_isFading">If the clip is fading</param>
+        /// <param name="a_isLooping">If the clip it autolooping</param>
+        /// <param name="a_key">the key we want</param>
+        /// <param name="a_delay">if we play with a delay</param>
+        /// <returns></returns>
+        public int StartAudio(AudioClip a_clip, MIXER_GROUP_TYPE a_mixerGroupType = MIXER_GROUP_TYPE.AMBIANT, bool a_isFading = true, bool a_isLooping = true, AUDIOSOURCE_KEY a_key = AUDIOSOURCE_KEY.CREATE_KEY, ulong a_delay = 0)
     {
         int res = -1;
         int key = (int)a_key;

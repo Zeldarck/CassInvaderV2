@@ -20,6 +20,8 @@ public class AdditionalBallBoost : Collectable
 
         m_used = true;
         m_usedTime = Time.time;
+        base.PlayerUse();
+
     }
 
     private void Update()

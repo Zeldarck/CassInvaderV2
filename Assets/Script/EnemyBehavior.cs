@@ -32,7 +32,8 @@ public class EnemyBehavior : Ennemies
         OnDie.AddListener(() => { GameManager.INSTANCE.AddPoint(m_enemyLevel); });
         OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
         OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(m_enemyLevel, gameObject.transform.position); });
-        
+        OnDie.AddListener(() => { SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.ENEMY_DIE, MIXER_GROUP_TYPE.SFX_BAD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY); });
+
     }
 
 
@@ -99,6 +100,10 @@ public class EnemyBehavior : Ennemies
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
     }
 
-    
+    protected virtual void LaunchProjectile()
+    {
+        SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.ENEMY_FIRE, MIXER_GROUP_TYPE.SFX_BAD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
+    }
+
 
 }

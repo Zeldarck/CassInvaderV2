@@ -33,6 +33,7 @@ public abstract class Collectable : MonoBehaviour
             }
             else
             {
+                SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.BONUS_PICKED, MIXER_GROUP_TYPE.SFX_GOOD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
                 m_playerController.SetBoost(this);
             }
         }
@@ -49,7 +50,10 @@ public abstract class Collectable : MonoBehaviour
     /// <summary>
     /// Action when player use it
     /// </summary>
-    public abstract void PlayerUse();
+    public virtual void PlayerUse()
+    {
+        SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.BONUS_USED, MIXER_GROUP_TYPE.SFX_GOOD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
+    }
 
     /// <summary>
     /// Color to display on ButtonPower

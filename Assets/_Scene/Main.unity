@@ -1798,6 +1798,17 @@ MonoBehaviour:
   - m_mixerType: 3
     m_mixerGroup: {fileID: 243763395077185460, guid: 2059b0cbf121e954185a33cb932a6ccb,
       type: 2}
+  m_listAudioClip:
+  - m_key: 0
+    m_audioClip: {fileID: 8300000, guid: fd2f63ca85216c34c8f334fa6a9fae0a, type: 3}
+  - m_key: 1
+    m_audioClip: {fileID: 8300000, guid: b95a65ff4594cc64c85e3df181f5c97c, type: 3}
+  - m_key: 2
+    m_audioClip: {fileID: 8300000, guid: b2aeca33d3e993347b02297d35d3eff1, type: 3}
+  - m_key: 3
+    m_audioClip: {fileID: 8300000, guid: 424e05f5bb38c004ba0aaa5afa7c841b, type: 3}
+  - m_key: 4
+    m_audioClip: {fileID: 8300000, guid: c97f3292e5fe6824ea7b7ab2d7a1bc51, type: 3}
   m_listRandomSound: []
   m_stepFade: 0.05
 --- !u!1 &966952472
