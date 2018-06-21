@@ -7,9 +7,6 @@ public class FastBallBoost : Collectable
 {
 
     [SerializeField]
-    private float m_boostDuration = 5f;
-
-    [SerializeField]
     private float m_boostSpeed = 1f;
 
     [SerializeField]
@@ -24,8 +21,8 @@ public class FastBallBoost : Collectable
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
         foreach (GameObject ball in balls)
         {
-            ball.GetComponent<BallController>().BoostSpeed(m_boostSpeed,m_boostDuration);
-            ball.GetComponent<BallController>().BoostStrength(m_boostStrength, m_boostDuration);
+            ball.GetComponent<BallController>().BoostSpeed(m_boostSpeed,BoostDuration);
+            ball.GetComponent<BallController>().BoostStrength(m_boostStrength, BoostDuration);
         }
 
         m_used = true;
@@ -35,7 +32,7 @@ public class FastBallBoost : Collectable
 
     private void Update()
     {
-        if (m_used && Time.time > m_usedTime + m_boostDuration)
+        if (m_used && Time.time > m_usedTime + BoostDuration)
         {
             m_playerController.SetActiveBoost(false);
             DestroyUsedBoost();
@@ -45,4 +42,5 @@ public class FastBallBoost : Collectable
     {
         return Color.blue;
     }
+
 }

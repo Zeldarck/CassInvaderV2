@@ -6,9 +6,6 @@ using UnityEngine;
 public class FastReloadBoost : Collectable
 {
 
-    [SerializeField]
-    private float m_boostDuration = 8f;
-
     private float m_usedTime;
     private bool m_used = false;
 
@@ -26,7 +23,7 @@ public class FastReloadBoost : Collectable
 
     private void Update()
     {
-        if (m_used && Time.time > m_usedTime + m_boostDuration)
+        if (m_used && Time.time > m_usedTime + BoostDuration)
         {
             m_playerController.SetNbMaxBall(1);
             m_playerController.SetReloadTime(30f);

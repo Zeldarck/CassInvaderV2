@@ -23,7 +23,7 @@ public class FireProjectileBehavior : Projectile
                 GameManager.INSTANCE.EndGame();
             }
 
-            player.SetUsableBoost(false);
+            player.DestroyBoost();
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
 

@@ -76,7 +76,8 @@ public class PlayerController : Singleton<PlayerController> {
     private bool m_boostPicked = false;
     private bool m_boostUsable = false;
 
-
+    Color m_boostHUDDestColor = Color.black;
+    float m_timeLerpBoostHUD = 0;
 
     void Start()
     {
@@ -92,6 +93,15 @@ public class PlayerController : Singleton<PlayerController> {
         var pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, -m_boundY, m_boundY);
         transform.position = pos;
+        if(m_boostCollected != null)
+        {
+            m_timeLerpBoostHUD = Math.Min(m_timeLerpBoostHUD + Time.deltaTime, m_boostCollected.BoostDuration);
+            m_boostHUD.color = Color.Lerp(m_boostCollected.GetColorPower(), m_boostHUDDestColor, m_timeLerpBoostHUD/m_boostCollected.BoostDuration);
+        }
+        else
+        {
+            m_boostHUD.color = Color.black;
+        }
 
     }
 
@@ -209,8 +219,23 @@ public class PlayerController : Singleton<PlayerController> {
             Debug.Log("BoostUsed");
             SetUsableBoost(false);
             m_boostCollected.PlayerUse();
-            m_boostHUD.color = Color.black;
+            m_boostHUDDestColor = Color.black;
+            m_timeLerpBoostHUD = 0;
         }
+    }
+
+    public void DestroyBoost()
+    {
+        if (m_boostUsable)
+        {
+            CleanBoost();
+        }
+    }
+
+    public void CleanBoost()
+    {
+        SetActiveBoost(false);
+        SetBoost(null);
     }
 
 
@@ -220,7 +245,7 @@ public class PlayerController : Singleton<PlayerController> {
         m_boostCollected = a_boost;
         if(a_boost != null)
         {
-            m_boostHUD.color = a_boost.GetColorPower();
+            m_boostHUDDestColor = a_boost.GetColorPower();
             SetUsableBoost(true);
             SetActiveBoost(true);
         }

@@ -6,10 +6,22 @@ using UnityEngine;
 public abstract class Collectable : MonoBehaviour
 {
     [SerializeField]
+    private float m_boostDuration = 0f;
+
+
+    [SerializeField]
     private float m_collectSpeed = 2f;
 
     private bool m_notPicked = true;
     protected PlayerController m_playerController = null;
+
+    public float BoostDuration
+    {
+        get
+        {
+            return m_boostDuration;
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -62,10 +74,9 @@ public abstract class Collectable : MonoBehaviour
 
     public void DestroyUsedBoost()
     {
-        m_playerController.SetActiveBoost(false);
-        m_playerController.SetBoost(null);
+        m_playerController.CleanBoost();
         m_playerController = null;
-
         Destroy(gameObject);
     }
+
 }
