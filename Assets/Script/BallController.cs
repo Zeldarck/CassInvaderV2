@@ -56,13 +56,16 @@ public class BallController : MonoBehaviour {
         }
     }
 
-
     void Start()
     {
         m_rb2d = GetComponent<Rigidbody2D>();
         m_currentSpeed = m_speed;
         ++m_nbBallAlive;
-        GoBall(0f);
+    }
+
+    public void LaunchBall(float a_delay, Vector2 a_direction)
+    {
+        GoBall(a_delay, a_direction);
     }
 
     void Update () {
@@ -83,17 +86,17 @@ public class BallController : MonoBehaviour {
     /// <summary>
     /// The ball started
     /// </summary>
-    void GoBall(float a_second)
+    void GoBall(float a_second, Vector2 a_direction)
     {
-        StartCoroutine(GoBallCoroutine(a_second));
+        StartCoroutine(GoBallCoroutine(a_second, a_direction));
     }
 
-    IEnumerator GoBallCoroutine(float a_second)
+    IEnumerator GoBallCoroutine(float a_second, Vector2 a_direction)
     {
         yield return new WaitForSeconds(a_second);
 
         GetComponent<TrailRenderer>().enabled = true;
-        m_rb2d.AddForce(new Vector2(25, 15));
+        m_rb2d.AddForce(a_direction);
         
     }
 

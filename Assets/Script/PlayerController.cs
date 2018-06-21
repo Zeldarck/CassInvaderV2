@@ -115,7 +115,7 @@ public class PlayerController : Singleton<PlayerController> {
         m_sliderReload.value += Time.deltaTime;
         if ( Input.GetKeyDown(KeyCode.Space) && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
         {
-            Fire();
+            Fire(new Vector2(25, 15));
         }
 
         
@@ -140,13 +140,13 @@ public class PlayerController : Singleton<PlayerController> {
             if (Utils.IsTapping(Input.GetTouch(0), 0) && Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
             {
                 Debug.Log(Input.GetTouch(0).position.y + "   " + Screen.height * m_percentageScreenFire);
-                Fire();
+                Fire((Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position) - m_ballSpawnPosition.position).normalized);
             }
             else if(m_boostUsable && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
                 UseBoost();
             }
-            else
+            else if(Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
                 float x = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
                 vel.x = m_speed * -1 * Utils.SignWithZero(transform.position.x - x, 0.1f);
@@ -170,9 +170,10 @@ public class PlayerController : Singleton<PlayerController> {
 
     }
 
-    void Fire()
+    void Fire(Vector2 a_direction)
     {
-        GameObjectManager.INSTANCE.Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+        GameObject ball = GameObjectManager.INSTANCE.Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+        ball.GetComponent<BallController>().LaunchBall(0, a_direction);
         m_sliderReload.value = 0;
         //TODO : add velocity depend on player velocity
 
