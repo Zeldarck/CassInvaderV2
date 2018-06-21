@@ -142,7 +142,6 @@ public class AudioSourceExtend
     AudioSource m_audioSource;
     bool m_autoDestroy;
     float m_step;
-    bool m_isDestroyed;
     int m_key;
 
 #region GetterSetter
@@ -150,12 +149,7 @@ public class AudioSourceExtend
     {
         get
         {
-            return m_isDestroyed;
-        }
-
-        set
-        {
-            m_isDestroyed = value;
+            return m_audioSource == null;
         }
     }
 
@@ -228,8 +222,7 @@ public class AudioSourceExtend
     {
         if (AutoDestroy && AudioSource  && AudioSource.clip != null && (( AudioSource.time >= AudioSource.clip.length - 0.001 && !AudioSource.loop) || Mathf.Approximately(AudioSource.volume, 0)))
         {
-            GameObject.Destroy(AudioSource);
-            IsDestroyed = true;
+            GameObject.DestroyImmediate(AudioSource);
         }
     }
 
@@ -301,7 +294,10 @@ public class SoundManager : Singleton<SoundManager>
             audioSourceExtend.Update();
             if (audioSourceExtend.IsDestroyed)
             {
-                m_audioSourcesExtendWithKey.Remove(audioSourceExtend.Key);
+                if (m_audioSourcesExtendWithKey.ContainsKey(audioSourceExtend.Key) && m_audioSourcesExtendWithKey[audioSourceExtend.Key] == audioSourceExtend)
+                {
+                    m_audioSourcesExtendWithKey.Remove(audioSourceExtend.Key);
+                }
             }
         }
         m_audioSourcesExtend.RemoveAll(x => x.IsDestroyed);
