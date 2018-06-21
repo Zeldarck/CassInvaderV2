@@ -70,10 +70,9 @@ public class PlayerController : Singleton<PlayerController> {
     /// <summary>
     /// Collectable boosts
     /// </summary>
-    [SerializeField]
     private Collectable m_boostCollected = null;
     [SerializeField]
-    private Button m_boostButton = null;
+    Image m_boostHUD = null;
     private bool m_boostPicked = false;
     private bool m_boostUsable = false;
 
@@ -210,7 +209,7 @@ public class PlayerController : Singleton<PlayerController> {
             Debug.Log("BoostUsed");
             SetUsableBoost(false);
             m_boostCollected.PlayerUse();
-            m_boostButton.image.color = Color.white;
+            m_boostHUD.color = Color.black;
         }
     }
 
@@ -221,7 +220,7 @@ public class PlayerController : Singleton<PlayerController> {
         m_boostCollected = a_boost;
         if(a_boost != null)
         {
-            m_boostButton.image.color = a_boost.GetColorPower();
+            m_boostHUD.color = a_boost.GetColorPower();
             SetUsableBoost(true);
             SetActiveBoost(true);
         }

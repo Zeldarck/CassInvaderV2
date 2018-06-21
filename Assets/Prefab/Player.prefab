@@ -413,16 +413,16 @@ MonoBehaviour:
   m_moveRight: 100
   m_moveLeft: 113
   m_speed: 4
+  m_countSlowDebuff: 0
   m_boundY: 2.3
-  m_timeToReload: 30
+  m_timeToReload: 20
   m_nbMaxBall: 1
   m_sliderReload: {fileID: 114726351782463956}
   m_ballPrefab: {fileID: 1252923666813102, guid: 28387d599ef699240846646eced24865,
     type: 2}
   m_ballSpawnPosition: {fileID: 4866002991477672}
   m_percentageScreenFire: 0.19
-  m_boostCollected: {fileID: 0}
-  m_boostActive: 0
+  m_boostHUD: {fileID: 0}
 --- !u!114 &114314465260076958
 MonoBehaviour:
   m_ObjectHideFlags: 1
