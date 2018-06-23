@@ -74,7 +74,7 @@ public class RandomSound
     #endregion
 }
 
-public enum MIXER_GROUP_TYPE { AMBIANT, SFX_MENU, SFX_GOOD, SFX_BAD };
+public enum MIXER_GROUP_TYPE { AMBIANT, SFX_MENU, SFX_GOOD, SFX_BAD , SFX, MASTER};
 
 [System.Serializable]
 public class MixerGroupLink
@@ -83,6 +83,9 @@ public class MixerGroupLink
     MIXER_GROUP_TYPE m_mixerType;
     [SerializeField]
     AudioMixerGroup m_mixerGroup;
+
+    [SerializeField]
+    string m_volumeVariable;
 
     public MIXER_GROUP_TYPE MixerType
     {
@@ -107,6 +110,14 @@ public class MixerGroupLink
         private set
         {
             m_mixerGroup = value;
+        }
+    }
+
+    public string VolumeVariable
+    {
+        get
+        {
+            return m_volumeVariable;
         }
     }
 }
@@ -303,7 +314,24 @@ public class SoundManager : Singleton<SoundManager>
         m_audioSourcesExtend.RemoveAll(x => x.IsDestroyed);
     }
 
+    public void SetMixerVolume(MIXER_GROUP_TYPE a_mixerGroupType, float a_volume)
+    {
+        MixerGroupLink mixer = m_listMixerGroup.Find(x => x.MixerType == a_mixerGroupType);
+        Assert.AreNotEqual(mixer, null, "MixerGroup don't exist");
 
+        mixer.MixerGroup.audioMixer.SetFloat(mixer.VolumeVariable, a_volume);
+
+    }
+
+    public float GetMixerVolume(MIXER_GROUP_TYPE a_mixerGroupType)
+    {
+        float res = 0;
+        MixerGroupLink mixer = m_listMixerGroup.Find(x => x.MixerType == a_mixerGroupType);
+        Assert.AreNotEqual(mixer, null, "MixerGroup don't exist");
+
+         mixer.MixerGroup.audioMixer.GetFloat(mixer.VolumeVariable, out res);
+        return res;
+    }
 
     /// <summary>
     /// Check if an Audio is actually playing

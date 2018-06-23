@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif  //UNITY_EDITOR
+
 public class Utils {
 
     static System.Random m_random = new System.Random();
@@ -128,7 +132,12 @@ public class Utils {
 
     public static void QuitApp()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+
+#endif //UNITY_EDITOR
     }
 
 

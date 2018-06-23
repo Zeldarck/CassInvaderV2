@@ -13,14 +13,24 @@ public class StartMenu : Menu {
     Button m_quitButton;
 
     [SerializeField]
+    Button m_optionButton;
+
+    [SerializeField]
     AudioClip m_backGroundMusic;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         m_creditsButton.onClick.AddListener(() =>
         {
             MenuManager.INSTANCE.OpenMenu(MENUTYPE.CREDITS);
         });
+
+        m_optionButton.onClick.AddListener(() =>
+        {
+            MenuManager.INSTANCE.OpenMenu(MENUTYPE.OPTION);
+        });
+
 
         m_quitButton.onClick.AddListener(() =>
         {
