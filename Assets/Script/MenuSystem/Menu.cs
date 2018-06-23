@@ -13,17 +13,11 @@ public abstract class Menu : MonoBehaviour
 {
 
     [SerializeField]
-    Button m_backButton;
+    protected Button m_backButton;
 
     protected virtual void Start()
     {
-        if (m_backButton)
-        {
-            m_backButton.onClick.AddListener(() =>
-            {
-                MenuManager.INSTANCE.BackToMainMenu();
-            });
-        }
+        SetUpBackButtonListenner();
     }
 
     public void CloseMenu()
@@ -33,12 +27,13 @@ public abstract class Menu : MonoBehaviour
 
     public virtual void OnOpen()
     {
-
+        SetUpBackButtonListenner();
+        Time.timeScale = 0;
     }
 
     public virtual void OnClose()
     {
-
+        Time.timeScale = 1;
     }
 
 #if NETWORK
@@ -52,6 +47,30 @@ public abstract class Menu : MonoBehaviour
     public virtual float GetAlphaBack()
     {
         return 1.0f;
+    }
+
+    protected void SetUpBackButtonListenner()
+    {
+        if (m_backButton)
+        {
+            m_backButton.onClick.RemoveAllListeners();
+            m_backButton.onClick.AddListener(() =>
+            {
+                MenuManager.INSTANCE.BackToMainMenu();
+            });
+        }
+    }
+
+    public void SetBackButtonAsClose()
+    {
+        if (m_backButton)
+        {
+            m_backButton.onClick.RemoveAllListeners();
+            m_backButton.onClick.AddListener(() =>
+            {
+                MenuManager.INSTANCE.CloseMenu();
+            });
+        }
     }
 
 

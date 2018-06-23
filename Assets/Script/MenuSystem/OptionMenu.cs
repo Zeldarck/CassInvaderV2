@@ -26,8 +26,7 @@ public class OptionMenu : Menu {
         {
             SoundManager.INSTANCE.SetMixerVolume(MIXER_GROUP_TYPE.SFX, a_value);
         });
-
-
     }
+
 
 }
