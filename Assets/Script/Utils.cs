@@ -125,4 +125,11 @@ public class Utils {
         return a_touch.tapCount > m_minTap && a_touch.phase == TouchPhase.Began;
     }
 
+
+    public static void QuitApp()
+    {
+        Application.Quit();
+    }
+
+
 }

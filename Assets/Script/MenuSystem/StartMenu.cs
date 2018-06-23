@@ -10,6 +10,9 @@ public class StartMenu : Menu {
     private Button m_creditsButton;
 
     [SerializeField]
+    Button m_quitButton;
+
+    [SerializeField]
     AudioClip m_backGroundMusic;
 
     private void Start()
@@ -18,6 +21,12 @@ public class StartMenu : Menu {
         {
             MenuManager.INSTANCE.OpenMenu(MENUTYPE.CREDITS);
         });
+
+        m_quitButton.onClick.AddListener(() =>
+        {
+            Utils.QuitApp();
+        });
+
     }
 
     public override void OnOpen()
@@ -25,6 +34,7 @@ public class StartMenu : Menu {
         base.OnOpen();
         SoundManager.INSTANCE.StartAudio(m_backGroundMusic, MIXER_GROUP_TYPE.AMBIANT, true, true, AUDIOSOURCE_KEY.BACKGROUND);
     }
+
 
     public void OnPlayButton()
     {
