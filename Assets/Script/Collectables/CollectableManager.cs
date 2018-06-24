@@ -2,28 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class ProbaCollectableLink
+{
+    [SerializeField]
+    GameObject m_prefabCollectable;
+    [SerializeField]
+    float m_spawnProba;
+
+    public float SpawnProba
+    {
+        get
+        {
+            return m_spawnProba;
+        }
+    }
+
+    public GameObject PrefabCollectable
+    {
+        get
+        {
+            return m_prefabCollectable;
+        }
+    }
+}
+
 public class CollectableManager : Singleton<CollectableManager>
 {
 
 
     [SerializeField]
-    List<GameObject> m_collectables;
-
-    [SerializeField]
-    List<float> m_spawnProba;
-
-    private void Start()
-    {
-    }
+    List<ProbaCollectableLink> m_probaCollectableLinkList;
 
     public void EnemyDestroyed(int a_enemyLvl, Vector3 a_pos)
     {
         int enemyIndex = a_enemyLvl - 1;
-        float proba = Random.Range(0f, 1f);
+        float proba = Utils.RandomFloat(0, 1);
 
-       if (proba <= m_spawnProba[enemyIndex])
+       if (proba <= m_probaCollectableLinkList[enemyIndex].SpawnProba)
         {
-            SpawnCollectable(a_pos, m_collectables[enemyIndex]);
+            SpawnCollectable(a_pos, m_probaCollectableLinkList[enemyIndex].PrefabCollectable);
         }
     }
 

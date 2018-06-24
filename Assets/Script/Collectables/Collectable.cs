@@ -17,6 +17,11 @@ public abstract class Collectable : MonoBehaviour
     protected bool m_used = false;
     protected float m_usedTime;
 
+    protected virtual void Start()
+    {
+        GetComponent<SpriteRenderer>().color = GetColorPower();
+    }
+
     public float BoostDuration
     {
         get
@@ -29,7 +34,7 @@ public abstract class Collectable : MonoBehaviour
     {
         if (m_used && Time.time > m_usedTime + BoostDuration)
         {
-            CleanBoost();
+            Destroy(gameObject);
         }
     }
 
@@ -92,9 +97,19 @@ public abstract class Collectable : MonoBehaviour
 
     public void DestroyUsedBoost()
     {
-        m_playerController.CleanBoost();
+        if (m_playerController)
+        {
+            m_playerController.CleanBoost();
+        }
         m_playerController = null;
-        Destroy(gameObject);
+    }
+
+    protected void OnDestroy()
+    {
+        if (m_used)
+        {
+            CleanBoost();
+        }
     }
 
 }

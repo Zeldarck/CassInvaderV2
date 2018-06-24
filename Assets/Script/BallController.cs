@@ -159,17 +159,7 @@ public class BallController : MonoBehaviour {
     }
 
 
-    /// <summary>
-    /// Boost Speed
-    /// </summary>
-    public void BoostSpeed(float a_value, float a_time)
-    {
-        m_countBoost += a_value;
-        m_currentSpeed += a_value;
-        UpdateColorBall();
-        StartCoroutine(UndoBoostSpeed(a_value, a_time));
-    }
-
+   
 
     /// <summary>
     /// Boost Speed
@@ -183,35 +173,16 @@ public class BallController : MonoBehaviour {
 
 
 
-    IEnumerator UndoBoostSpeed(float a_value, float a_time)
-    {
-        yield return new WaitForSeconds(a_time);
-        m_countBoost -= a_value;
-        Debug.Log(m_countBoost);
-        m_currentSpeed -= a_value;
-        UpdateColorBall();
-    }
-
-    public void BoostStrength(int a_value, float a_time)
-    {
-        m_strength += a_value;
-        StartCoroutine(UndoBoostStrength(a_value, a_time));
-    }
     public void AddStrength(int a_value)
     {
         m_strength += a_value;
     }
 
-
-    IEnumerator UndoBoostStrength(int a_value, float a_time)
-    {
-        yield return new WaitForSeconds(a_time);
-        m_strength -= a_value;
-    }
+    
 
     void UpdateColorBall()
     {
-        Color color = m_countBoost > 0 ? Color.red : m_countBoost == 0 ? Color.white : Color.blue;
+        Color color = m_countBoost > 0 ? Color.red : Mathf.Approximately(m_countBoost,0) ? Color.white : Color.blue;
         GetComponent<SpriteRenderer>().color = color;
 
         TrailRenderer trail = GetComponent<TrailRenderer>();
