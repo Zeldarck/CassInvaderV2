@@ -66,7 +66,10 @@ public class PlayerController : Singleton<PlayerController> {
     [SerializeField]
     float m_percentageScreenFire;
 
+    [SerializeField]
+    float m_multiplicatorIfNoBall;
 
+    
     /// <summary>
     /// Collectable boosts
     /// </summary>
@@ -112,7 +115,7 @@ public class PlayerController : Singleton<PlayerController> {
             return;
         }
 
-        m_sliderReload.value += Time.deltaTime;
+        m_sliderReload.value += (Time.deltaTime * ( BallController.NbBallAlive > 0 ? 1 : m_multiplicatorIfNoBall));
         if ( Input.GetKeyDown(KeyCode.Space) && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
         {
             Fire(new Vector2(25, 15));
@@ -175,8 +178,6 @@ public class PlayerController : Singleton<PlayerController> {
         GameObject ball = GameObjectManager.INSTANCE.Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
         ball.GetComponent<BallController>().LaunchBall(0, a_direction);
         m_sliderReload.value = 0;
-        //TODO : add velocity depend on player velocity
-
     }
 
     public void StartGame()
