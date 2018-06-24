@@ -7,30 +7,22 @@ public class AdditionalBallBoost : Collectable
 {
 
 
-    private float m_usedTime;
-    private bool m_used = false;
-
 
     public override void PlayerUse()
     {
         m_playerController.AddNbMaxBall(1);
         m_playerController.SetReloadTime(0f);
 
-        m_used = true;
-        m_usedTime = Time.time;
         base.PlayerUse();
 
     }
 
-    private void Update()
+
+    protected override void CleanBoost()
     {
-        if (m_used && Time.time > m_usedTime + BoostDuration)
-        {
-            m_playerController.AddNbMaxBall(-1);
-            m_playerController.SetReloadTime(30f);
-            m_playerController.SetActiveBoost(false);
-            DestroyUsedBoost();
-        }
+        m_playerController.AddNbMaxBall(-1);
+        m_playerController.SetReloadTime(20f);
+        base.CleanBoost();
     }
     public override Color GetColorPower()
     {

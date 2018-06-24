@@ -14,6 +14,8 @@ public abstract class Collectable : MonoBehaviour
 
     private bool m_notPicked = true;
     protected PlayerController m_playerController = null;
+    protected bool m_used = false;
+    protected float m_usedTime;
 
     public float BoostDuration
     {
@@ -22,6 +24,15 @@ public abstract class Collectable : MonoBehaviour
             return m_boostDuration;
         }
     }
+
+    protected virtual void Update()
+    {
+        if (m_used && Time.time > m_usedTime + BoostDuration)
+        {
+            CleanBoost();
+        }
+    }
+
 
     private void FixedUpdate()
     {
@@ -64,6 +75,8 @@ public abstract class Collectable : MonoBehaviour
     /// </summary>
     public virtual void PlayerUse()
     {
+        m_used = true;
+        m_usedTime = Time.time;
         SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.BONUS_USED, MIXER_GROUP_TYPE.SFX_GOOD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
     }
 
@@ -71,6 +84,11 @@ public abstract class Collectable : MonoBehaviour
     /// Color to display on ButtonPower
     /// </summary>
     public abstract Color GetColorPower();
+
+    protected virtual void CleanBoost()
+    {
+        DestroyUsedBoost();
+    }
 
     public void DestroyUsedBoost()
     {

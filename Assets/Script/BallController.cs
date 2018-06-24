@@ -171,6 +171,18 @@ public class BallController : MonoBehaviour {
     }
 
 
+    /// <summary>
+    /// Boost Speed
+    /// </summary>
+    public void AddSpeed(float a_value)
+    {
+        m_countBoost += a_value;
+        m_currentSpeed += a_value;
+        UpdateColorBall();
+    }
+
+
+
     IEnumerator UndoBoostSpeed(float a_value, float a_time)
     {
         yield return new WaitForSeconds(a_time);
@@ -184,6 +196,10 @@ public class BallController : MonoBehaviour {
     {
         m_strength += a_value;
         StartCoroutine(UndoBoostStrength(a_value, a_time));
+    }
+    public void AddStrength(int a_value)
+    {
+        m_strength += a_value;
     }
 
 
