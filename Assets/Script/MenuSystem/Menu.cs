@@ -15,9 +15,14 @@ public abstract class Menu : MonoBehaviour
     [SerializeField]
     protected Button m_backButton;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         SetUpBackButtonListenner();
+    }
+
+
+    protected virtual void Start()
+    {
     }
 
     public void CloseMenu()
