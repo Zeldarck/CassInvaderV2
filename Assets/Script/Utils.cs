@@ -140,5 +140,16 @@ public class Utils {
 #endif //UNITY_EDITOR
     }
 
+    public static bool IsSameSign(int a_number1, int a_number2)
+    {
+        return (a_number1 ^ a_number2) >= 0;
+    }
+
+    public static bool IsSameSign(float a_number1, float a_number2)
+    {
+        return IsSameSign((int)Mathf.Floor(a_number1), (int)Mathf.Floor(a_number2));
+    }
+
+
 
 }
