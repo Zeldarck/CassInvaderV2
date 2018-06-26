@@ -15,7 +15,7 @@
   - Musiques :
 
      - Page d'accueil : musique de fond_ok, bruit quand on appuie sur les boutons
-     - Son de demarrage et son de fin (win/loose)
+     - Son de demarrage et son de fin (win/loose)_ok
      - Musique de fond, musique qui s'accelere au fur et a mesure
      - Deplacements, rebonds
      - Bruits danger : ennemi qui tire_ok, ennemi qui se rapproche
