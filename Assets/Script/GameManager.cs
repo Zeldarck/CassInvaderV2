@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager> {
     bool m_isGameRunning = false;
 
     [SerializeField]
-    AudioClip m_noemieTest;
+    AudioClip m_backGroundMusic;
 
     public int PlayerScore
     {
@@ -42,10 +42,6 @@ public class GameManager : Singleton<GameManager> {
 
     void Start()
     {
-        if (m_noemieTest != null)
-        {
-            SoundManager.INSTANCE.StartAudio(m_noemieTest);
-        }
     }
 
     public void StartGame()
@@ -55,6 +51,8 @@ public class GameManager : Singleton<GameManager> {
         EnemyManager.INSTANCE.StartSpawn();
         PlayerController.INSTANCE.StartGame();
         m_isGameRunning = true;
+        SoundManager.INSTANCE.StartAudio(m_backGroundMusic, MIXER_GROUP_TYPE.AMBIANT, true, true, AUDIOSOURCE_KEY.BACKGROUND);
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     public void EndGame()
@@ -63,6 +61,7 @@ public class GameManager : Singleton<GameManager> {
         EnemyManager.INSTANCE.StopSpawn();
         MenuManager.INSTANCE.OpenMenu(MENUTYPE.END);
         m_isGameRunning = false;
+        Screen.sleepTimeout = SleepTimeout.SystemSetting;
     }
 
     void Update()

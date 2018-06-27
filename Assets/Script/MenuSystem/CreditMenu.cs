@@ -4,8 +4,4 @@ using UnityEngine;
 
 public class CreditMenu : Menu {
 
-    public void OnBackButton()
-    {
-        MenuManager.INSTANCE.BackToMainMenu();
-    }
 }

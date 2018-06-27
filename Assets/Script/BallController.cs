@@ -56,13 +56,16 @@ public class BallController : MonoBehaviour {
         }
     }
 
-
     void Start()
     {
         m_rb2d = GetComponent<Rigidbody2D>();
         m_currentSpeed = m_speed;
         ++m_nbBallAlive;
-        GoBall(0f);
+    }
+
+    public void LaunchBall(float a_delay, Vector2 a_direction)
+    {
+        GoBall(a_delay, a_direction);
     }
 
     void Update () {
@@ -83,17 +86,17 @@ public class BallController : MonoBehaviour {
     /// <summary>
     /// The ball started
     /// </summary>
-    void GoBall(float a_second)
+    void GoBall(float a_second, Vector2 a_direction)
     {
-        StartCoroutine(GoBallCoroutine(a_second));
+        StartCoroutine(GoBallCoroutine(a_second, a_direction));
     }
 
-    IEnumerator GoBallCoroutine(float a_second)
+    IEnumerator GoBallCoroutine(float a_second, Vector2 a_direction)
     {
         yield return new WaitForSeconds(a_second);
 
         GetComponent<TrailRenderer>().enabled = true;
-        m_rb2d.AddForce(new Vector2(25, 15));
+        m_rb2d.AddForce(a_direction);
         
     }
 
@@ -156,43 +159,30 @@ public class BallController : MonoBehaviour {
     }
 
 
+   
+
     /// <summary>
     /// Boost Speed
     /// </summary>
-    public void BoostSpeed(float a_value, float a_time)
+    public void AddSpeed(float a_value)
     {
         m_countBoost += a_value;
         m_currentSpeed += a_value;
         UpdateColorBall();
-        StartCoroutine(UndoBoostSpeed(a_value, a_time));
     }
 
 
-    IEnumerator UndoBoostSpeed(float a_value, float a_time)
-    {
-        yield return new WaitForSeconds(a_time);
-        m_countBoost -= a_value;
-        Debug.Log(m_countBoost);
-        m_currentSpeed -= a_value;
-        UpdateColorBall();
-    }
 
-    public void BoostStrength(int a_value, float a_time)
+    public void AddStrength(int a_value)
     {
         m_strength += a_value;
-        StartCoroutine(UndoBoostStrength(a_value, a_time));
     }
 
-
-    IEnumerator UndoBoostStrength(int a_value, float a_time)
-    {
-        yield return new WaitForSeconds(a_time);
-        m_strength -= a_value;
-    }
+    
 
     void UpdateColorBall()
     {
-        Color color = m_countBoost > 0 ? Color.red : m_countBoost == 0 ? Color.white : Color.blue;
+        Color color = m_countBoost > 0 ? Color.red : Mathf.Approximately(m_countBoost,0) ? Color.white : Color.blue;
         GetComponent<SpriteRenderer>().color = color;
 
         TrailRenderer trail = GetComponent<TrailRenderer>();

@@ -47,10 +47,11 @@ public class RunnerBehavior : EnemyBehavior
         return directionComputed;
     }
 
-    void LaunchProjectile()
+    protected override void LaunchProjectile()
     {
         m_currentPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
         GameObjectManager.INSTANCE.Instantiate(m_iceProjectile, m_currentPosition, m_initialRotation,SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+        base.LaunchProjectile();
     }
 
     #endregion

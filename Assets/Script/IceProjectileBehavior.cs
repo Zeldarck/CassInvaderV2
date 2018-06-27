@@ -8,8 +8,9 @@ public class IceProjectileBehavior : Projectile
     protected float m_projectileSpeed = 3f;
     public UnityEvent OnDie;
 
-    
-    #region Damage undertaking
+
+    // Damage undertaking
+    //------------------------------------------------------------------------------------
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,6 +19,7 @@ public class IceProjectileBehavior : Projectile
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (collider.CompareTag("Player"))
         {
+            OnPlayerHit();
             player.m_speed -= 1f;
             if(player.m_speed < 1.5f)
             {
@@ -30,9 +32,10 @@ public class IceProjectileBehavior : Projectile
         }
     }
 
-    #endregion
 
-    #region Movement behavior
+
+    // Movement behavior
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Compute the direction vector of the enemy depending of the current situation
@@ -60,6 +63,6 @@ public class IceProjectileBehavior : Projectile
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
     }
 
-    #endregion
+    
 
 }

@@ -66,18 +66,21 @@ public class PlayerController : Singleton<PlayerController> {
     [SerializeField]
     float m_percentageScreenFire;
 
+    [SerializeField]
+    float m_multiplicatorIfNoBall;
 
+    
     /// <summary>
     /// Collectable boosts
     /// </summary>
-    [SerializeField]
     private Collectable m_boostCollected = null;
     [SerializeField]
-    private Button m_boostButton = null;
+    Image m_boostHUD = null;
     private bool m_boostPicked = false;
     private bool m_boostUsable = false;
 
-
+    Color m_boostHUDDestColor = Color.black;
+    float m_timeLerpBoostHUD = 0;
 
     void Start()
     {
@@ -93,6 +96,15 @@ public class PlayerController : Singleton<PlayerController> {
         var pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, -m_boundY, m_boundY);
         transform.position = pos;
+        if(m_boostCollected != null)
+        {
+            m_timeLerpBoostHUD = Math.Min(m_timeLerpBoostHUD + Time.deltaTime, m_boostCollected.BoostDuration);
+            m_boostHUD.color = Color.Lerp(m_boostCollected.GetColorPower(), m_boostHUDDestColor, m_timeLerpBoostHUD/m_boostCollected.BoostDuration);
+        }
+        else
+        {
+            m_boostHUD.color = Color.black;
+        }
 
     }
 
@@ -103,10 +115,10 @@ public class PlayerController : Singleton<PlayerController> {
             return;
         }
 
-        m_sliderReload.value += Time.deltaTime;
+        m_sliderReload.value += (Time.deltaTime * ( BallController.NbBallAlive > 0 ? 1 : m_multiplicatorIfNoBall));
         if ( Input.GetKeyDown(KeyCode.Space) && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
         {
-            Fire();
+            Fire(new Vector2(25, 15));
         }
 
         
@@ -131,13 +143,13 @@ public class PlayerController : Singleton<PlayerController> {
             if (Utils.IsTapping(Input.GetTouch(0), 0) && Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
             {
                 Debug.Log(Input.GetTouch(0).position.y + "   " + Screen.height * m_percentageScreenFire);
-                Fire();
+                Fire((Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position) - m_ballSpawnPosition.position).normalized);
             }
             else if(m_boostUsable && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
                 UseBoost();
             }
-            else
+            else if(Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
                 float x = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
                 vel.x = m_speed * -1 * Utils.SignWithZero(transform.position.x - x, 0.1f);
@@ -161,12 +173,11 @@ public class PlayerController : Singleton<PlayerController> {
 
     }
 
-    void Fire()
+    void Fire(Vector2 a_direction)
     {
-        GameObjectManager.INSTANCE.Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+        GameObject ball = GameObjectManager.INSTANCE.Instantiate(m_ballPrefab, m_ballSpawnPosition.position, transform.rotation, SPAWN_CONTAINER_TYPE.DESTRUCTIBLE);
+        ball.GetComponent<BallController>().LaunchBall(0, a_direction);
         m_sliderReload.value = 0;
-        //TODO : add velocity depend on player velocity
-
     }
 
     public void StartGame()
@@ -210,8 +221,23 @@ public class PlayerController : Singleton<PlayerController> {
             Debug.Log("BoostUsed");
             SetUsableBoost(false);
             m_boostCollected.PlayerUse();
-            m_boostButton.image.color = Color.white;
+            m_boostHUDDestColor = Color.black;
+            m_timeLerpBoostHUD = 0;
         }
+    }
+
+    public void DestroyBoost()
+    {
+        if (m_boostUsable)
+        {
+            CleanBoost();
+        }
+    }
+
+    public void CleanBoost()
+    {
+        SetActiveBoost(false);
+        SetBoost(null);
     }
 
 
@@ -221,7 +247,7 @@ public class PlayerController : Singleton<PlayerController> {
         m_boostCollected = a_boost;
         if(a_boost != null)
         {
-            m_boostButton.image.color = a_boost.GetColorPower();
+            m_boostHUDDestColor = a_boost.GetColorPower();
             SetUsableBoost(true);
             SetActiveBoost(true);
         }

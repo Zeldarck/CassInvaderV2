@@ -7,7 +7,8 @@ public class FireProjectileBehavior : Projectile
     protected float m_projectileSpeed = 3f;
     public UnityEvent OnDie;
 
-    #region Damage undertaking
+    // Damage undertaking
+    //------------------------------------------------------------------------------------
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -16,21 +17,22 @@ public class FireProjectileBehavior : Projectile
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (collider.CompareTag("Player"))
         {
+            OnPlayerHit();
             if (player.GetDamage(1))
             {
                 GameManager.INSTANCE.EndGame();
             }
 
-            player.SetUsableBoost(false);
+            player.DestroyBoost();
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
 
         }
     }
 
-    #endregion
 
-    #region Movement behavior
+    // Movement behavior
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Compute the direction vector of the enemy depending of the current situation
@@ -58,6 +60,6 @@ public class FireProjectileBehavior : Projectile
         gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
     }
 
-    #endregion
+    
 
 }

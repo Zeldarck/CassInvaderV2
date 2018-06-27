@@ -7,7 +7,8 @@ public abstract class Projectile : MonoBehaviour
     protected float _INIT_POS_X = 0; // Initial X position of the projectile
     protected float _INIT_POS_Y = 0; // Initial Y position of the projectile
 
-    #region GameObject Setup
+    // GameObject Setup
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Set defaults values as soon as the object gets created
@@ -26,9 +27,10 @@ public abstract class Projectile : MonoBehaviour
         _INIT_POS_Y = this.transform.position.y;
     }
 
-    #endregion
 
-    #region GameObject movement Behavior
+
+    // GameObject movement Behavior
+    //------------------------------------------------------------------------------------
 
     /// <summary>
     /// Abstract function to compute the direction vector of the projectile depending of the current situation
@@ -40,5 +42,8 @@ public abstract class Projectile : MonoBehaviour
     /// </summary>
     protected abstract void FixedUpdate();
 
-    #endregion
+    protected virtual void OnPlayerHit()
+    {
+        SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.HITTED, MIXER_GROUP_TYPE.SFX_BAD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
+    }
 }
