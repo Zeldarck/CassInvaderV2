@@ -4534,6 +4534,21 @@ Prefab:
       propertyPath: m_multiplicatorIfNoBall
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_stepSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_speed
+      value: 3.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_controlType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98659fa48047eb24391ad2a280fb66a9, type: 2}
   m_IsPrefabParent: 0

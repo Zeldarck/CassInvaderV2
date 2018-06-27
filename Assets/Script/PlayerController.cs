@@ -69,7 +69,16 @@ public class PlayerController : Singleton<PlayerController> {
     [SerializeField]
     float m_multiplicatorIfNoBall;
 
-    
+    float m_xLastinput = 0;
+    float m_dir = 0;
+    float m_currentSpeed = 0;
+    bool m_haveLastInput = false;
+    [SerializeField]
+    float m_stepSpeed;
+
+    [SerializeField]
+    int m_controlType;
+
     /// <summary>
     /// Collectable boosts
     /// </summary>
@@ -139,33 +148,67 @@ public class PlayerController : Singleton<PlayerController> {
         var vel = m_rb2d.velocity;
         if (Input.touchCount > 0)
         {
-            
+
             if (Utils.IsTapping(Input.GetTouch(0), 0) && Input.GetTouch(0).position.y > Screen.height * m_percentageScreenFire && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
             {
                 Debug.Log(Input.GetTouch(0).position.y + "   " + Screen.height * m_percentageScreenFire);
                 Fire((Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position) - m_ballSpawnPosition.position).normalized);
             }
-            else if(m_boostUsable && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
+            else if (m_boostUsable && Utils.IsTapping(Input.GetTouch(0)) && Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
                 UseBoost();
             }
-            else if(Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
+            else if (Input.GetTouch(0).position.y <= Screen.height * m_percentageScreenFire)
             {
-                float x = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
-                vel.x = m_speed * -1 * Utils.SignWithZero(transform.position.x - x, 0.1f);
+                float x = Input.GetTouch(0).position.x;
+                float pos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
+
+                if ((m_controlType == 0 && m_haveLastInput && x < m_xLastinput + Mathf.Epsilon) || (m_controlType == 1 && pos < transform.position.x - 0.1f) || (m_controlType == 2 && pos < 0))
+                {
+                    m_currentSpeed = (m_dir > 0 ? m_stepSpeed : m_currentSpeed + m_stepSpeed);
+                    m_dir = -1;
+                }
+                else if ((m_controlType == 0 && m_haveLastInput && x > m_xLastinput - Mathf.Epsilon) || (m_controlType == 1 && pos > transform.position.x + 0.1f) || (m_controlType == 2 && pos > 0))
+                {
+                    m_currentSpeed = (m_dir < 0 ? m_stepSpeed : m_currentSpeed + m_stepSpeed);
+                    m_dir = 1;
+                }
+                else if ((!Utils.IsSameSign(pos - transform.position.x, m_dir) && m_controlType == 0) || (m_controlType!=0))
+                {
+                    m_dir = 0;
+                    m_currentSpeed = 0;
+                }
+                else
+                {
+                    m_currentSpeed += m_stepSpeed;
+                }
+                vel.x = m_speed * Mathf.Log10(m_currentSpeed + m_speed + 10) * m_dir;
+                m_haveLastInput = true;
+                m_xLastinput = x;
+
+
             }
+
+
+
         }
-        else if (Input.GetKey(m_moveRight) || Input.GetKey(KeyCode.RightArrow))
-        {
-            vel.x = m_speed;
-        }
-        else if (Input.GetKey(m_moveLeft) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            vel.x = -m_speed;
-        }
-        else
-        {
-            vel.x = 0;
+        else {
+            m_dir = 0;
+            m_currentSpeed = 0;
+            m_haveLastInput = false;
+
+            if (Input.GetKey(m_moveRight) || Input.GetKey(KeyCode.RightArrow))
+            {
+                vel.x = m_speed;
+            }
+            else if (Input.GetKey(m_moveLeft) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                vel.x = -m_speed;
+            }
+            else
+            {
+                vel.x = 0;
+            }
         }
 
 
