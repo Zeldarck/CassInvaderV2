@@ -12,6 +12,10 @@ public class OptionMenu : Menu {
     [SerializeField]
     Slider m_sfxSoundOption;
 
+    [SerializeField]
+    Button m_mainMenu;
+
+
     protected override void Start()
     {
         base.Start();
@@ -26,7 +30,24 @@ public class OptionMenu : Menu {
         {
             SoundManager.INSTANCE.SetMixerVolume(MIXER_GROUP_TYPE.SFX, a_value);
         });
+
+        m_mainMenu.onClick.AddListener(() =>
+       {
+           MenuManager.INSTANCE.BackToMainMenu();
+       });
+
     }
 
+    public override void SetBackButtonAsClose()
+    {
+        base.SetBackButtonAsClose();
+        m_mainMenu.gameObject.SetActive(true);
+    }
+
+    protected override void SetUpBackButtonListenner()
+    {
+        base.SetUpBackButtonListenner();
+        m_mainMenu.gameObject.SetActive(false);
+    }
 
 }
