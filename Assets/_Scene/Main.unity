@@ -2739,7 +2739,7 @@ MonoBehaviour:
   - m_key: 4
     m_audioClip: {fileID: 8300000, guid: c97f3292e5fe6824ea7b7ab2d7a1bc51, type: 3}
   m_listRandomSound: []
-  m_stepFade: 0.05
+  m_speedFade: 0.05
 --- !u!1 &966952472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2798,7 +2798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &968359776
 MonoBehaviour:
   m_ObjectHideFlags: 0
