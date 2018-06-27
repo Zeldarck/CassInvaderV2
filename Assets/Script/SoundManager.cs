@@ -269,7 +269,7 @@ public class AudioSourceExtend
 
 public enum AUDIOSOURCE_KEY { BACKGROUND, NO_KEY_AUTODESTROY, CREATE_KEY };
 
-public enum AUDIOCLIP_KEY{ BONUS_PICKED, BONUS_USED, ENEMY_DIE, ENEMY_FIRE, HITTED  };
+public enum AUDIOCLIP_KEY{ BONUS_PICKED, BONUS_USED, ENEMY_DIE, ENEMY_FIRE, HITTED , LOOSE, WIN };
 
 
 public class SoundManager : Singleton<SoundManager>

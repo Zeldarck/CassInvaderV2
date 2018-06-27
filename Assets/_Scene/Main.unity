@@ -2738,6 +2738,10 @@ MonoBehaviour:
     m_audioClip: {fileID: 8300000, guid: 424e05f5bb38c004ba0aaa5afa7c841b, type: 3}
   - m_key: 4
     m_audioClip: {fileID: 8300000, guid: c97f3292e5fe6824ea7b7ab2d7a1bc51, type: 3}
+  - m_key: 5
+    m_audioClip: {fileID: 8300000, guid: 223b5a47c1693524abbf971e67c786de, type: 3}
+  - m_key: 6
+    m_audioClip: {fileID: 8300000, guid: c0e68f54732c7f3428cee0ea7ff11e5c, type: 3}
   m_listRandomSound: []
   m_speedFade: 0.05
 --- !u!1 &966952472
