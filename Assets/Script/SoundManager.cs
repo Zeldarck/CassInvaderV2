@@ -221,7 +221,7 @@ public class AudioSourceExtend
     #endregion
 
 
-    //TODO remplace with a real 
+    //TODO remplace with a class wich handle interpolation
     private float ExpoEaseOut(float t, float b, float c, float d)
     {
         return (t >= d) ? b + c : c * (-(float)Math.Pow(2, -10 * t / d) + 1) + b;
