@@ -221,13 +221,6 @@ public class AudioSourceExtend
     #endregion
 
 
-    //TODO remplace with a class wich handle interpolation
-    private float ExpoEaseOut(float t, float b, float c, float d)
-    {
-        return (t >= d) ? b + c : c * (-(float)Math.Pow(2, -10 * t / d) + 1) + b;
-    }
-
-
     public AudioSourceExtend(AudioSource a_audioSource)
     {
         m_audioSource = a_audioSource;
@@ -245,7 +238,7 @@ public class AudioSourceExtend
         }
 
         m_currentTime += Mathf.Abs(Speed) * Time.deltaTime;
-        AudioSource.volume = ExpoEaseOut(m_currentTime, Speed > 0 ? 0 : 1, Speed > 0 ? 1 : -1, 1);
+        AudioSource.volume = ConcreteEaseMethods.ExpoEaseOut(m_currentTime, Speed > 0 ? 0 : 1, Speed > 0 ? 1 : -1, 1);
         TryToDestroy();
     }
 
