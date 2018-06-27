@@ -54,7 +54,7 @@ public abstract class Menu : MonoBehaviour
         return 1.0f;
     }
 
-    protected void SetUpBackButtonListenner()
+    protected virtual void  SetUpBackButtonListenner()
     {
         if (m_backButton)
         {
@@ -66,7 +66,7 @@ public abstract class Menu : MonoBehaviour
         }
     }
 
-    public void SetBackButtonAsClose()
+    public virtual void SetBackButtonAsClose()
     {
         if (m_backButton)
         {

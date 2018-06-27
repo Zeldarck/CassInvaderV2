@@ -152,8 +152,9 @@ public class AudioSourceExtend
 {
     AudioSource m_audioSource;
     bool m_autoDestroy;
-    float m_step;
+    float m_speed;
     int m_key;
+    float m_currentTime;
 
 #region GetterSetter
     public bool IsDestroyed
@@ -190,16 +191,17 @@ public class AudioSourceExtend
         }
     }
 
-    public float Step
+    public float Speed
     {
         get
         {
-            return m_step;
+            return m_speed;
         }
 
         set
         {
-            m_step = value;
+            m_currentTime = 0;
+            m_speed = value;
         }
     }
 
@@ -218,6 +220,14 @@ public class AudioSourceExtend
 
     #endregion
 
+
+    //TODO remplace with a class wich handle interpolation
+    private float ExpoEaseOut(float t, float b, float c, float d)
+    {
+        return (t >= d) ? b + c : c * (-(float)Math.Pow(2, -10 * t / d) + 1) + b;
+    }
+
+
     public AudioSourceExtend(AudioSource a_audioSource)
     {
         m_audioSource = a_audioSource;
@@ -225,7 +235,17 @@ public class AudioSourceExtend
 
     public void Update()
     {
-        AudioSource.volume += Step * Time.deltaTime;
+        if(Time.deltaTime == 0)
+        {
+            m_currentTime += Mathf.Abs(Speed) *  1 / 60f;
+        }
+        else
+        {
+            m_currentTime += Mathf.Abs(Speed) * Time.deltaTime;
+        }
+
+        m_currentTime += Mathf.Abs(Speed) * Time.deltaTime;
+        AudioSource.volume = ExpoEaseOut(m_currentTime, Speed > 0 ? 0 : 1, Speed > 0 ? 1 : -1, 1);
         TryToDestroy();
     }
 
@@ -293,7 +313,7 @@ public class SoundManager : Singleton<SoundManager>
     /// Step to fade sounds
     /// </summary>
     [SerializeField]
-    float m_stepFade = 0.1f;
+    float m_speedFade = 0.1f;
 
 
     void Update()
@@ -371,7 +391,7 @@ public class SoundManager : Singleton<SoundManager>
                 if (a_key != (int)AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY)
                 {
                     m_audioSourcesExtendWithKey.Add(a_key, out_res);
-                    out_res.Step = -m_stepFade;
+                    out_res.Speed = -m_speedFade;
                     out_res.AutoDestroy = true;
                 }
                 else
@@ -468,7 +488,7 @@ public class SoundManager : Singleton<SoundManager>
                 m_audioSourcesExtendWithKey[key] = new_source;
                 if (a_isFading)
                 {
-                    source.Step = -m_stepFade;
+                    source.Speed = -m_speedFade;
                 }
                 else
                 {
@@ -483,7 +503,7 @@ public class SoundManager : Singleton<SoundManager>
             if (a_isFading)
             {
 
-                source.Step = m_stepFade;
+                source.Speed = m_speedFade;
                 source.AudioSource.volume = 0;
             }
 
@@ -551,7 +571,7 @@ public class SoundManager : Singleton<SoundManager>
      {
         AudioSourceExtend audioSource;
         GetAudioSource(a_key, out audioSource,  false);
-        audioSource.Step = -m_stepFade;
+        audioSource.Speed = -m_speedFade;
         audioSource.AutoDestroy = true;
      }
 
