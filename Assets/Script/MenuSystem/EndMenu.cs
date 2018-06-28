@@ -23,14 +23,14 @@ public class EndMenu : Menu
         if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel())
         {
             endText = "That's a win !";
-            SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.WIN, MIXER_GROUP_TYPE.AMBIANT, true, true, AUDIOSOURCE_KEY.BACKGROUND);
+            SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.WIN, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
 
         }
 
         else
         {
             endText = "Noob !!";
-            SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.LOOSE, MIXER_GROUP_TYPE.AMBIANT, true, true, AUDIOSOURCE_KEY.BACKGROUND);
+            SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.LOOSE, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
         }
 
         m_wordText.text = string.Concat(endText, "\n Current level : ", level, "\n Score : ", score);
