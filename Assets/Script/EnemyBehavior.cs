@@ -53,7 +53,7 @@ public class EnemyBehavior : Ennemies
             OnDie.Invoke();
             return true;
         }
-
+        SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.ENNEMY_HITTED, MIXER_GROUP_TYPE.SFX_GOOD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
         return false;
     }
 

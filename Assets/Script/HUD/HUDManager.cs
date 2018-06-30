@@ -20,6 +20,7 @@ public class HUDManager : Singleton<HUDManager> {
         {
             Menu pause = MenuManager.INSTANCE.OpenMenu(MENUTYPE.OPTION);
             pause.GetComponent<OptionMenu>().SetBackButtonAsClose();
+            SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.BUTTON_MENU, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
         });
     }
     // Set Display Time

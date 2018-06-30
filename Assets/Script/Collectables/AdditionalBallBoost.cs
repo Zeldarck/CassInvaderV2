@@ -11,7 +11,7 @@ public class AdditionalBallBoost : Collectable
     public override void PlayerUse()
     {
         m_playerController.AddNbMaxBall(1);
-        m_playerController.SetReloadTime(0f);
+        m_playerController.SetReloadTime(1f);
 
         base.PlayerUse();
 
