@@ -14,13 +14,13 @@
 
   - Musiques :
 
-     - Page d'accueil : musique de fond_ok, bruit quand on appuie sur les boutons
+     - Page d'accueil : musique de fond_ok, bruit quand on appuie sur les boutons_ok
      - Son de demarrage et son de fin (win/loose)_ok
-     - Musique de fond, musique qui s'accelere au fur et a mesure
+     - Musique de fond_ok, musique qui s'accelere au fur et a mesure
      - Deplacements, rebonds
      - Bruits danger : ennemi qui tire_ok, ennemi qui se rapproche
-     - Bruits evenements negatifs : touche par un ennemi, vie perdue_ok
-     - Bruits evenements positifs : ennemi detruit_ok, recharge fini (micro onde), bonus ramase_ok, bonus utilise_ok, chain kill
+     - Bruits evenements negatifs : touche par un ennemi_ok, vie perdue_ok
+     - Bruits evenements positifs : ennemi detruit_ok, recharge fini (micro onde)_ok, bonus ramase_ok, bonus utilise_ok, chain kill
 	 
   - Classe son :
      - 4 channels : Ambiance, SFX Menu, SFX Good, SFX Bad
