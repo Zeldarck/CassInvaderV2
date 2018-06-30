@@ -2744,6 +2744,8 @@ MonoBehaviour:
     m_audioClip: {fileID: 8300000, guid: 263d070174ffd764dbfb5dd71483b7aa, type: 3}
   - m_key: 8
     m_audioClip: {fileID: 8300000, guid: 00a1d9b7208ccb5489a3395ed03fd12e, type: 3}
+  - m_key: 9
+    m_audioClip: {fileID: 8300000, guid: 3b87dad3439af5c4fbe2a6ee3c4090da, type: 3}
   m_listRandomSound:
   - m_type: 0
     m_listSounds:
