@@ -30,7 +30,8 @@ public class EndMenu : Menu
         else
         {
             endText = "Noob !!";
-            SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.LOOSE, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
+            SoundManager.INSTANCE.StartRandom(RANDOM_SOUND_TYPE.LOOSE, MIXER_GROUP_TYPE.SFX_BAD);
+           // SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.LOOSE, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
         }
 
         m_wordText.text = string.Concat(endText, "\n Current level : ", level, "\n Score : ", score);

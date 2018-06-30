@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 using System;
 
 
-public enum RANDOM_SOUND_TYPE { };
+public enum RANDOM_SOUND_TYPE { LOOSE };
 
 [System.Serializable]
 public class RandomSound
@@ -16,7 +16,7 @@ public class RandomSound
     RANDOM_SOUND_TYPE m_type;
     [SerializeField]
     List<AudioClip> m_listSounds;
-    List<AudioClip> m_everUsed;
+    List<AudioClip> m_everUsed = new List<AudioClip>();
     int m_audioSourceKey = (int)AUDIOSOURCE_KEY.CREATE_KEY;
 
     #region GetterSetter
@@ -260,9 +260,9 @@ public class AudioSourceExtend
 }
 
 
-public enum AUDIOSOURCE_KEY { BACKGROUND, NO_KEY_AUTODESTROY, CREATE_KEY };
+public enum AUDIOSOURCE_KEY { BACKGROUND, BUTTON_MENU, NO_KEY_AUTODESTROY, CREATE_KEY };
 
-public enum AUDIOCLIP_KEY{ BONUS_PICKED, BONUS_USED, ENEMY_DIE, ENEMY_FIRE, HITTED , LOOSE, WIN };
+public enum AUDIOCLIP_KEY{ BONUS_PICKED, BONUS_USED, ENEMY_DIE, ENEMY_FIRE, HITTED , LOOSE, WIN, ENNEMY_HITTED, BUTTON_MENU };
 
 
 public class SoundManager : Singleton<SoundManager>
@@ -476,6 +476,11 @@ public class SoundManager : Singleton<SoundManager>
 
             if (GetAudioSource(key, out source))
             {
+                if(source.AudioSource.clip == a_clip)
+                {
+                    Debug.Log("Clip ever play : " + a_clip.name);
+                    return key;
+                }
                 AudioSourceExtend new_source = new AudioSourceExtend(CreateAudioSource());
                 m_audioSourcesExtend.Add(new_source);
                 m_audioSourcesExtendWithKey[key] = new_source;
