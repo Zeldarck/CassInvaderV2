@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212273160061334424}
   - component: {fileID: 58818597923277144}
   - component: {fileID: 114239246617304210}
-  - component: {fileID: 95528762142998428}
   - component: {fileID: 198292130924297140}
   - component: {fileID: 199775984568987446}
+  - component: {fileID: 95178385235765254}
   m_Layer: 9
   m_Name: Giant
   m_TagString: Enemy
@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1737856206623766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.862, y: 3.829, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.25, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,8 +59,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2.01
---- !u!95 &95528762142998428
+  m_Radius: 0.1
+--- !u!95 &95178385235765254
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -201,7 +201,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -305,7 +305,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.05
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3492,8 +3492,8 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
-  m_MinParticleSize: 0.03
-  m_MaxParticleSize: 0.1
+  m_MinParticleSize: 0.01
+  m_MaxParticleSize: 0.05
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -3542,7 +3542,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a66c8727e2bfb234eab1c21af22ff9d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66ffebd19c0698d44896f3efba436a3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

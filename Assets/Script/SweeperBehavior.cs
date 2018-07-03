@@ -5,6 +5,9 @@ public class SweeperBehavior : EnemyBehavior
     [SerializeField]
     GameObject m_fireProjectile;
 
+    protected Animator m_sweeperAnim;
+    protected int targetHash = Animator.StringToHash("Targeted");
+
     private Vector3 m_currentPosition = new Vector3(0, 0, 0);
     private Quaternion m_initialRotation = new Quaternion(180, 0, 0, 0);
 
@@ -20,6 +23,13 @@ public class SweeperBehavior : EnemyBehavior
         m_enemyLevel = 2;
 
         InvokeRepeating("LaunchProjectile", Random.Range(0.8f, 12.1f), Random.Range(5f, 15f));
+    }
+
+    override public bool GetDamage(int a_damage)
+    {
+        //m_sweeperAnim.SetTrigger(targetHash);
+
+        return base.GetDamage(a_damage);
     }
 
     #endregion

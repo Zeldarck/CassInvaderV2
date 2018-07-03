@@ -6,6 +6,9 @@ public class RunnerBehavior : EnemyBehavior
     [SerializeField]
     GameObject m_iceProjectile;
 
+    protected Animator m_runnerAnim;
+    protected int targetHash = Animator.StringToHash("Targeted");
+
     private Vector3 m_currentPosition = new Vector3(0, 0, 0);
     private Quaternion m_initialRotation = new Quaternion(180, 0, 0, 0);
 
@@ -25,6 +28,13 @@ public class RunnerBehavior : EnemyBehavior
     }
 
     #endregion
+
+    override public bool GetDamage(int a_damage)
+    {
+        //m_runnerAnim.SetTrigger(targetHash);
+
+        return base.GetDamage(a_damage);
+    }
 
     #region Movement behavior
 

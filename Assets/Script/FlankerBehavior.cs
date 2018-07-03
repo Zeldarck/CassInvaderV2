@@ -7,6 +7,9 @@ public class FlankerBehavior : EnemyBehavior
     private float m_rngHideStopLowLimit;
     private bool m_hidden;
 
+    protected Animator m_flankerAnim;
+    protected int targetHash = Animator.StringToHash("Targeted");
+
     #region GameObject Setup
 
     /// <summary>
@@ -41,6 +44,8 @@ public class FlankerBehavior : EnemyBehavior
         {
             a_damage = 0;
         }
+
+        // m_flankerAnim.SetTrigger(targetHash);
 
         m_life -= a_damage;
         gameObject.GetComponent<Renderer>().enabled = false;
