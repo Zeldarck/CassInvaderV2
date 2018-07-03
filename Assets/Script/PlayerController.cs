@@ -98,6 +98,13 @@ public class PlayerController : Singleton<PlayerController> {
         m_sliderReload.maxValue = m_timeToReload;
         m_sliderReload.value = m_sliderReload.maxValue;
         m_baseSpeed = m_speed;
+        m_sliderReload.onValueChanged.AddListener((float a_value) =>
+       {
+           if(a_value >= m_sliderReload.maxValue)
+           {
+               SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.RELOADED, MIXER_GROUP_TYPE.SFX_GOOD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
+           }
+       });
     }
 
     private void Update()

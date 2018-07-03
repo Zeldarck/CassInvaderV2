@@ -17,6 +17,14 @@ public abstract class Menu : MonoBehaviour
 
     protected virtual void Awake()
     {
+        Button[] childrenButton = GetComponentsInChildren<Button>();
+        for (int i = 0; i < childrenButton.Length; ++i)
+        {
+            childrenButton[i].onClick.AddListener(() =>
+            {
+                SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.BUTTON_MENU, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
+            });
+        }
         SetUpBackButtonListenner();
     }
 
@@ -62,6 +70,7 @@ public abstract class Menu : MonoBehaviour
             m_backButton.onClick.AddListener(() =>
             {
                 MenuManager.INSTANCE.BackToMainMenu();
+                SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.BUTTON_MENU, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
             });
         }
     }
@@ -74,6 +83,7 @@ public abstract class Menu : MonoBehaviour
             m_backButton.onClick.AddListener(() =>
             {
                 MenuManager.INSTANCE.CloseMenu();
+                SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.BUTTON_MENU, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
             });
         }
     }
