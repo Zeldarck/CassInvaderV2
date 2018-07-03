@@ -56,7 +56,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
 
     int m_nbWavesEnemysExecuted = 0;
-    public int m_currentLevel = 1;
+    int m_currentLevel = 1;
     protected GameObject currentPrefab;
 
 
