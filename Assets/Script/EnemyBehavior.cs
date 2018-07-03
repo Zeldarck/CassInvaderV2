@@ -33,7 +33,7 @@ public class EnemyBehavior : Ennemies
         OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
         OnDie.AddListener(() => { CollectableManager.INSTANCE.EnemyDestroyed(m_enemyLevel, gameObject.transform.position); });
         OnDie.AddListener(() => { SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.ENEMY_DIE, MIXER_GROUP_TYPE.SFX_BAD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY); });
-
+        //OnDie.AddListener(() => StartCoroutine(CheckGameHasEnded(3.0f)));
     }
 
 
@@ -68,6 +68,7 @@ public class EnemyBehavior : Ennemies
         yield return new WaitForSeconds(a_delay);
 
         Destroy(gameObject);
+        CheckGameHasEnded();
     }
 
 
@@ -105,5 +106,14 @@ public class EnemyBehavior : Ennemies
         SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.ENEMY_FIRE, MIXER_GROUP_TYPE.SFX_BAD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
     }
 
-
+    public void CheckGameHasEnded()
+    {
+        if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel())
+        {
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
+            {
+                GameManager.INSTANCE.EndGame();
+            }
+        }
+    }
 }

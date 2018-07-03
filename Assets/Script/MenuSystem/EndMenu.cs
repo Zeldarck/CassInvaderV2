@@ -20,7 +20,7 @@ public class EndMenu : Menu
         int level = EnemyManager.INSTANCE.GetCurrentLevel();
         int score = GameManager.INSTANCE.PlayerScore;
 
-        if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel())
+        if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel() && GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
         {
             endText = "That's a win !";
             SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.WIN, MIXER_GROUP_TYPE.AMBIANT, true, true, AUDIOSOURCE_KEY.BACKGROUND);
@@ -34,6 +34,8 @@ public class EndMenu : Menu
         }
 
         m_wordText.text = string.Concat(endText, "\n Current level : ", level, "\n Score : ", score);
+
+        PlayerController.INSTANCE.DestroyBoost();
     }
 
     public void OnBackButton()
