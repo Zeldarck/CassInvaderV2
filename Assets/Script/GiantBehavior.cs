@@ -3,8 +3,6 @@
 public class GiantBehavior : EnemyBehavior
 {
 
-    protected Animator m_giantAnim;
-    protected int targetHash = Animator.StringToHash("Targeted");
 
     #region GameObject Setup
 
@@ -18,14 +16,12 @@ public class GiantBehavior : EnemyBehavior
         m_life = 4;
         m_enemyLevel = 3;
 
-        m_giantAnim = GetComponent<Animator>();
     }
 
     #endregion
 
     override public bool GetDamage(int a_damage)
     {
-        m_giantAnim.SetTrigger(targetHash);
 
         return base.GetDamage(a_damage);
     }

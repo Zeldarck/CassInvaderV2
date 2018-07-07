@@ -13,7 +13,8 @@ public class EnemyBehavior : Ennemies
     protected int m_frameCount = 0;
 
     public UnityEvent OnDie;
-
+    protected Animator m_animator;
+    protected int m_getDamageAnimation = Animator.StringToHash("Targeted");
 
     // GameObject Setup
     //------------------------------------------------------------------------------------
@@ -28,6 +29,7 @@ public class EnemyBehavior : Ennemies
         _X_MOVE_EAST = 2; // ( this.transform.parent.childCount)/2;
         _X_MOVE_WEST = 2; // (this.transform.parent.childCount)/2;
 
+        m_animator = GetComponent<Animator>();
 
         OnDie.AddListener(() => { GameManager.INSTANCE.AddPoint(m_enemyLevel); });
         OnDie.AddListener(() => StartCoroutine(AutoDestroy()));
@@ -52,6 +54,10 @@ public class EnemyBehavior : Ennemies
             GetComponent<ParticleSystem>().Emit(10);
             OnDie.Invoke();
             return true;
+        }
+        if (m_animator)
+        {
+            m_animator.SetTrigger(m_getDamageAnimation);
         }
         SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.ENNEMY_HITTED, MIXER_GROUP_TYPE.SFX_GOOD, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);
         return false;

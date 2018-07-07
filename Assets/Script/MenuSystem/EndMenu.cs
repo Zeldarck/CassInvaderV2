@@ -35,8 +35,6 @@ public class EndMenu : Menu
         }
 
         m_wordText.text = string.Concat(endText, "\n Current level : ", level, "\n Score : ", score);
-
-        PlayerController.INSTANCE.DestroyBoost();
     }
 
     public void OnBackButton()

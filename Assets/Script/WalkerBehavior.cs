@@ -3,8 +3,6 @@
 public class WalkerBehavior : EnemyBehavior
 {
 
-    protected Animator m_walkerAnim;
-    protected int targetHash = Animator.StringToHash("Targeted");
 
     #region GameObject Setup
 
@@ -20,8 +18,6 @@ public class WalkerBehavior : EnemyBehavior
 
     override public bool GetDamage(int a_damage)
     {
-        // m_walkerAnim.SetTrigger(targetHash);
-
         return base.GetDamage(a_damage);
     }
 
