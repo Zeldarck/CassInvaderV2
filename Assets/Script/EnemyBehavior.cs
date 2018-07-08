@@ -114,12 +114,9 @@ public class EnemyBehavior : Ennemies
 
     public void CheckGameHasEnded()
     {
-        if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel())
+        if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel() && GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
         {
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
-            {
-                GameManager.INSTANCE.EndGame();
-            }
+            GameManager.INSTANCE.IsGameWon = true;
         }
     }
 }

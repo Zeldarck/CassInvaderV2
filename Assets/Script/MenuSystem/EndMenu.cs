@@ -20,7 +20,7 @@ public class EndMenu : Menu
         int level = EnemyManager.INSTANCE.GetCurrentLevel();
         int score = GameManager.INSTANCE.PlayerScore;
 
-        if (EnemyManager.INSTANCE.GetCurrentLevel() >= EnemyManager.INSTANCE.GetMaxLevel() && GameObject.FindGameObjectsWithTag("Enemy").Length <= 1)
+        if (GameManager.INSTANCE.IsGameWon)
         {
             endText = "That's a win !";
             SoundManager.INSTANCE.StartAudio(AUDIOCLIP_KEY.WIN, MIXER_GROUP_TYPE.SFX_MENU, false, false, AUDIOSOURCE_KEY.NO_KEY_AUTODESTROY);

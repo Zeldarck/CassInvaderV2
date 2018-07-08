@@ -11,8 +11,6 @@ public class AdditionalBallBoost : Collectable
     public override void PlayerUse()
     {
         m_playerController.AddNbMaxBall(1);
-        m_playerController.SetReloadTime(1f);
-
         base.PlayerUse();
 
     }
@@ -21,7 +19,6 @@ public class AdditionalBallBoost : Collectable
     protected override void CleanBoost()
     {
         m_playerController.AddNbMaxBall(-1);
-        m_playerController.SetReloadTime(20f);
         base.CleanBoost();
     }
     public override Color GetColorPower()

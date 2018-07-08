@@ -16,6 +16,8 @@ public class GameManager : Singleton<GameManager> {
 
     bool m_isGameRunning = false;
 
+    bool m_isGameWon;
+
     [SerializeField]
     AudioClip m_backGroundMusic;
 
@@ -40,6 +42,20 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+    public bool IsGameWon
+    {
+        get
+        {
+            return m_isGameWon;
+        }
+
+        set
+        {
+            m_isGameWon = value;
+            EndGame();
+        }
+    }
+
     void Start()
     {
     }
@@ -47,6 +63,7 @@ public class GameManager : Singleton<GameManager> {
     public void StartGame()
     {
         PlayerScore = 0;
+        m_isGameWon = false;
         MenuManager.INSTANCE.CloseMenu();
         EnemyManager.INSTANCE.StartSpawn();
         PlayerController.INSTANCE.StartGame();
