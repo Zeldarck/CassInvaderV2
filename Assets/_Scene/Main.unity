@@ -4691,12 +4691,17 @@ Prefab:
     - target: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
         type: 2}
       propertyPath: m_nbMaxBall
-      value: 50
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
         type: 2}
       propertyPath: m_timeToReload
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114310697944508424, guid: 98659fa48047eb24391ad2a280fb66a9,
+        type: 2}
+      propertyPath: m_speedOfReload
+      value: 7.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98659fa48047eb24391ad2a280fb66a9, type: 2}

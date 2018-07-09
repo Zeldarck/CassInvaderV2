@@ -29,7 +29,9 @@ public class PlayerController : Singleton<PlayerController> {
     /// Time to reload
     /// </summary>
     [SerializeField]
-    float m_timeToReload = 30;
+    float m_speedOfReload = 10;
+
+    float m_currentSpeedOfReload;
 
 
     /// <summary>
@@ -95,7 +97,7 @@ public class PlayerController : Singleton<PlayerController> {
     {
         m_rb2d = GetComponent<Rigidbody2D>();
         m_startPos = transform.position;
-        m_sliderReload.maxValue = m_timeToReload;
+        m_sliderReload.maxValue = 100;// m_timeToReload;
         m_sliderReload.value = m_sliderReload.maxValue;
         m_baseSpeed = m_speed;
         m_sliderReload.onValueChanged.AddListener((float a_value) =>
@@ -131,7 +133,7 @@ public class PlayerController : Singleton<PlayerController> {
             return;
         }
 
-        m_sliderReload.value += (Time.deltaTime * ( BallController.NbBallAlive > 0 ? 1 : m_multiplicatorIfNoBall));
+        m_sliderReload.value += (Time.deltaTime * ( BallController.NbBallAlive > 0 ? 1 : m_multiplicatorIfNoBall) * m_currentSpeedOfReload);
         if ( Input.GetKeyDown(KeyCode.Space) && m_sliderReload.value >= m_sliderReload.maxValue && BallController.NbBallAlive < m_nbMaxBall)
         {
             Fire(new Vector2(25, 15));
@@ -233,8 +235,9 @@ public class PlayerController : Singleton<PlayerController> {
     public void StartGame()
     {
         transform.position = new Vector3(0, transform.position.y, transform.position.z);
-        m_sliderReload.value = m_timeToReload;
-        m_sliderReload.maxValue = m_timeToReload;
+        m_sliderReload.value = m_sliderReload.maxValue;
+        m_currentSpeedOfReload = m_speedOfReload;
+        m_currentSpeed = m_speed;
     }
 
 
@@ -246,12 +249,15 @@ public class PlayerController : Singleton<PlayerController> {
         transform.position = m_startPos;
     }
 
-    public void SetReloadTime(float a_reloadTime)
+    public void SetReloadSpeed(float a_reloadSpeed)
     {
-        m_timeToReload = a_reloadTime;
-        m_sliderReload.maxValue = m_timeToReload;
+        m_currentSpeedOfReload = a_reloadSpeed;
     }
 
+    public void ResetReloadSpeed()
+    {
+        m_currentSpeedOfReload = m_speedOfReload;
+    }
 
     public void SetNbMaxBall(int a_nbBall)
     {
