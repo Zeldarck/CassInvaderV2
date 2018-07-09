@@ -79,18 +79,7 @@ public class FlankerBehavior : EnemyBehavior
             }
         }
 
-        // check if an invader has made it to the Dead Zone
-        if (gameObject.transform.position.y < (_DEADZONE + m_enemyRadius))
-        {
-            // GameController.EndGame(); // TO LINK OR IMPLEMENT LATER
-            Debug.Log("An Enemy reached the bottom!");
-
-            Destroy(gameObject);
-        }
-
-        // move accordingly 
-        Vector2 direction = DirectionComputation();
-        gameObject.transform.position = (Vector2)gameObject.transform.position + direction * Time.deltaTime;
+        base.FixedUpdate();
     }
 
     #endregion
